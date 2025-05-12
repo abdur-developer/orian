@@ -5,6 +5,7 @@
         include("section/hero.php");
         include("section/feature.php");
         include("section/course.php");
+        include("section/product.php");
         include("section/testimonials.php");
         include("section/cta.php");
         include("section/footer.php");
