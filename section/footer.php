@@ -141,7 +141,7 @@
         </div>
         
         <div class="copyright">
-            <p class="mb-0">© 2023 Abdur Ltd. সকল স্বত্ব সংরক্ষিত</p>
+            <p class="mb-0">© 2025 Abdur Ltd. সকল স্বত্ব সংরক্ষিত</p>
         </div>
     </div>
 </footer>
