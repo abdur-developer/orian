@@ -215,7 +215,7 @@
                         <div class="product-wishlist">
                             <i class="far fa-heart"></i>
                         </div>
-                        <img src="https://m.media-amazon.com/images/I/61sGz5EM9FL._AC_UL480_FMwebp_QL65_.jpg" class="product-img" alt="Smart Watch X1">
+                        <img src="https://oriangroup.com/wp-content/uploads/2024/10/2-5.png" class="product-img" alt="Smart Watch X1">
                     </div>
                     <div class="product-body">
                         <span class="product-category">Smart Watch</span>
