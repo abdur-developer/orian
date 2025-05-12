@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military Courses - Bangladesh</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2a5cb8;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ff6b6b;
+            --text-dark: #333;
+            --text-medium: #555;
+            --text-light: #777;
+        }
+        
+        body {
+            font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-dark);
+        }
+        
+        .course-header {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5cb8 100%);
+            color: white;
+            padding: 5px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .courses-container {
+            padding: 20px 0 40px;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .course-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+            background: white;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .course-img-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .course-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .course-card:hover .course-img {
+            transform: scale(1.05);
+        }
+        
+        .course-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 200px);
+        }
+        
+        .course-provider {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+        
+        .course-title {
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+        
+        .course-desc {
+            color: var(--text-medium);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+        
+        .course-meta-item {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+        }
+        
+        .course-meta-item i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+        
+        .course-price {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .course-price del {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-left: 8px;
+        }
+        
+        .btn-enroll {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 6px;
+            padding: 8px;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-enroll:hover {
+            background: #1d4a9e;
+            transform: translateY(-2px);
+        }
+        
+        .btn-details {
+            background: white;
+            color: var(--primary-color);
+            font-weight: 600;
+            border-radius: 6px;
+            padding: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-details:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #1a3a8f 0%, #2a5cb8 100%);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 18px;
+            }
+            
+            .course-desc {
+                -webkit-line-clamp: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="course-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-6 fw-bold mb-0">Bangladesh Military Courses</h1>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Your pathway to serving the nation</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container courses-container">
+        <h2 class="section-title">Featured Courses</h2>
+        
+        <div class="row g-4">
+            <!-- Army Course -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card">
+                    <div class="course-img-container">
+                        <img src="https://instantjob.sgp1.cdn.digitaloceanspaces.com/course_image/eb330f06312b4065a7780b7dffecd3e2-website(2).png" class="course-img" alt="Army Commissioned Officer Course">
+                        <span class="course-badge">Popular</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="course-provider">Bangladesh Army</span>
+                        <h3 class="course-title">আর্মি কমিশন্ড অফিসার কোর্স</h3>
+                        <p class="course-desc">বাংলাদেশের হাজারো তরুণ-তরুণীদের স্বপ্ন থাকে সেনাবাহিনীর কমিশন্ড অফিসার হওয়ার। মুলত এইচ এস সি পাশের পর সেনা কর্মকর্তা হবার জন্য নির্দিষ্ট যোগ্যতা থাকা সাপেক্ষে যে কেউ এই পদে আবেদন করতে পারে...</p>
+                        
+                        <div class="course-meta">
+                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
+                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
+                        </div>
+                        
+                        <div class="course-price">
+                            মূল্য : 2000৳
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navy Course -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card">
+                    <div class="course-img-container">
+                        <img src="https://instantjob.sgp1.cdn.digitaloceanspaces.com/course_image/ed316efa71ed436c9dd488e3aefc82bc-website.png" class="course-img" alt="Navy Commissioned Officer Course">
+                    </div>
+                    <div class="card-body">
+                        <span class="course-provider">Bangladesh Navy</span>
+                        <h3 class="course-title">নেভি কমিশন্ড অফিসার কোর্স</h3>
+                        <p class="course-desc">বাংলাদেশের হাজারো তরুণ-তরুণীদের স্বপ্ন থাকে নেভি কমিশন্ড অফিসার হওয়ার। মুলত এইচ এস সি পাশের পর নেভি কর্মকর্তা হবার জন্য নির্দিষ্ট যোগ্যতা থাকা সাপেক্ষে যে কেউ এই পদে আবেদন করতে পারে...</p>
+                        
+                        <div class="course-meta">
+                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
+                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
+                        </div>
+                        
+                        <div class="course-price">
+                            মূল্য : 2000৳
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Air Force Course -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card">
+                    <div class="course-img-container">
+                        <img src="https://instantjob.sgp1.cdn.digitaloceanspaces.com/course_image/39ad3ca9deec4e719823e7101bfadd08-website(1).png" class="course-img" alt="Air Force Commissioned Officer Course">
+                        <span class="course-badge">Discount</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="course-provider">Bangladesh Air Force</span>
+                        <h3 class="course-title">এয়ার ফোর্স কমিশন্ড অফিসার কোর্স</h3>
+                        <p class="course-desc">প্রতিবছর দেশের সেবায় কাজ করার জন্য বাংলাদেশ বিমানবাহিনী কমিশন্ড অফিসার পদে চাকরি করার স্বপ্ন দেখে অনেকেই...</p>
+                        
+                        <div class="course-meta">
+                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
+                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
+                        </div>
+                        
+                        <div class="course-price">
+                            মূল্য : 4000৳ <del>6000৳</del>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ISSB Course -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card">
+                    <div class="course-img-container">
+                        <img src="https://instant-job.sgp1.cdn.digitaloceanspaces.com/course_image/153f421da724490da72ac5ccf8bfeaab-ISSB@4x-100(1)(1).jpg" class="course-img" alt="ISSB Course">
+                    </div>
+                    <div class="card-body">
+                        <span class="course-provider">Bangladesh Military</span>
+                        <h3 class="course-title">ISSB কোর্স</h3>
+                        <p class="course-desc">ISSB-এর বিগত অভিজ্ঞতা থেকে পর্যালোচনা করে দেখা যায়, ৪০-৬০ ভাগ শিক্ষার্থী স্ক্রিন আউট এর সম্মুখীন হয়...</p>
+                        
+                        <div class="course-meta">
+                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
+                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
+                        </div>
+                        
+                        <div class="course-price">
+                            মূল্য : 1500৳
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Spoken English Course -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card">
+                    <div class="course-img-container">
+                        <img src="https://instant-job.sgp1.cdn.digitaloceanspaces.com/course_image/6de72a867ac2478297e24a8e7a8db1d7-spokenenglish.png" class="course-img" alt="Spoken English Course">
+                        <span class="course-badge">New</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="course-provider">Bangladesh Military</span>
+                        <h3 class="course-title">ইন্টারেক্টিভ স্পোকেন ইংলিশ কোর্স</h3>
+                        <p class="course-desc">সাবলীলভাবে ইংরেজিতে কথা বলতে পারা এই যুগে একটি গুরুত্বপূর্ণ দক্ষতা। সামরিক বাহিনীর প্রিলিমিনারি পরীক্ষা ও আইএসএসবির ক্ষেত্রেও ইংরেজি বলার দক্ষতা জরুরি...</p>
+                        
+                        <div class="course-meta">
+                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
+                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
+                        </div>
+                        
+                        <div class="course-price">
+                            মূল্য : 2000৳
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pre-ISSB Course -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card">
+                    <div class="course-img-container">
+                        <img src="https://instant-job.sgp1.cdn.digitaloceanspaces.com/course_image/9c9b6dea9aa44b29ac0937024604524d-hfhg.jpg" class="course-img" alt="Pre-ISSB Course">
+                    </div>
+                    <div class="card-body">
+                        <span class="course-provider">Bangladesh Military</span>
+                        <h3 class="course-title">ISSB পূর্ব-প্রস্তুতি কোর্স</h3>
+                        <p class="course-desc">বাংলাদেশের বিশাল সংখ্যক পরীক্ষার্থীর স্বপ্ন থাকে সামরিক অফিসার হওয়া। কিন্তু সামরিক বাহিনীতে চান্স পাওয়া সহজ নয়...</p>
+                        
+                        <div class="course-meta">
+                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
+                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
+                        </div>
+                        
+                        <div class="course-price">
+                            মূল্য : 2000৳
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Soldier Course -->
+            <div class="col-lg-4 col-md-6">
+                <div class="course-card">
+                    <div class="course-img-container">
+                        <img src="https://instant-job.sgp1.cdn.digitaloceanspaces.com/course_image/38c666a416cb41fba78078e103826723-Army@4x-100(1).jpg" class="course-img" alt="Bangladesh Army Soldier Course">
+                    </div>
+                    <div class="card-body">
+                        <span class="course-provider">Bangladesh Army</span>
+                        <h3 class="course-title">বাংলাদেশ সেনাবাহিনী সৈনিক কোর্স</h3>
+                        <p class="course-desc">প্রতিবছর বাংলাদেশের হাজার হাজার পরীক্ষার্থী সৈনিক পদে চাকরির জন্য আবেদন করে। সফলতা পায় খুব কম। কারণ সঠিক দিকনির্দেশনা ও প্রস্তুতির অভাব...</p>
+                        
+                        <div class="course-meta">
+                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
+                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
+                        </div>
+                        
+                        <div class="course-price">
+                            মূল্য : 2000৳
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Bangladesh Military Courses</h5>
+                    <p>Your trusted partner for military career preparation in Bangladesh.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#" class="text-white">All Courses</a></li>
+                        <li><a href="#" class="text-white">About Us</a></li>
+                        <li><a href="#" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p><i class="fas fa-phone me-2"></i> +880 1234 567890</p>
+                    <p><i class="fas fa-envelope me-2"></i> info@militarycourses.com</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0">© 2023 Bangladesh Military Courses. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
