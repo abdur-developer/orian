@@ -244,57 +244,45 @@
         <div class="category-section">
             <div class="category-title">
                 <h2>Browse Categories</h2>
-                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                <!-- <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a> -->
             </div>
             
             <div class="category-scroll">
                 <a href="#" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2936/2936886.png" alt="Programming">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2997/2997592.png">
                     </div>
-                    <span class="category-name">Programming</span>
-                </a>
-                
+                    <span class="category-name">কোর্স</span>
+                </a>                
                 <a href="#" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2933/2933245.png" alt="Design">
+                        <img src="https://cdn-icons-png.flaticon.com/512/5832/5832416.png">
                     </div>
-                    <span class="category-name">Design</span>
-                </a>
-                
+                    <span class="category-name">বই</span>
+                </a>                
                 <a href="#" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2933/2933293.png" alt="Marketing">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2954/2954918.png">
                     </div>
-                    <span class="category-name">Marketing</span>
-                </a>
-                
+                    <span class="category-name">পোশাক</span>
+                </a>                
                 <a href="#" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2936/2936777.png" alt="Business">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3659/3659898.png">
                     </div>
-                    <span class="category-name">Business</span>
+                    <span class="category-name">ডিভাইস</span>
                 </a>
-                
                 <a href="#" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2933/2933323.png" alt="Photography">
+                        <img src="https://cdn-icons-png.flaticon.com/512/8790/8790284.png">
                     </div>
-                    <span class="category-name">Photography</span>
+                    <span class="category-name">পরামর্শদাতা</span>
                 </a>
-                
                 <a href="#" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2936/2936704.png" alt="Music">
+                        <img src="	https://cdn-icons-png.flaticon.com/512/4115/4115893.png" >
                     </div>
-                    <span class="category-name">Music</span>
-                </a>
-                
-                <a href="#" class="category-item">
-                    <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2933/2933451.png" alt="Health">
-                    </div>
-                    <span class="category-name">Health</span>
+                    <span class="category-name">জব এ্যা‌প্লাই</span>
                 </a>
             </div>
         </div>

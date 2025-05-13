@@ -11,7 +11,9 @@
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100..800&display=swap" rel="stylesheet">
     <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
@@ -36,7 +38,7 @@
         }
 
         body {
-            font-family: 'Poppins', 'SolaimanLipi', sans-serif;
+            font-family: "Anek Bangla", sans-serif;
             color: var(--dark);
             overflow-x: hidden;
             background-color: #f5f7ff;
@@ -131,9 +133,9 @@
             border-radius: 2px;
         }
 
+        /* margin-bottom: 60px; */
         .section-subtitle {
             color: #666;
-            margin-bottom: 60px;
             text-align: center;
             font-size: 1.1rem;
             max-width: 700px;

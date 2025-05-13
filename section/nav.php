@@ -253,7 +253,7 @@
 <header>
     <nav class="navbar navbar-expand-lg fixed-top navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="/bn">
+            <a class="navbar-brand" href="index.php">
                 <img src="img/logo.jpg" alt="Defence 24 bd" class="logo img-fluid" style="height: 40px;">
                 Defence 24 bd
             </a>
@@ -270,7 +270,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/bn">
+                        <a class="nav-link <?php if(!isset($_GET)) echo "active"; ?>" href="index.php">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-home me-2"></i>
                                 <span>হোম</span>
@@ -279,7 +279,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bn/circular">
+                        <a class="nav-link <?php if(isset($_GET['circular'])) echo "active"; ?>" href="?circular">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-bullhorn me-2"></i>
                                 <span>সার্কুলার</span>
@@ -288,7 +288,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bn/all-courses">
+                        <a class="nav-link" href="?courses">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-book me-2"></i>
                                 <span>সকল কোর্স</span>
@@ -297,7 +297,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bn/model-test">
+                        <a class="nav-link" href="?model-test">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-clipboard-list me-2"></i>
                                 <span>মডেল টেস্ট</span>
@@ -309,7 +309,7 @@
                 
                 <!-- Fixed Login Button -->
                 <div class="d-flex ms-lg-3 mt-3 mt-lg-0">
-                    <a href="/bn/login" class="btn login-btn px-4 py-2">
+                    <a href="login.php" class="btn login-btn px-4 py-2">
                         <i class="fas fa-sign-in-alt me-2"></i> লগইন
                     </a>
                 </div>

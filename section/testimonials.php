@@ -67,6 +67,8 @@
         <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">আমাদের সফল শিক্ষার্থীদের অভিজ্ঞতা</p>
         
         <div class="row mt-5">
+            <?php for ($i = 0; $i < 3; $i++) { ?>
+            <!-- Review <?=$i + 1?> -->
             <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="testimonial-card">
                     <div class="testimonial-rating">
@@ -89,52 +91,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">
-                        "ISSB প্রস্তুতির জন্য Abdur Ltd এর কোর্স আমার জন্য খুবই সহায়ক ছিল। বিশেষ করে সাইকোলজিক্যাল 
-                        টেস্ট সম্পর্কে বিস্তারিত জানতে পেরেছিলাম যা আমাকে চূড়ান্ত নির্বাচনে সাহায্য করেছে।"
-                    </p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student">
-                        <div class="author-info">
-                            <h5>আয়শা সিদ্দিকা</h5>
-                            <p>বাংলাদেশ বিমানবাহিনী</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <p class="testimonial-text">
-                        "বাংলাদেশ নৌবাহিনীতে অফিসার পদে চাকরি পাওয়ার ক্ষেত্রে Abdur Ltd এর মডেল টেস্ট এবং 
-                        ইন্টারভিউ প্রস্তুতি আমার জন্য খুবই কার্যকরী প্রমাণিত হয়েছে।"
-                    </p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Student">
-                        <div class="author-info">
-                            <h5>ইমরান হোসেন</h5>
-                            <p>বাংলাদেশ নৌবাহিনী</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
 </section>

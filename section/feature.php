@@ -113,7 +113,7 @@
                 </div>
             </div>
             
-            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+            <!-- <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-graduation-cap"></i>
@@ -121,7 +121,7 @@
                     <h4 class="feature-title">সার্টিফিকেট</h4>
                     <p class="feature-text">কোর্স সম্পন্ন করলে পাবেন স্বীকৃতিপত্র যা আপনার সিভিকে শক্তিশালী করবে</p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </section>

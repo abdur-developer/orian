@@ -158,7 +158,8 @@
         <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">সেরা প্রশিক্ষকদের সাথে প্রস্তুতি নিন আপনার পছন্দের চাকরির জন্য</p>
         <!-- ================================================== -->      
         <div class="row g-4">
-            <!-- Army Course -->
+            <?php for($i = 0; $i < 4; $i++){ ?>
+            <!-- course <?=$i + 1?> -->
             <div class="col-lg-4 col-md-6">
                 <div class="course-card">
                     <div class="course-img-container">
@@ -172,40 +173,12 @@
                         
                         <div class="course-meta">
                             <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
-                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
+                            <!-- <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span> -->
+                            <div class="course-price">
+                                মূল্য : 2000৳
+                            </div>
                         </div>
                         
-                        <div class="course-price">
-                            মূল্য : 2000৳
-                        </div>
-                        
-                        <div class="d-grid gap-2 d-md-flex">
-                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Navy Course -->
-            <div class="col-lg-4 col-md-6">
-                <div class="course-card">
-                    <div class="course-img-container">
-                        <img src="https://instantjob.sgp1.cdn.digitaloceanspaces.com/course_image/ed316efa71ed436c9dd488e3aefc82bc-website.png" class="course-img" alt="Navy Commissioned Officer Course">
-                    </div>
-                    <div class="card-body">
-                        <span class="course-provider">Bangladesh Navy</span>
-                        <h3 class="course-title">নেভি কমিশন্ড অফিসার কোর্স</h3>
-                        <p class="course-desc">বাংলাদেশের হাজারো তরুণ-তরুণীদের স্বপ্ন থাকে নেভি কমিশন্ড অফিসার হওয়ার। মুলত এইচ এস সি পাশের পর নেভি কর্মকর্তা হবার জন্য নির্দিষ্ট যোগ্যতা থাকা সাপেক্ষে যে কেউ এই পদে আবেদন করতে পারে...</p>
-                        
-                        <div class="course-meta">
-                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
-                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
-                        </div>
-                        
-                        <div class="course-price">
-                            মূল্য : 2000৳
-                        </div>
                         
                         <div class="d-grid gap-2 d-md-flex">
                             <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
@@ -214,148 +187,7 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Air Force Course -->
-            <div class="col-lg-4 col-md-6">
-                <div class="course-card">
-                    <div class="course-img-container">
-                        <img src="https://instantjob.sgp1.cdn.digitaloceanspaces.com/course_image/39ad3ca9deec4e719823e7101bfadd08-website(1).png" class="course-img" alt="Air Force Commissioned Officer Course">
-                        <span class="course-badge">Discount</span>
-                    </div>
-                    <div class="card-body">
-                        <span class="course-provider">Bangladesh Air Force</span>
-                        <h3 class="course-title">এয়ার ফোর্স কমিশন্ড অফিসার কোর্স</h3>
-                        <p class="course-desc">প্রতিবছর দেশের সেবায় কাজ করার জন্য বাংলাদেশ বিমানবাহিনী কমিশন্ড অফিসার পদে চাকরি করার স্বপ্ন দেখে অনেকেই...</p>
-                        
-                        <div class="course-meta">
-                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
-                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
-                        </div>
-                        
-                        <div class="course-price">
-                            মূল্য : 4000৳ <del>6000৳</del>
-                        </div>
-                        
-                        <div class="d-grid gap-2 d-md-flex">
-                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ISSB Course -->
-            <div class="col-lg-4 col-md-6">
-                <div class="course-card">
-                    <div class="course-img-container">
-                        <img src="https://instant-job.sgp1.cdn.digitaloceanspaces.com/course_image/153f421da724490da72ac5ccf8bfeaab-ISSB@4x-100(1)(1).jpg" class="course-img" alt="ISSB Course">
-                    </div>
-                    <div class="card-body">
-                        <span class="course-provider">Bangladesh Military</span>
-                        <h3 class="course-title">ISSB কোর্স</h3>
-                        <p class="course-desc">ISSB-এর বিগত অভিজ্ঞতা থেকে পর্যালোচনা করে দেখা যায়, ৪০-৬০ ভাগ শিক্ষার্থী স্ক্রিন আউট এর সম্মুখীন হয়...</p>
-                        
-                        <div class="course-meta">
-                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
-                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
-                        </div>
-                        
-                        <div class="course-price">
-                            মূল্য : 1500৳
-                        </div>
-                        
-                        <div class="d-grid gap-2 d-md-flex">
-                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Spoken English Course -->
-            <div class="col-lg-4 col-md-6">
-                <div class="course-card">
-                    <div class="course-img-container">
-                        <img src="https://instant-job.sgp1.cdn.digitaloceanspaces.com/course_image/6de72a867ac2478297e24a8e7a8db1d7-spokenenglish.png" class="course-img" alt="Spoken English Course">
-                        <span class="course-badge">New</span>
-                    </div>
-                    <div class="card-body">
-                        <span class="course-provider">Bangladesh Military</span>
-                        <h3 class="course-title">ইন্টারেক্টিভ স্পোকেন ইংলিশ কোর্স</h3>
-                        <p class="course-desc">সাবলীলভাবে ইংরেজিতে কথা বলতে পারা এই যুগে একটি গুরুত্বপূর্ণ দক্ষতা। সামরিক বাহিনীর প্রিলিমিনারি পরীক্ষা ও আইএসএসবির ক্ষেত্রেও ইংরেজি বলার দক্ষতা জরুরি...</p>
-                        
-                        <div class="course-meta">
-                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
-                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
-                        </div>
-                        
-                        <div class="course-price">
-                            মূল্য : 2000৳
-                        </div>
-                        
-                        <div class="d-grid gap-2 d-md-flex">
-                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Pre-ISSB Course -->
-            <div class="col-lg-4 col-md-6">
-                <div class="course-card">
-                    <div class="course-img-container">
-                        <img src="https://instant-job.sgp1.cdn.digitaloceanspaces.com/course_image/9c9b6dea9aa44b29ac0937024604524d-hfhg.jpg" class="course-img" alt="Pre-ISSB Course">
-                    </div>
-                    <div class="card-body">
-                        <span class="course-provider">Bangladesh Military</span>
-                        <h3 class="course-title">ISSB পূর্ব-প্রস্তুতি কোর্স</h3>
-                        <p class="course-desc">বাংলাদেশের বিশাল সংখ্যক পরীক্ষার্থীর স্বপ্ন থাকে সামরিক অফিসার হওয়া। কিন্তু সামরিক বাহিনীতে চান্স পাওয়া সহজ নয়...</p>
-                        
-                        <div class="course-meta">
-                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
-                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
-                        </div>
-                        
-                        <div class="course-price">
-                            মূল্য : 2000৳
-                        </div>
-                        
-                        <div class="d-grid gap-2 d-md-flex">
-                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Soldier Course -->
-            <div class="col-lg-4 col-md-6">
-                <div class="course-card">
-                    <div class="course-img-container">
-                        <img src="https://instant-job.sgp1.cdn.digitaloceanspaces.com/course_image/38c666a416cb41fba78078e103826723-Army@4x-100(1).jpg" class="course-img" alt="Bangladesh Army Soldier Course">
-                    </div>
-                    <div class="card-body">
-                        <span class="course-provider">Bangladesh Army</span>
-                        <h3 class="course-title">বাংলাদেশ সেনাবাহিনী সৈনিক কোর্স</h3>
-                        <p class="course-desc">প্রতিবছর বাংলাদেশের হাজার হাজার পরীক্ষার্থী সৈনিক পদে চাকরির জন্য আবেদন করে। সফলতা পায় খুব কম। কারণ সঠিক দিকনির্দেশনা ও প্রস্তুতির অভাব...</p>
-                        
-                        <div class="course-meta">
-                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
-                            <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span>
-                        </div>
-                        
-                        <div class="course-price">
-                            মূল্য : 2000৳
-                        </div>
-                        
-                        <div class="d-grid gap-2 d-md-flex">
-                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
         <!-- ================================================== -->
     </div>
