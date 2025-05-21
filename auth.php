@@ -1,3 +1,4 @@
+<?php require 'include/auth_ck.php';?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <title>auth | Abdur Rahman</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -129,18 +131,6 @@
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
         }
-        /* 
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .remember-me input {
-            width: 1rem;
-            height: 1rem;
-            accent-color: var(--primary);
-        } */
 
         .forgot-password a {
             color: var(--primary);
@@ -222,6 +212,32 @@
     </style>
 </head>
 <body>
+    <?php
+        if(isset($_REQUEST['error'])){
+            $error = $_REQUEST['error'];
+            echo "
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '$error'
+                    });
+            </script>
+            ";
+        }
+        if(isset($_REQUEST['success'])){
+            $success = $_REQUEST['success'];
+            echo "
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'WOW...',
+                    text: '$success'
+                    });
+            </script>
+            ";
+        }
+    ?>
     <div class="login-card">
         <div class="card-header">
             <?php
@@ -236,12 +252,14 @@
         </div>
         
         <div class="card-body">
-            <form action="login.php" method="GET">
-                <?php
-                    if (isset($_GET['signup'])) {
-                        echo '<input type="hidden" name="signup" value="1">';
-                    }
-                ?>
+            <form action="auth.php" method="POST">
+                <?php if (isset($_GET['signup'])) { ?>
+                    <div class="form-group">
+                        <input type="hidden" name="signup" value="1">
+                        <label for="name">সম্পূর্ণ নাম</label>
+                        <input type="text" name="name" id="name" placeholder="নাম প্রবেশ করান" required>
+                    </div>
+                <?php } ?>
                 <div class="form-group">
                     <label for="number">মোবাইল নাম্বার 
                         <?php
@@ -343,37 +361,37 @@
                     <div class="checkbox-group">
                         <div class="col-6">
                             <label class="checkbox-option">
-                                <input type="checkbox" name="wish" value="Army">
+                                <input type="checkbox" name="wish[]" value="Army">
                                 <span class="checkmark"></span> বাংলাদেশ সেনাবাহিনী
                             </label>
                             <label class="checkbox-option">
-                                <input type="checkbox" name="wish" value="Air">
+                                <input type="checkbox" name="wish[]" value="Air">
                                 <span class="checkmark"></span> বাংলাদেশ বিমানবাহিনী
                             </label>
                             <label class="checkbox-option">
-                                <input type="checkbox" name="wish" value="Navy">
+                                <input type="checkbox" name="wish[]" value="Navy">
                                 <span class="checkmark"></span> বাংলাদেশ নৌবাহিনী
                             </label>
                             <label class="checkbox-option">
-                                <input type="checkbox" name="wish" value="BGB">
+                                <input type="checkbox" name="wish[]" value="BGB">
                                 <span class="checkmark"></span> বাংলাদেশ বর্ডারগার্ড
                             </label>
                         </div>
                         <div class="col-6">
                             <label class="checkbox-option">
-                                <input type="checkbox" name="wish" value="Police">
+                                <input type="checkbox" name="wish[]" value="Police">
                                 <span class="checkmark"></span> বাংলাদেশ পুলিশ
                             </label>
                             <label class="checkbox-option">
-                                <input type="checkbox" name="wish" value="Ansar">
+                                <input type="checkbox" name="wish[]" value="Ansar">
                                 <span class="checkmark"></span> বাংলাদেশ আনসার
                             </label>
                             <label class="checkbox-option">
-                                <input type="checkbox" name="wish" value="Fire">
+                                <input type="checkbox" name="wish[]" value="Fire">
                                 <span class="checkmark"></span> বাংলাদেশ ফায়ার সার্ভিস
                             </label>
                             <label class="checkbox-option">
-                                <input type="checkbox" name="wish" value="Others">
+                                <input type="checkbox" name="wish[]" value="Others">
                                 <span class="checkmark"></span> অন্যান্য
                             </label>
                         </div>
@@ -403,9 +421,9 @@
                 <div class="signup-link">
                     <?php
                         if (isset($_GET['signup'])) {
-                            echo 'আগে থেকেই আছে ? <a href="login.php">লগইন করুন</a>';
+                            echo 'আগে থেকেই আছে ? <a href="auth.php">লগইন করুন</a>';
                         } else {
-                            echo 'কোন আকাউন্ট নেই ? <a href="login.php?signup">রেজিস্টার করুন</a>';
+                            echo 'কোন আকাউন্ট নেই ? <a href="auth.php?signup">রেজিস্টার করুন</a>';
                         }
                     ?>
                 </div>

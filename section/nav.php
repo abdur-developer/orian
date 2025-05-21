@@ -309,7 +309,7 @@
                 
                 <!-- Fixed Login Button -->
                 <div class="d-flex ms-lg-3 mt-3 mt-lg-0">
-                    <a href="login.php" class="btn login-btn px-4 py-2">
+                    <a href="auth.php" class="btn login-btn px-4 py-2">
                         <i class="fas fa-sign-in-alt me-2"></i> লগইন
                     </a>
                 </div>

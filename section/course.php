@@ -158,30 +158,32 @@
         <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">সেরা প্রশিক্ষকদের সাথে প্রস্তুতি নিন আপনার পছন্দের চাকরির জন্য</p>
         <!-- ================================================== -->      
         <div class="row g-4">
-            <?php for($i = 0; $i < 4; $i++){ ?>
-            <!-- course <?=$i + 1?> -->
+            <?php 
+                $sql ="SELECT id, price, users, title, description, badge, provider FROM course";
+                $result = mysqli_query($conn, $sql);
+                while($row = mysqli_fetch_assoc($result)){ ?>
             <div class="col-lg-4 col-md-6">
                 <div class="course-card">
                     <div class="course-img-container">
                         <img src="https://instantjob.sgp1.cdn.digitaloceanspaces.com/course_image/eb330f06312b4065a7780b7dffecd3e2-website(2).png" class="course-img" alt="Army Commissioned Officer Course">
-                        <span class="course-badge">Popular</span>
+                        <?php if($row['badge'] != null) echo "<span class='course-badge'>{$row['badge']}</span>"; ?>
                     </div>
                     <div class="card-body">
-                        <span class="course-provider">Bangladesh Army</span>
-                        <h3 class="course-title">আর্মি কমিশন্ড অফিসার কোর্স</h3>
-                        <p class="course-desc">বাংলাদেশের হাজারো তরুণ-তরুণীদের স্বপ্ন থাকে সেনাবাহিনীর কমিশন্ড অফিসার হওয়ার। মুলত এইচ এস সি পাশের পর সেনা কর্মকর্তা হবার জন্য নির্দিষ্ট যোগ্যতা থাকা সাপেক্ষে যে কেউ এই পদে আবেদন করতে পারে...</p>
+                        <span class="course-provider"><?=$row['provider']?></span>
+                        <h3 class="course-title"><?=$row['title']?></h3>
+                        <p class="course-desc"><?=$row['description']?></p>
                         
                         <div class="course-meta">
-                            <span class="course-meta-item"><i class="fas fa-users"></i> 220 Students</span>
+                            <span class="course-meta-item"><i class="fas fa-users"></i> <?=$row['users']?> Students</span>
                             <!-- <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span> -->
                             <div class="course-price">
-                                মূল্য : 2000৳
+                                মূল্য : <?=$row['price']?>৳
                             </div>
                         </div>
                         
                         
                         <div class="d-grid gap-2 d-md-flex">
-                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                            <button onclick="detailsCourse('<?=encryptSt($row['id'])?>')" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
                             <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
                         </div>
                     </div>
@@ -189,6 +191,11 @@
             </div>
             <?php } ?>
         </div>
+        <script>
+            function detailsCourse(id) {
+                window.location.href = "course-details.php?course=" + id;
+            }
+        </script>
         <!-- ================================================== -->
     </div>
 </section>

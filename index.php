@@ -1,4 +1,7 @@
-<?php include("section/header.php"); ?>
+<?php
+require "include/dbcon.php";
+include("section/header.php");
+?>
 <body>
     <?php
         include("section/nav.php");

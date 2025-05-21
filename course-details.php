@@ -1,3 +1,40 @@
+<?php
+require 'include/dbcon.php';
+$course_id = decryptSt($_GET['course']);
+$sql = "SELECT * FROM course WHERE id = '$course_id'";
+$result = mysqli_query($conn, $sql);
+if (mysqli_num_rows($result) == 0) {
+    echo "Course not found.";
+    exit;
+}
+function getTotalModule() {
+    global $conn, $course_id;
+    $sql = "SELECT COUNT(*) as module_count FROM course_module WHERE course_id = '$course_id'";
+    $row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+    return $row['module_count'];
+}
+function getTotalDetails() {
+    global $conn, $course_id;
+    $sql = "SELECT COUNT(md.id) AS details_count FROM course c
+        JOIN course_module cm ON c.id = cm.course_id
+        JOIN module_details md ON cm.id = md.module_id WHERE c.id = '$course_id'";
+    $row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+    return $row['details_count'];
+}
+function getDetails($module_id) {
+    global $conn;
+    $sql = "SELECT COUNT(*) as details_count FROM module_details WHERE module_id = '$module_id'";
+    $row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+    return $row['details_count'];
+}
+function getTotalTime($module_id) {
+    global $conn;
+    $sql = "SELECT SUM(time_minutes) as details_time FROM module_details WHERE module_id = '$module_id'";
+    $row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+    return $row['details_time'];
+}
+$course = mysqli_fetch_assoc($result);
+?>
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -430,12 +467,10 @@
         <div class="container">
             <div class="enrolled-count">
                 <i class="fas fa-users"></i>
-                <span>475 Students Enrolled</span>
+                <span><?=$course['users']?> Students Enrolled</span>
             </div>
-            <h1 class="course-title">এয়ার ফোর্স কমিশন্ড অফিসার কোর্স</h1>
-            <p class="course-description">
-                প্রতিবছর দেশের সেবায় কাজ করার জন্য বাংলাদেশ বিমানবাহিনী কমিশন্ড অফিসার পদে চাকরি করার স্বপ্ন দেখে অনেকেই। মূলত বিজ্ঞান বিভাগ থেকে যে কেউ এইচএসসি পাসের পর বিমানবাহিনী কমিশন্ড অফিসার পদে আবেদন করতে পারে। কিন্তু বিগত অভিজ্ঞতা থেকে দেখা যায়, সঠিক দিকনির্দেশনা ও প্রস্তুতির অভাবে অনেকই তাদের কাঙ্খিত  ফলাফল অর্জন করতে ব্যর্থ হয়। এই সকল সমস্যার সমাধানের জন্য আমরা নিয়ে এসেছি বিমানবাহিনী কমিশন্ড অফিসার কোর্স, যেখানে শিক্ষার্থীরা পাবেন লিখিত, মৌখিক ও প্রিলিমিনারি পরীক্ষায় সঠিকভাবে প্রস্তুতির জন্য প্রয়োজনীয় সকল ধরনের তথ্য ও দিকনির্দেশনা। আমাদের কোর্সের সকল প্রশিক্ষকই অবসরপ্রাপ্ত সামরিক কর্মকর্তাবৃন্দ।
-            </p>
+            <h1 class="course-title"><?=$course['title']?></h1>
+            <p class="course-description"><?=$course['description']?></p>
         </div>
     </section>
 
@@ -447,8 +482,8 @@
                 <div class="tab-container">
                     <div class="tab active" data-tab="curriculum">কোর্স পাঠ্যক্রম</div>
                     <div class="tab" data-tab="overview">কোর্স ওভারভিউ</div>
-                    <div class="tab" data-tab="instructor">প্রশিক্ষক</div>
-                    <div class="tab" data-tab="reviews">কোর্স রিভিউ</div>
+                    <!-- <div class="tab" data-tab="instructor">প্রশিক্ষক</div>
+                    <div class="tab" data-tab="reviews">কোর্স রিভিউ</div> -->
                 </div>
                 
                 <!-- Tab Contents -->
@@ -461,205 +496,70 @@
                     <div class="course-stats">
                         <div class="course-stat">
                             <i class="fas fa-list-ul"></i>
-                            <span>13 সেকশন</span>
+                            <span><?= getTotalModule() ?> সেকশন</span>
                         </div>
                         <div class="course-stat">
                             <i class="fas fa-play-circle"></i>
-                            <span>30 লেকচার</span>
+                            <span><?= getTotalDetails() ?> লেকচার</span>
                         </div>
                     </div>
-                    
                     <div class="accordion" id="courseAccordion">
-                        <!-- Section 1 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#section1">
-                                    <div class="section-header-inner">
-                                        <h3 class="section-title-text">ফ্রী ক্লাস দেখে যাচাই করুন</h3>
-                                        <div class="section-meta">
-                                            <span>3 লেকচার</span>
-                                            <span>•</span>
-                                            <span>35 মিনিট</span>
+                        <?php
+                            $sql = "SELECT * FROM course_module WHERE course_id = '$course_id'";
+                            $result_module = mysqli_query($conn, $sql);
+                            while ($course_module = mysqli_fetch_assoc($result_module)) { ?>
+                                <!-- ================================================== -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#section1">
+                                            <div class="section-header-inner">
+                                                <h3 class="section-title-text"><?=$course_module['title']?></h3>
+                                                <div class="section-meta">
+                                                    <span><?=getDetails($course_module['id'])?> লেকচার</span>
+                                                    <span>•</span>
+                                                    <span><?=getTotalTime($course_module['id'])?> মিনিট</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="section1" class="accordion-collapse collapse" data-bs-parent="#courseAccordion">
+                                        <div class="accordion-body p-0">
+                                            <ul class="lecture-list">
+                                                <!-- ////////////////////////////////////////////////////////// -->
+                                                <?php
+                                                    $sql = "SELECT * FROM `module_details` WHERE module_id = '{$course_module['id']}'";
+                                                    $result = mysqli_query($conn, $sql);
+                                                    while ($module_details = mysqli_fetch_assoc($result)) {
+                                                ?>
+                                                <li class="lecture-item">
+                                                    <div class="lecture-icon">
+                                                        <i class="fas fa-play-circle"></i>
+                                                    </div>
+                                                    <div class="lecture-content">
+                                                        <div class="lecture-title"><?=$module_details['title']?></div>
+                                                        <div class="lecture-meta">
+                                                            <?php if($module_details['is_free'] != '0') echo "<span class='tag free'>ফ্রি প্রিভিউ</span>"; ?>
+                                                            <span class="lecture-duration"><?=$module_details['time_minutes']?> মিনিট</span>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                        // echo "<i class='fas fa-check-circle lecture-status'></i>"; // completed
+                                                        if($module_details['is_free'] != '0') {
+                                                            echo "<i class='fas fa-eye lecture-status'></i>";
+                                                        } else {
+                                                            echo "<i class='fas fa-lock lecture-status'></i>";
+                                                        }
+                                                    ?>                                          
+                                                </li>
+                                                <?php } ?>
+                                                <!-- ////////////////////////////////////////////////////////// -->
+                                            </ul>
                                         </div>
                                     </div>
-                                </button>
-                            </h2>
-                            <div id="section1" class="accordion-collapse collapse" data-bs-parent="#courseAccordion">
-                                <div class="accordion-body p-0">
-                                    <ul class="lecture-list">
-                                        <li class="lecture-item">
-                                            <div class="lecture-icon">
-                                                <i class="fas fa-play-circle"></i>
-                                            </div>
-                                            <div class="lecture-content">
-                                                <div class="lecture-title">preliminary Viva</div>
-                                                <div class="lecture-meta">
-                                                    <span class="tag free">ফ্রি প্রিভিউ</span>
-                                                    <span class="lecture-duration">15 মিনিট</span>
-                                                </div>
-                                            </div>
-                                            <i class="fas fa-eye lecture-status"></i>
-                                        </li>
-                                        <li class="lecture-item">
-                                            <div class="lecture-icon">
-                                                <i class="fas fa-play-circle"></i>
-                                            </div>
-                                            <div class="lecture-content">
-                                                <div class="lecture-title">পদার্থবিজ্ঞান(মহাকর্ষ এবং অভিকর্ষ)</div>
-                                                <div class="lecture-meta">
-                                                    <span class="tag free">ফ্রি প্রিভিউ</span>
-                                                    <span class="lecture-duration">10 মিনিট</span>
-                                                </div>
-                                            </div>
-                                            <i class="fas fa-eye lecture-status"></i>
-                                        </li>
-                                        <li class="lecture-item">
-                                            <div class="lecture-icon">
-                                                <i class="fas fa-play-circle"></i>
-                                            </div>
-                                            <div class="lecture-content">
-                                                <div class="lecture-title">IQ(Math)</div>
-                                                <div class="lecture-meta">
-                                                    <span class="tag free">ফ্রি প্রিভিউ</span>
-                                                    <span class="lecture-duration">10 মিনিট</span>
-                                                </div>
-                                            </div>
-                                            <i class="fas fa-eye lecture-status"></i>
-                                        </li>
-                                    </ul>
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Section 2 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#section2">
-                                    <div class="section-header-inner">
-                                        <h3 class="section-title-text">কোর্সটি কিভাবে করলে ভালো করবেন!</h3>
-                                        <div class="section-meta">
-                                            <span>1 লেকচার</span>
-                                            <span>•</span>
-                                            <span>5 মিনিট</span>
-                                        </div>
-                                    </div>
-                                </button>
-                            </h2>
-                            <div id="section2" class="accordion-collapse collapse" data-bs-parent="#courseAccordion">
-                                <div class="accordion-body p-0">
-                                    <ul class="lecture-list">
-                                        <li class="lecture-item">
-                                            <div class="lecture-icon">
-                                                <i class="fas fa-play-circle"></i>
-                                            </div>
-                                            <div class="lecture-content">
-                                                <div class="lecture-title">কোর্সটি কিভাবে করলে ভালো করবেন</div>
-                                                <div class="lecture-meta">
-                                                    <span class="tag free">ফ্রি প্রিভিউ</span>
-                                                    <span class="lecture-duration">5 মিনিট</span>
-                                                </div>
-                                            </div>
-                                            <i class="fas fa-lock lecture-status"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Section 3 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#section3">
-                                    <div class="section-header-inner">
-                                        <h3 class="section-title-text">বিমানবাহিনী কমিশন্ড অফিসার পরীক্ষার পদ্ধতি</h3>
-                                        <div class="section-meta">
-                                            <span>2 লেকচার</span>
-                                            <span>•</span>
-                                            <span>20 মিনিট</span>
-                                        </div>
-                                    </div>
-                                </button>
-                            </h2>
-                            <div id="section3" class="accordion-collapse collapse" data-bs-parent="#courseAccordion">
-                                <div class="accordion-body p-0">
-                                    <ul class="lecture-list">
-                                        <li class="lecture-item">
-                                            <div class="lecture-icon">
-                                                <i class="fas fa-play-circle"></i>
-                                            </div>
-                                            <div class="lecture-content">
-                                                <div class="lecture-title">কমিশন্ড অফিসার পরীক্ষার পদ্ধতি</div>
-                                                <div class="lecture-meta">
-                                                    <span class="tag free">ফ্রি প্রিভিউ</span>
-                                                    <span class="lecture-duration">10 মিনিট</span>
-                                                </div>
-                                            </div>
-                                            <i class="fas fa-lock lecture-status"></i>
-                                        </li>
-                                        <li class="lecture-item">
-                                            <div class="lecture-icon">
-                                                <i class="fas fa-play-circle"></i>
-                                            </div>
-                                            <div class="lecture-content">
-                                                <div class="lecture-title">কি কি কাগজ পত্র নিতে হবে</div>
-                                                <div class="lecture-meta">
-                                                    <span class="tag free">ফ্রি প্রিভিউ</span>
-                                                    <span class="lecture-duration">10 মিনিট</span>
-                                                </div>
-                                            </div>
-                                            <i class="fas fa-lock lecture-status"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Section 4 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#section4">
-                                    <div class="section-header-inner">
-                                        <h3 class="section-title-text">স্বাস্থ্য পরীক্ষা</h3>
-                                        <div class="section-meta">
-                                            <span>5 লেকচার</span>
-                                            <span>•</span>
-                                            <span>1h 0m</span>
-                                        </div>
-                                    </div>
-                                </button>
-                            </h2>
-                            <div id="section4" class="accordion-collapse collapse" data-bs-parent="#courseAccordion">
-                                <div class="accordion-body p-0">
-                                    <ul class="lecture-list">
-                                        <li class="lecture-item">
-                                            <div class="lecture-icon">
-                                                <i class="fas fa-play-circle"></i>
-                                            </div>
-                                            <div class="lecture-content">
-                                                <div class="lecture-title">স্বাস্থ্য পরীক্ষার প্রস্তুতি</div>
-                                                <div class="lecture-meta">
-                                                    <span class="lecture-duration">15 মিনিট</span>
-                                                </div>
-                                            </div>
-                                            <i class="fas fa-lock lecture-status"></i>
-                                        </li>
-                                        <li class="lecture-item">
-                                            <div class="lecture-icon">
-                                                <i class="fas fa-play-circle"></i>
-                                            </div>
-                                            <div class="lecture-content">
-                                                <div class="lecture-title">চোখের পরীক্ষা</div>
-                                                <div class="lecture-meta">
-                                                    <span class="lecture-duration">10 মিনিট</span>
-                                                </div>
-                                            </div>
-                                            <i class="fas fa-lock lecture-status"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                <!-- ================================================== -->
+                        <?php } ?>
+                    </div>                    
                 </div>
                 
                 <!-- Overview Tab Content (hidden by default) -->
@@ -667,21 +567,11 @@
                     <div class="section-header">
                         <h2 class="section-title">কোর্স ওভারভিউ</h2>
                     </div>
-                    <div class="course-overview">
-                        <p>এই কোর্সটি বাংলাদেশ বিমানবাহিনীতে কমিশন্ড অফিসার হিসেবে যোগদানের জন্য প্রস্তুতিমূলক একটি সম্পূর্ণ গাইড। কোর্সটি নিম্নলিখিত বিষয়গুলো কভার করে:</p>
-                        <ul>
-                            <li>প্রিলিমিনারি ভাইভা প্রস্তুতি</li>
-                            <li>লিখিত পরীক্ষার প্রস্তুতি</li>
-                            <li>স্বাস্থ্য পরীক্ষার প্রস্তুতি</li>
-                            <li>ফাইনাল ভাইভা প্রস্তুতি</li>
-                            <li>সাধারণ জ্ঞান ও সামরিক বিষয়াবলী</li>
-                        </ul>
-                        <p>কোর্সটি সম্পন্ন করার পর আপনি বিমানবাহিনী কমিশন্ড অফিসার পদে আবেদনের সম্পূর্ণ প্রক্রিয়া সম্পর্কে স্পষ্ট ধারণা পাবেন এবং প্রতিটি ধাপে সফলভাবে উত্তীর্ণ হওয়ার জন্য প্রয়োজনীয় দক্ষতা অর্জন করতে সক্ষম হবেন।</p>
-                    </div>
+                    <div class="course-overview"><?=$course['overview']?></div>
                 </div>
                 
                 <!-- Instructor Tab Content (hidden by default) -->
-                <div class="tab-content" id="instructor" style="display: none;">
+                <!-- <div class="tab-content" id="instructor" style="display: none;">
                     <div class="section-header">
                         <h2 class="section-title">প্রশিক্ষক</h2>
                     </div>
@@ -703,10 +593,10 @@
                             <p>কর্নেল (অব.) মোঃ রফিকুল ইসলাম বাংলাদেশ বিমানবাহিনীতে ২৫ বছর সক্রিয় দায়িত্ব পালন করেছেন। তিনি বিমানবাহিনী সিলেকশন বোর্ডের সদস্য হিসেবে দায়িত্ব পালন করেছেন এবং শতাধিক ক্যান্ডিডেটের ইন্টারভিউ নিয়েছেন। তাঁর অভিজ্ঞতা ও জ্ঞান এই কোর্সের মাধ্যমে শিক্ষার্থীদের সাথে শেয়ার করা হবে।</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 
                 <!-- Reviews Tab Content (hidden by default) -->
-                <div class="tab-content" id="reviews" style="display: none;">
+                <!-- <div class="tab-content" id="reviews" style="display: none;">
                     <div class="section-header">
                         <h2 class="section-title">কোর্স রিভিউ</h2>
                     </div>
@@ -763,43 +653,32 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             
             <!-- Sidebar -->
             <div class="col-lg-4">
                 <div class="course-sidebar">
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/accom0MghUo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/<?=$course['feature_video_id']?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     
                     <h3 class="includes-title">এই কোর্সে যা পাচ্ছেন :</h3>
                     <ul class="includes-list">
+                        <?php 
+                            $decoded = json_decode($course['ki_thakbe'], true);
+                            foreach ($decoded as $item) {
+                        ?>
                         <li class="includes-item">
                             <i class="fas fa-check-circle text-success me-2"></i>
-                            <span>প্রাথমিক স্বাস্থ্য পরীক্ষা সম্পর্কিত তথ্য</span>
+                            <span><?=$item?></span>
                         </li>
-                        <li class="includes-item">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <span>লিখিত ও মৌখিক পরীক্ষার প্রস্তুতি</span>
-                        </li>
-                        <li class="includes-item">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <span>ভিডিও এবং লাইভ ক্লাস</span>
-                        </li>
-                        <li class="includes-item">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <span>নোটস</span>
-                        </li>
-                        <li class="includes-item">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <span>কমিশন্ড অফিসার সম্পর্কিত সকল ধরনের সাপোর্ট</span>
-                        </li>
+                        <?php } ?>
                     </ul>
                     
                     <div class="price-container">
-                        <span class="current-price">4000৳</span>
-                        <span class="original-price">6000৳</span>
+                        <span class="current-price"><?=$course['price']?>৳</span>
+                        <span class="original-price"><?=$course['old_price']?>৳</span>
                     </div>
                     
                     <button class="btn-enroll">

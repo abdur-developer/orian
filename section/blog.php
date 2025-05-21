@@ -147,17 +147,19 @@
         </div>
         
         <div class="blog-grid">
-            <?php for ($i = 0; $i < 3; $i++) { ?>
-            <!-- Blog Card <?= $i + 1?> -->
+            <?php 
+            $sql = "SELECT id, img, title, text, date FROM post";
+            $result = mysqli_query($conn, $sql);
+            while($row = mysqli_fetch_assoc($result)){ ?>
             <div class="blog-card">
                 <div class="blog-image">
-                    <img src="img/course.jpg" alt="ডিফেন্স প্রস্তুতি গাইড">
+                    <img src="<?=$row['img']?>" >
                 </div>
                 <div class="blog-content">
-                    <span class="blog-date">১৫ জুন, ২০২৩</span>
-                    <h3 class="blog-title">বিসিএস ও অন্যান্য ডিফেন্স পরীক্ষার প্রস্তুতি কীভাবে নেবেন</h3>
-                    <p class="blog-excerpt">ডিফেন্স পরীক্ষার প্রস্তুতির জন্য সম্পূর্ণ গাইডলাইন। জানুন কিভাবে সময় ব্যবস্থাপনা করবেন, কোন বই পড়বেন এবং মডেল টেস্ট দেবেন।</p>
-                    <a href="?view" class="read-more">
+                    <span class="blog-date"><?=$row['date']?></span>
+                    <h3 class="blog-title"><?=$row['title']?></h3>
+                    <p class="blog-excerpt"><?=$row['text']?>।</p>
+                    <a href="?view-blog=<?=$row['id']?>" class="read-more">
                         আরও পড়ুন <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
