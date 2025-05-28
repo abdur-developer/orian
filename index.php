@@ -5,7 +5,7 @@ include("section/header.php");
 <body>
     <?php
         include("section/nav.php");
-        if(isset($_GET['view'])){
+        if(isset($_GET['view-blog'])){
             include("section/view-blog.php");
         }else{
             include("section/hero.php");

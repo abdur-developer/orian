@@ -151,7 +151,7 @@
     }
 </style>
 <!-- Courses Section -->
-<section class="section bg-light">
+<section class="section bg-light" id="courses">
     <!-- Main Content -->
     <div class="container">
         <h2 class="section-title" data-aos="fade-up">আমাদের জনপ্রিয় কোর্সসমূহ</h2>

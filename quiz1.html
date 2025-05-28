@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>লিডারবোর্ড</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0066ff;
+      --secondary: #e6f0ff;
+      --text-dark: #1f1f1f;
+      --text-light: #666;
+      --gold: #ffd700;
+      --silver: #c0c0c0;
+      --bronze: #cd7f32;
+      --bg: #f9fbff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans Bengali', sans-serif;
+      background: var(--bg);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .leaderboard {
+      background: #fff;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary), #004ec2);
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .top3 {
+      display: flex;
+      justify-content: space-around;
+      padding: 30px 20px 10px;
+      background: var(--secondary);
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .top-player {
+      text-align: center;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .top-player img {
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border: 4px solid white;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .top-player h3 {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: var(--text-dark);
+    }
+
+    .top-player p {
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .rank-badge {
+      margin-top: 8px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .gold { color: var(--gold); }
+    .silver { color: var(--silver); }
+    .bronze { color: var(--bronze); }
+
+    ul.rankings {
+      list-style: none;
+      padding: 20px;
+    }
+
+    li.player {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    li.player:hover {
+      transform: scale(1.02);
+    }
+
+    .player-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .player img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+
+    .player .name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .player .title {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .player .score {
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .highlight {
+      background: #eaf0ff;
+      border-left: 5px solid var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="leaderboard">
+    <div class="header">
+      <h1>শীর্ষ খেলোয়াড়</h1>
+      <p>সাপ্তাহিক লিডারবোর্ড</p>
+    </div>
+    <div class="top3">
+      <div class="top-player">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="সীমা আক্তার" />
+        <h3>সীমা আক্তার</h3>
+        <p>৪৮০ পয়েন্ট</p>
+        <div class="rank-badge silver">🥈 ২</div>
+      </div>
+      <div class="top-player">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="রাহুল ইসলাম" />
+        <h3>রাহুল ইসলাম</h3>
+        <p>৫২০ পয়েন্ট</p>
+        <div class="rank-badge gold">🥇 ১</div>
+      </div>
+      <div class="top-player">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="তানিয়া আহমেদ" />
+        <h3>তানিয়া আহমেদ</h3>
+        <p>৪৫০ পয়েন্ট</p>
+        <div class="rank-badge bronze">🥉 ৩</div>
+      </div>
+    </div>
+    <ul class="rankings">
+      <li class="player highlight">
+        <div class="player-info">
+          <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="আপনি" />
+          <div>
+            <div class="name">আপনি</div>
+            <div class="title">নতুন খেলোয়াড়</div>
+          </div>
+        </div>
+        <div class="score">৪২০</div>
+      </li>
+      <li class="player">
+        <div class="player-info">
+          <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="আরাফাত খান" />
+          <div>
+            <div class="name">আরাফাত খান</div>
+            <div class="title">প্রাক্তন চ্যাম্পিয়ন</div>
+          </div>
+        </div>
+        <div class="score">৪০০</div>
+      </li>
+      <li class="player">
+        <div class="player-info">
+          <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="নুসরাত জাহান" />
+          <div>
+            <div class="name">নুসরাত জাহান</div>
+            <div class="title">দক্ষ খেলোয়াড়</div>
+          </div>
+        </div>
+        <div class="score">৩৮০</div>
+      </li>
+      <li class="player">
+        <div class="player-info">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="ইমরান হোসেন" />
+          <div>
+            <div class="name">ইমরান হোসেন</div>
+            <div class="title">নিয়মিত খেলোয়াড়</div>
+          </div>
+        </div>
+        <div class="score">৩৫০</div>
+      </li>
+      <li class="player">
+        <div class="player-info">
+          <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="ফারহানা আক্তার" />
+          <div>
+            <div class="name">ফারহানা আক্তার</div>
+            <div class="title">নতুন তারকা</div>
+          </div>
+        </div>
+        <div class="score">৩২০</div>
+      </li>
+      <li class="player">
+        <div class="player-info">
+          <img src="https://randomuser.me/api/portraits/men/60.jpg" alt="সজীব আহমেদ" />
+          <div>
+            <div class="name">সজীব আহমেদ</div>
+            <div class="title">উদীয়মান খেলোয়াড়</div>
+          </div>
+        </div>
+        <div class="score">৩০০</div>
+      </li>
+      <li class="player">
+        <div class="player-info">
+          <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="জেরিন তাসনিম" />
+          <div>
+            <div class="name">জেরিন তাসনিম</div>
+            <div class="title">নতুন যোগদান</div>
+          </div>
+        </div>
+        <div class="score">২৮০</div>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

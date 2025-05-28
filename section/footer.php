@@ -92,7 +92,7 @@
         <div class="row">
             <div class="col-lg-4 mb-5 mb-lg-0" data-aos="fade-up">
                 <div class="footer-logo">
-                    <img src="/images/Logo-Final.png" alt="Abdur" width="150">
+                    <img src="img/logo.jpg" alt="Abdur" width="50" style="border-radius: 50%;">
                 </div>
                 <p class="footer-about">
                     সকল চাকরির প্রস্তুতি নিন ঘরে বসে। আমাদের প্ল্যাটফর্মে আপনি পাবেন সামরিক ও বেসামরিক চাকরির সম্পূর্ণ প্রস্তুতি।

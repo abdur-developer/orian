@@ -67,8 +67,10 @@
         <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">আমাদের সফল শিক্ষার্থীদের অভিজ্ঞতা</p>
         
         <div class="row mt-5">
-            <?php for ($i = 0; $i < 3; $i++) { ?>
-            <!-- Review <?=$i + 1?> -->
+            <?php
+            $sql = "SELECT * FROM testimonials ORDER BY id DESC LIMIT 3";
+            $result = mysqli_query($conn, $sql);
+            while($row = mysqli_fetch_assoc($result)){ ?>
             <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="testimonial-card">
                     <div class="testimonial-rating">
@@ -78,15 +80,12 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="testimonial-text">
-                        "Abdur Ltd এর কোর্সের মাধ্যমে আমি বাংলাদেশ সেনাবাহিনীতে সৈনিক পদে চাকরি পেয়েছি। 
-                        তাদের স্টাডি ম্যাটেরিয়াল এবং মডেল টেস্ট আমার প্রস্তুতিতে অনেক সাহায্য করেছে।"
-                    </p>
+                    <p class="testimonial-text"><?=$row['message']?></p>
                     <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student">
+                        <img src="<?=$row['img']?>" alt="Student">
                         <div class="author-info">
-                            <h5>মোহাম্মদ রাকিব</h5>
-                            <p>বাংলাদেশ সেনাবাহিনী</p>
+                            <h5><?=$row['name']?></h5>
+                            <p><?=$row['sector']?></p>
                         </div>
                     </div>
                 </div>

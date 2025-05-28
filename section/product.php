@@ -202,7 +202,7 @@
     }
 </style>
 
-<section>
+<section id="product-section" class="section product-section">
     <div class="container">
         <h2 class="section-title">Our Products</h2>
         

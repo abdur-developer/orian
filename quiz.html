@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ইন্টারেক্টিভ কুইজ প্ল্যাটফর্ম</title>
+  <style>
+    :root {
+      --primary-color: #4a6bff;
+      --secondary-color: #f8f9fa;
+      --accent-color: #ff6b6b;
+      --text-color: #333;
+      --light-text: #6c757d;
+      --correct-color: #28a745;
+      --wrong-color: #dc3545;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7ff;
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }    
+    .quiz-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background-color: #e9ecef;
+      border-radius: 4px;
+      margin-bottom: 25px;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      border-radius: 4px;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+    
+    .timer-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .timer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 50px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    
+    .timer i {
+      margin-right: 8px;
+    }
+    
+    .question {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+    
+    .options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    
+    .option {
+      padding: 15px 20px;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1.1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .option:hover {
+      background-color: #f8f9fa;
+      border-color: var(--primary-color);
+    }
+    
+    .option.selected {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .option.correct {
+      background-color: var(--correct-color);
+      color: white;
+      border-color: var(--correct-color);
+    }
+    
+    .option.wrong {
+      background-color: var(--wrong-color);
+      color: white;
+      border-color: var(--wrong-color);
+    }
+    
+    .option.disabled {
+      pointer-events: none;
+    }
+    
+    .submit-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: block;
+      margin: 0 auto;
+      font-weight: 600;
+    }
+    
+    .submit-btn:hover {
+      background-color: #3a5bef;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(74, 107, 255, 0.3);
+    }
+    
+    .submit-btn:disabled {
+      background-color: #e9ecef;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .result-container {
+      text-align: center;
+      display: none;
+    }
+    
+    .result-title {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+    
+    .score {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .score span {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    .feedback {
+      margin-bottom: 30px;
+    }
+    
+    .feedback p {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    
+    .leaderboard {
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #eef2ff, #d9e4ff);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      display: none;
+    }
+
+    .leaderboard h3 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .leaderboard-table th, .leaderboard-table td {
+      text-align: left;
+      padding: 12px 16px;
+    }
+
+    .leaderboard-table th {
+      background-color: #4a6bff;
+      color: white;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      font-size: 1rem;
+    }
+
+    .leaderboard-table tr:nth-child(even) {
+      background-color: #f4f7ff;
+    }
+
+    .leaderboard-table tr:nth-child(odd) {
+      background-color: #ffffff;
+    }
+
+    .leaderboard-table tr.you {
+      background-color: rgba(74, 107, 255, 0.2);
+      font-weight: bold;
+    }
+
+    .leaderboard-table td.rank {
+      font-weight: bold;
+      color: #4a6bff;
+    }
+    
+    .restart-btn {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: block;
+      margin: 30px auto 0;
+      font-weight: 600;
+    }
+    
+    .restart-btn:hover {
+      background-color: #ff5252;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .quiz-card {
+        padding: 20px;
+      }
+      
+      .question {
+        font-size: 1.1rem;
+      }
+      
+      .option {
+        padding: 12px 15px;
+        font-size: 1rem;
+      }
+    }
+    /* New styles for feedback section */
+    .feedback {
+      margin: 30px 0;
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    .feedback-title {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      text-align: center;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .feedback-title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 3px;
+    }
+    
+    .feedback-item {
+      margin-bottom: 25px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .feedback-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .feedback-question {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--text-color);
+      line-height: 1.4;
+    }
+    
+    .feedback-answer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+    
+    .answer-label {
+      font-weight: 600;
+      min-width: 120px;
+    }
+    
+    .user-answer, .correct-answer {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    
+    .user-answer {
+      background-color: rgba(220, 53, 69, 0.1);
+      color: var(--wrong-color);
+    }
+    
+    .user-answer.correct {
+      background-color: rgba(40, 167, 69, 0.1);
+      color: var(--correct-color);
+    }
+    
+    .correct-answer {
+      background-color: rgba(40, 167, 69, 0.1);
+      color: var(--correct-color);
+    }
+    
+    .feedback-explanation {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      position: relative;
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .feedback-explanation:before {
+      content: '💡';
+      position: absolute;
+      left: 10px;
+      top: -10px;
+      font-size: 1.2rem;
+      background: white;
+      padding: 0 5px;
+    }
+    
+    .feedback-stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .stat-box {
+      flex: 1;
+      min-width: 150px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .stat-value.correct {
+      color: var(--correct-color);
+    }
+    
+    .stat-value.wrong {
+      color: var(--wrong-color);
+    }
+    
+    .stat-label {
+      color: var(--light-text);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .feedback {
+        padding: 20px;
+      }
+      
+      .feedback-title {
+        font-size: 1.3rem;
+      }
+      
+      .feedback-answer {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .stat-box {
+        min-width: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="quiz-card" id="quiz-section">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      
+      <div class="timer-container">
+        <div class="timer">
+          <i>⏱️</i>
+          <span id="time">30</span> সেকেন্ড
+        </div>
+      </div>
+      
+      <div class="question" id="question">প্রশ্ন লোড হচ্ছে...</div>
+      
+      <div class="options" id="options">
+        <!-- Options will be inserted here by JavaScript -->
+      </div>
+      
+      <button class="submit-btn" id="submit-btn" disabled>সাবমিট</button>
+    </div>
+    
+    <div class="result-container" id="result-section">
+      <h2 class="result-title">আপনার ফলাফল</h2>
+      <div class="score" id="score-display">আপনার স্কোর: <span>0</span>/0</div>
+      
+        <div class="feedback" id="feedback">
+            <!-- Feedback will be inserted here by JavaScript -->
+        </div>
+      
+      <button class="restart-btn" id="restart-btn">আবার খেলুন</button>
+    </div>
+    
+    <div class="leaderboard" id="leaderboard">
+        <h3>🏆 শীর্ষ খেলোয়াড় তালিকা</h3>
+        <table class="leaderboard-table">
+        <thead>
+            <tr>
+            <th>র‍্যাঙ্ক</th>
+            <th>নাম</th>
+            <th>স্কোর</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboard-list">
+            <!-- Leaderboard rows will be inserted here -->
+        </tbody>
+        </table>
+    </div>
+
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "বাংলাদেশের স্বাধীনতা দিবস কত তারিখে পালিত হয়?",
+        options: ["২৬শে মার্চ", "১৬ই ডিসেম্বর", "২১শে ফেব্রুয়ারি", "১৫ই আগস্ট"],
+        answer: 0,
+        explanation: "২৬শে মার্চ বাংলাদেশের স্বাধীনতা দিবস হিসেবে পালিত হয়, যখন ১৯৭১ সালে বাংলাদেশ স্বাধীনতার ঘোষণা দেয়।"
+      },
+      {
+        question: "বাংলাদেশের জাতীয় ফুল কি?",
+        options: ["গোলাপ", "শাপলা", "গাঁদা", "বেলি"],
+        answer: 1,
+        explanation: "শাপলা বাংলাদেশের জাতীয় ফুল, যা জলজ পরিবেশে জন্মায়।"
+      },
+      {
+        question: "বাংলাদেশের দীর্ঘতম নদী কোনটি?",
+        options: ["যমুনা", "পদ্মা", "মেঘনা", "ব্রহ্মপুত্র"],
+        answer: 2,
+        explanation: "মেঘনা বাংলাদেশের দীর্ঘতম নদী, যার মোট দৈর্ঘ্য প্রায় ১,২০০ কিলোমিটার।"
+      },
+      {
+        question: "বাংলাদেশের জাতীয় পাখি কোনটি?",
+        options: ["ময়না", "দোয়েল", "কাক", "ময়ূর"],
+        answer: 1,
+        explanation: "দোয়েল বাংলাদেশের জাতীয় পাখি, যা ছোট ও সুরেলা কণ্ঠের জন্য পরিচিত।"
+      },
+      {
+        question: "বাংলাদেশের প্রথম প্রধানমন্ত্রী কে ছিলেন?",
+        options: ["শেখ মুজিবুর রহমান", "তাজউদ্দীন আহমেদ", "জিয়াউর রহমান", "হুসেইন মুহাম্মদ এরশাদ"],
+        answer: 1,
+        explanation: "তাজউদ্দীন আহমেদ বাংলাদেশের প্রথম প্রধানমন্ত্রী ছিলেন, যিনি ১৯৭১ সালে মুক্তিযুদ্ধের সময় সরকার গঠন করেছিলেন।"
+      }
+    ];
+
+    // Quiz state variables
+    let currentQuestion = 0;
+    let score = 0;
+    let timer;
+    let timeLeft = 30;
+    let selectedAnswer = null;
+    let userAnswers = [];
+    let leaderboardData = [
+      { name: "আপনি", score: 0 },
+      { name: "রাহুল", score: 4 },
+      { name: "সীমা", score: 3 },
+      { name: "আরাফাত", score: 5 },
+      { name: "তানিয়া", score: 2 }
+    ];
+
+    // DOM elements
+    const quizSection = document.getElementById('quiz-section');
+    const resultSection = document.getElementById('result-section');
+    const leaderboard = document.getElementById('leaderboard');
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const submitBtn = document.getElementById('submit-btn');
+    const timeElement = document.getElementById('time');
+    const progressBar = document.getElementById('progress-bar');
+    const scoreDisplay = document.getElementById('score-display');
+    const feedbackElement = document.getElementById('feedback');
+    const leaderboardList = document.getElementById('leaderboard-list');
+    const restartBtn = document.getElementById('restart-btn');
+
+    // Initialize quiz
+    function initQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      userAnswers = [];
+      loadQuestion();
+    }
+
+    // Load question
+    function loadQuestion() {
+      resetState();
+      const q = quizData[currentQuestion];
+      
+      // Update progress bar
+      progressBar.style.width = `${((currentQuestion) / quizData.length) * 100}%`;
+      
+      // Set question text
+      questionElement.textContent = `${currentQuestion + 1}. ${q.question}`;
+      
+      // Create options
+      q.options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.classList.add('option');
+        optionElement.textContent = option;
+        optionElement.dataset.index = index;
+        optionElement.addEventListener('click', selectOption);
+        optionsElement.appendChild(optionElement);
+      });
+      
+      // Reset timer
+      resetTimer();
+    }
+
+    // Reset quiz state for new question
+    function resetState() {
+      selectedAnswer = null;
+      optionsElement.innerHTML = '';
+      submitBtn.disabled = true;
+    }
+
+    // Select an option
+    function selectOption(e) {
+      // Remove selected class from all options
+      document.querySelectorAll('.option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      e.target.classList.add('selected');
+      selectedAnswer = parseInt(e.target.dataset.index);
+      submitBtn.disabled = false;
+    }
+
+    // Timer functions
+    function resetTimer() {
+      clearInterval(timer);
+      timeLeft = 30;
+      timeElement.textContent = timeLeft;
+      startTimer();
+    }
+
+    function startTimer() {
+      timer = setInterval(() => {
+        timeLeft--;
+        timeElement.textContent = timeLeft;
+        
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          submitAnswer();
+        }
+      }, 1000);
+    }
+
+    // Submit answer
+    function submitAnswer() {
+      clearInterval(timer);
+      
+      const q = quizData[currentQuestion];
+      const options = document.querySelectorAll('.option');
+      
+      // Disable all options
+      options.forEach(option => {
+        option.classList.add('disabled');
+      });
+      
+      // Mark correct and wrong answers
+      options.forEach((option, index) => {
+        if (index === q.answer) {
+          option.classList.add('correct');
+        } else if (index === selectedAnswer && selectedAnswer !== q.answer) {
+          option.classList.add('wrong');
+        }
+      });
+      
+      // Store user answer
+      userAnswers.push({
+        question: q.question,
+        userAnswer: selectedAnswer !== null ? q.options[selectedAnswer] : 'সময় শেষ',
+        correctAnswer: q.options[q.answer],
+        isCorrect: selectedAnswer === q.answer,
+        explanation: q.explanation
+      });
+      
+      // Update score if correct
+      if (selectedAnswer === q.answer) {
+        score++;
+      }
+      
+      // Move to next question or show results
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+          loadQuestion();
+        } else {
+          showResults();
+        }
+      }, 1500);
+    }
+
+    // Show results
+    function showResults() {
+      quizSection.style.display = 'none';
+      resultSection.style.display = 'block';
+      leaderboard.style.display = 'block';
+      
+      // Update score display
+      scoreDisplay.innerHTML = `আপনার স্কোর: <span>${score}</span>/${quizData.length}`;
+      
+      // Calculate stats
+      const correctCount = score;
+      const wrongCount = quizData.length - score;
+      const percentage = Math.round((score / quizData.length) * 100);
+      
+      // Generate feedback
+      feedbackElement.innerHTML = `
+        <h3 class="feedback-title">আপনার উত্তর বিশ্লেষণ</h3>
+        
+        <div class="feedback-stats">
+          <div class="stat-box">
+            <div class="stat-value correct">${correctCount}</div>
+            <div class="stat-label">সঠিক উত্তর</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value wrong">${wrongCount}</div>
+            <div class="stat-label">ভুল উত্তর</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">${percentage}%</div>
+            <div class="stat-label">সাফল্যের হার</div>
+          </div>
+        </div>
+      `;
+      
+      userAnswers.forEach((answer, index) => {
+        feedbackElement.innerHTML += `
+          <div class="feedback-item">
+            <div class="feedback-question">প্রশ্ন ${index + 1}: ${answer.question}</div>
+            
+            <div class="feedback-answer">
+              <div class="answer-label">আপনার উত্তর:</div>
+              <div class="user-answer ${answer.isCorrect ? 'correct' : ''}">${answer.userAnswer}</div>
+            </div>
+            
+            ${!answer.isCorrect ? `
+              <div class="feedback-answer">
+                <div class="answer-label">সঠিক উত্তর:</div>
+                <div class="correct-answer">${answer.correctAnswer}</div>
+              </div>
+            ` : ''}
+            
+            <div class="feedback-explanation">
+              ${answer.explanation}
+            </div>
+          </div>
+        `;
+      });
+      
+      // Update leaderboard with user score
+      leaderboardData[0].score = score;
+      leaderboardData.sort((a, b) => b.score - a.score);
+      
+      // Display leaderboard
+      leaderboardList.innerHTML = '';
+      leaderboardData.forEach((player, index) => {
+          const tr = document.createElement('tr');
+          if (player.name === 'আপনি') tr.classList.add('you');
+          tr.innerHTML = `
+              <td class="rank">${index + 1}</td>
+              <td>${player.name}</td>
+              <td>${player.score}/${quizData.length}</td>
+          `;
+          leaderboardList.appendChild(tr);
+      });
+    }
+
+    // Restart quiz
+    function restartQuiz() {
+      quizSection.style.display = 'block';
+      resultSection.style.display = 'none';
+      leaderboard.style.display = 'none';
+      initQuiz();
+    }
+
+    // Event listeners
+    submitBtn.addEventListener('click', submitAnswer);
+    restartBtn.addEventListener('click', restartQuiz);
+
+    // Start the quiz
+    initQuiz();
+  </script>
+</body>
+</html>

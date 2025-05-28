@@ -319,7 +319,12 @@
         }
     }
 </style>
-
+<?php
+    // Fetch the blog post details from the database
+    $id = $_GET['view-blog'];
+    $sql = "SELECT * FROM post WHERE id = '$id'";
+    $post = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+?>
 <!-- Blog View Page Content -->
 <section class="blog-view-page">
     <div class="container">
@@ -327,43 +332,19 @@
             <!-- Main Blog Content -->
             <div class="main-blog">
                 <div class="blog-header-image">
-                    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" alt="ডিফেন্স প্রস্তুতি গাইড">
+                    <img src="<?= $post['img'] ?>">
                 </div>
                 
                 <div class="blog-content-wrapper">
                     <div class="blog-meta">
-                        <span class="blog-date">১৫ জুন, ২০২৩</span>
-                        <span class="blog-category">ডিফেন্স গাইড</span>
+                        <span class="blog-date"><?= $post['date']; ?></span>
+                        <span class="blog-category"><?= $post['category']; ?></span>
                     </div>
                     
-                    <h1 class="blog-title">বিসিএস ও অন্যান্য ডিফেন্স পরীক্ষার প্রস্তুতি কীভাবে নেবেন</h1>
+                    <h1 class="blog-title"><?= $post['title']; ?></h1>
                     
                     <div class="blog-content">
-                        <p>ডিফেন্স পরীক্ষার প্রস্তুতি একটি দীর্ঘমেয়াদী প্রক্রিয়া যার জন্য প্রয়োজন সঠিক পরিকল্পনা, নিয়মানুবর্তিতা এবং ধৈর্য্য। এই গাইডে আমরা বিস্তারিতভাবে আলোচনা করব কিভাবে আপনি ডিফেন্স পরীক্ষার জন্য কার্যকরী প্রস্তুতি নিতে পারেন।</p>
-                        
-                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="ডিফেন্স প্রস্তুতি">
-                        
-                        <h2>প্রথম ধাপ: সিলেবাস বিশ্লেষণ</h2>
-                        <p>যেকোনো পরীক্ষার প্রস্তুতির প্রথম ধাপ হলো সিলেবাস ভালোভাবে বুঝে নেওয়া। বিসিএস ও অন্যান্য ডিফেন্স পরীক্ষার সিলেবাস সাধারণত তিনটি মূল বিভাগে বিভক্ত:</p>
-                        <ul>
-                            <li>লিখিত পরীক্ষা</li>
-                            <li>মৌখিক পরীক্ষা</li>
-                            <li>শারীরিক পরীক্ষা</li>
-                        </ul>
-                        
-                        <h3>লিখিত পরীক্ষার প্রস্তুতি</h3>
-                        <p>লিখিত পরীক্ষার জন্য আপনাকে বাংলা, ইংরেজি, গণিত, সাধারণ জ্ঞান এবং বিষয়ভিত্তিক প্রশ্নের জন্য প্রস্তুতি নিতে হবে। প্রতিটি বিষয়ের জন্য আলাদা আলাদা সময় বরাদ্দ করুন।</p>
-                        
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="লিখিত পরীক্ষার প্রস্তুতি">
-                        
-                        <h3>মৌখিক পরীক্ষার টিপস</h3>
-                        <p>মৌখিক পরীক্ষায় সাধারণত আপনার ব্যক্তিত্ব, যোগাযোগ দক্ষতা এবং দ্রুত চিন্তা করার ক্ষমতা যাচাই করা হয়। নিয়মিত সংবাদপত্র পড়ুন এবং বন্ধুদের সাথে মক ইন্টারভিউ অনুশীলন করুন।</p>
-                        
-                        <h2>দ্বিতীয় ধাপ: সময় ব্যবস্থাপনা</h2>
-                        <p>একটি কার্যকরী সময়সূচী তৈরি করুন যেখানে প্রতিদিনের পড়ার রুটিন, রিভিশন এবং মডেল টেস্ট দেয়ার সময় নির্ধারণ করা থাকবে। সপ্তাহে অন্তত একটি দিন নিজেকে মূল্যায়ন করুন।</p>
-                        
-                        <h2>তৃতীয় ধাপ: শারীরিক প্রস্তুতি</h2>
-                        <p>ডিফেন্স চাকরির জন্য শারীরিক ফিটনেস অপরিহার্য। প্রতিদিন সকালে দৌড়ানো, ব্যায়াম এবং সাঁতার কাটার অভ্যাস গড়ে তুলুন।</p>
+                        <?= $post['text']; ?>
                     </div>
                 </div>
             </div>
@@ -371,46 +352,34 @@
             <!-- Blog Sidebar -->
             <div class="blog-sidebar">
                 <h3 class="sidebar-title">সম্পর্কিত ব্লগ পোস্ট</h3>
-                
-                <div class="related-blog">
-                    <div class="related-blog-image">
-                        <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="ইন্টারভিউ টিপস">
+                <?php
+                // Fetch related blog posts (for simplicity, fetching the first 3 posts)    
+                $relatedPosts = mysqli_query($conn, "SELECT id, img, title, date FROM post WHERE id != '$id' LIMIT 3");
+                while($relatedPost = mysqli_fetch_assoc($relatedPosts)) {
+                    ?>
+                    <div class="related-blog">
+                        <div class="related-blog-image">
+                            <img src="<?= $relatedPost['img'] ?>">
+                        </div>
+                        <div class="related-blog-content">
+                            <h4><a href="?view-blog=<?= $relatedPost['id'] ?>"><?= $relatedPost['title'] ?></a></h4>
+                            <div class="related-blog-date"><?= $relatedPost['date'] ?></div>
+                        </div>
                     </div>
-                    <div class="related-blog-content">
-                        <h4><a href="/bn/blog/post-2">ডিফেন্স চাকরির ইন্টারভিউতে সফল হবার ১০টি টিপস</a></h4>
-                        <div class="related-blog-date">২৮ মে, ২০২৩</div>
-                    </div>
-                </div>
-                
-                <div class="related-blog">
-                    <div class="related-blog-image">
-                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="শারীরিক প্রস্তুতি">
-                    </div>
-                    <div class="related-blog-content">
-                        <h4><a href="/bn/blog/post-3">ডিফেন্স চাকরির জন্য শারীরিক প্রস্তুতি কীভাবে নেবেন</a></h4>
-                        <div class="related-blog-date">১০ মে, ২০২৩</div>
-                    </div>
-                </div>
-                
-                <div class="related-blog">
-                    <div class="related-blog-image">
-                        <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="সাইকোলজিক্যাল টেস্ট">
-                    </div>
-                    <div class="related-blog-content">
-                        <h4><a href="/bn/blog/post-4">ডিফেন্স চাকরির সাইকোলজিক্যাল টেস্টের প্রস্তুতি</a></h4>
-                        <div class="related-blog-date">২৫ এপ্রিল, ২০২৩</div>
-                    </div>
-                </div>
+                    <?php
+                }
+                ?>
                 
                 <!-- Tags Section -->
                 <div class="tags-section">
                     <h3 class="sidebar-title">ট্যাগসমূহ</h3>
                     <div class="tags-container">
-                        <a href="#" class="tag">ডিফেন্স গাইড</a>
-                        <a href="#" class="tag">বিসিএস প্রস্তুতি</a>
-                        <a href="#" class="tag">ইন্টারভিউ টিপস</a>
-                        <a href="#" class="tag">শারীরিক প্রস্তুতি</a>
-                        <a href="#" class="tag">সময় ব্যবস্থাপনা</a>
+                        <?php
+                        $tags = explode(',', $post['tags']);
+                        foreach($tags as $tag) {
+                            echo '<a href="#" class="tag">' . trim($tag) . '</a>';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
