@@ -25,19 +25,19 @@
                 }
 
                 // Connect to database after confirming the request
-                include(__DIR__ . "/../db_connection.php");
+                include(__DIR__ . "/../../include/dbcon.php");
                 include(__DIR__ . "/../OrderTransaction.php");
 
                 $tran_id = trim($_POST['tran_id']);
                 $ot = new OrderTransaction();
                 $sql = $ot->getRecordQuery($tran_id);
-                $result = $conn_integration->query($sql);
+                $result = $conn->query($sql);
                 $row = $result->fetch_array(MYSQLI_ASSOC);
 
                 if ($row['status'] == 'Pending' || $row['status'] == 'Canceled') :
                     $sql = $ot->updateTransactionQuery($tran_id, 'Canceled');
 
-                    if ($conn_integration->query($sql) === TRUE) :
+                    if ($conn->query($sql) === TRUE) :
                 ?>
                         <h2 class="text-center text-danger">Transaction has been CANCELLED.</h2>
                         <br>
@@ -62,7 +62,7 @@
                             </tr>
                         </table>
                     <?php else : ?>
-                        <h2 class="text-center text-danger">Error updating record: </h2>" <?= $conn_integration->error; ?>
+                        <h2 class="text-center text-danger">Error updating record: </h2>" <?= $conn->error; ?>
                     <?php endif; ?>
                 <?php elseif ($row['status'] == 'Processing') : ?>
                     <table border="1" class="table table-striped">

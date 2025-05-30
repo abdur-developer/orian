@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("INSERT INTO `users` (`name`, `number`, `email`, `wish`, `password`) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $name, $number, $email, $wish, $hashedPassword);
         if ($stmt->execute()) {
-            $_SESSION['name'] = $number;
+            $_SESSION['number'] = $number;
             $_SESSION['web'] = encryptSt($password);
             header("Location: home.php");
             exit();
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db_password = $row['password'];
 
             if (verifyPassword($password, $db_password)) {
-                $_SESSION['name'] = $number;
+                $_SESSION['number'] = $number;
                 $_SESSION['web'] = encryptSt($password);
                 header("Location: home.php");
                 exit();

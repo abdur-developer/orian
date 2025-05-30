@@ -1,6 +1,5 @@
 <?php
-require 'include/dbcon.php';
-$course_id = decryptSt($_GET['course']);
+$course_id = decryptSt($_GET['course-details']);
 $sql = "SELECT * FROM course WHERE id = '$course_id'";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) == 0) {

@@ -159,13 +159,13 @@
         <!-- ================================================== -->      
         <div class="row g-4">
             <?php 
-                $sql ="SELECT id, price, users, title, description, badge, provider FROM course";
+                $sql ="SELECT id, price, img, users, title, description, badge, provider FROM course";
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_assoc($result)){ ?>
             <div class="col-lg-4 col-md-6">
                 <div class="course-card">
                     <div class="course-img-container">
-                        <img src="https://instantjob.sgp1.cdn.digitaloceanspaces.com/course_image/eb330f06312b4065a7780b7dffecd3e2-website(2).png" class="course-img" alt="Army Commissioned Officer Course">
+                        <img src="<?= $row['img']; ?>" class="course-img" alt="<?=$row['title']?>">    
                         <?php if($row['badge'] != null) echo "<span class='course-badge'>{$row['badge']}</span>"; ?>
                     </div>
                     <div class="card-body">
@@ -184,7 +184,7 @@
                         
                         <div class="d-grid gap-2 d-md-flex">
                             <button onclick="detailsCourse('<?=encryptSt($row['id'])?>')" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                            <button class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                            <button onclick="enrollCourse('<?=encryptSt($row['id'])?>')" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
                         </div>
                     </div>
                 </div>
@@ -193,7 +193,10 @@
         </div>
         <script>
             function detailsCourse(id) {
-                window.location.href = "course-details.php?course=" + id;
+                window.location.href = "?course-details=" + id;
+            }
+            function enrollCourse(id) {
+                window.location.href = "cart/add.php?thanks=" + id + "&type=course";
             }
         </script>
         <!-- ================================================== -->

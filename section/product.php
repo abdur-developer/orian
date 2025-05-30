@@ -207,20 +207,23 @@
         <h2 class="section-title">Our Products</h2>
         
         <div class="row g-4">
-            <?php for($i = 0; $i < 4; $i++){ ?>
+            <?php 
+            $sql = "SELECT * FROM product";
+            $result = mysqli_query($conn, $sql);
+            while($row = mysqli_fetch_assoc($result)){ ?>
             <!-- Product <?=$i + 1?> -->
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="product-card">
                     <div class="product-img-container">
-                        <span class="product-badge">Sale</span>
+                        <span class="product-badge"><?= $row['status']; ?></span>
                         <div class="product-wishlist">
                             <i class="far fa-heart"></i>
                         </div>
-                        <img src="https://oriangroup.com/wp-content/uploads/2024/10/2-5.png" class="product-img" alt="Smart Watch X1">
+                        <img src="<?= $row['img']; ?>" class="product-img" alt="<?= $row['name']; ?>">
                     </div>
                     <div class="product-body">
-                        <span class="product-category">Smart Watch</span>
-                        <h3 class="product-name">Amazfit GTS 4 Smart Watch with Bluetooth Calling</h3>
+                        <span class="product-category"><?= $row['type']; ?></span>
+                        <h3 class="product-name"><?= $row['name']; ?></h3>
                         <div class="product-rating">
                             <div class="product-rating-stars">
                                 <i class="fas fa-star"></i>
@@ -229,21 +232,34 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star-half-alt"></i>
                             </div>
-                            <span class="product-rating-count">(142)</span>
+                            <span class="product-rating-count">(<?= $row['rating_count']; ?>)</span>
                         </div>
                         <div class="product-price">
-                            <span class="current-price">৳12,999</span>
-                            <span class="original-price">৳15,999</span>
-                            <span class="discount">19% off</span>
+                            <span class="current-price">৳<?= $row['price']; ?></span>
+                            <span class="original-price">৳<?= $row['old_price']; ?></span>
+                            <span class="discount"><?= getPercent($row['old_price'], $row['price']); ?> off</span>
                         </div>
                         <div class="product-actions">
-                            <button class="btn btn-add-to-cart">Add to Cart</button>
-                            <button class="btn btn-quick-view"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-add-to-cart" onclick="addToCart('<?= encryptSt($row['id']); ?>')">Add to Cart</button>
+                            <button class="btn btn-quick-view" onclick="viewProduct('<?= encryptSt($row['id']); ?>')"><i class="fas fa-eye"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
-            <?php } ?>
+            <?php }
+                function getPercent($oldPrice, $currentPrice) {
+                    if ($oldPrice == 0) return '0%';
+                    return round((($oldPrice - $currentPrice) / $oldPrice) * 100) . '%';
+                }
+            ?>
         </div>
     </div>
+    <script>
+        function addToCart(id){
+            window.location.href = "cart/add.php?thanks=" + id+ "&type=product";
+        }
+        function viewProduct(id){
+            window.location.href = "?product-details=" + id;
+        }
+    </script>
 </section>

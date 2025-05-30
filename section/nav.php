@@ -309,9 +309,15 @@
                 
                 <!-- Fixed Login Button -->
                 <div class="d-flex ms-lg-3 mt-3 mt-lg-0">
-                    <a href="auth.php" class="btn login-btn px-4 py-2">
-                        <i class="fas fa-sign-in-alt me-2"></i> লগইন
-                    </a>
+                    <?php if (!isset($_SESSION['number']) || !isset($_SESSION['web'])): ?>
+                        <a href="auth.php" class="btn login-btn px-4 py-2">
+                            <i class="fas fa-sign-in-alt me-2"></i> লগইন
+                        </a>
+                    <?php else: ?>
+                        <a href="home.php" class="btn login-btn px-4 py-2">
+                            <i class="fas fa-tachometer-alt me-2"></i> ড্যাশবোর্ড
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

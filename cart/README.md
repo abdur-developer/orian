@@ -17,7 +17,6 @@
     |-- ipn.php
  |-- README.md
  |-- orders.sql
- |-- db_connection.php
  |-- checkout_hosted.php
  |-- checkout_ajax.php
  |-- example_easycheckout.php
@@ -28,7 +27,7 @@
 
 * __Step 1:__ Download and extract the library files into your project
 
-* __Step 2:__ Create a database and import the `orders.sql` table schema. Then set the database credential on `db_connection.php` file.
+* __Step 2:__ Create a database and import the `orders.sql` table schema. Then set the database credential on `config.php` file.
 
 * __Step 3:__ For Hosted Checkout integration, you can update the `checkout_hosted.php` or use a different file according to your need. We have provided a basic sample page from where you can kickstart the payment gateway integration.
 
@@ -83,7 +82,7 @@
 
 ### Contributors
 
->Prabal Mallick
+> Prabal Mallick
 
 > Md. Rakibul Islam
 

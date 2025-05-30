@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 
 require_once(__DIR__ . "/lib/SslCommerzNotification.php");
 
-include("db_connection.php");
+include("../include/dbcon.php");
 include("OrderTransaction.php");
 
 use SslCommerz\SslCommerzNotification;
@@ -14,20 +14,20 @@ use SslCommerz\SslCommerzNotification;
 # Organize the submitted/inputted data
 $post_data = array();
 
-$post_data['total_amount'] = $_POST['amount'];
+$post_data['total_amount'] = "100.00"; // You cant not pass decimal value here, it will be rounded off
 $post_data['currency'] = "BDT";
 $post_data['tran_id'] = "SSLCZ_TEST_" . uniqid();
 
 # CUSTOMER INFORMATION
-$post_data['cus_name'] = isset($_POST['customer_name']) ? $_POST['customer_name'] : "John Doe";
-$post_data['cus_email'] = isset($_POST['customer_email']) ? $_POST['customer_email'] : "john.doe@email.com";
+$post_data['cus_name'] = "John Doe";
+$post_data['cus_email'] = "john.doe@email.com";
 $post_data['cus_add1'] = "Dhaka";
 $post_data['cus_add2'] = "Dhaka";
 $post_data['cus_city'] = "Dhaka";
 $post_data['cus_state'] = "Dhaka";
 $post_data['cus_postcode'] = "1000";
 $post_data['cus_country'] = "Bangladesh";
-$post_data['cus_phone'] = isset($_POST['customer_mobile']) ? $_POST['customer_mobile'] : "01711111111";
+$post_data['cus_phone'] = "01711111111";
 $post_data['cus_fax'] = "01711111111";
 
 # SHIPMENT INFORMATION
@@ -140,7 +140,7 @@ $post_data['convenience_fee'] = "3";
 $query = new OrderTransaction();
 $sql = $query->saveTransactionQuery($post_data);
 
-if ($conn_integration->query($sql) === TRUE) {
+if ($conn->query($sql) === TRUE) {
 
     # Call the Payment Gateway Library
     $sslcz = new SslCommerzNotification();
@@ -149,6 +149,6 @@ if ($conn_integration->query($sql) === TRUE) {
         echo $msg;
     }
 } else {
-    echo "Error: " . $sql . "<br>" . $conn_integration->error;
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
 

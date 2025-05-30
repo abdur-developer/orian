@@ -7,6 +7,10 @@ include("section/header.php");
         include("section/nav.php");
         if(isset($_GET['view-blog'])){
             include("section/view-blog.php");
+        }elseif(isset($_GET['course-details'])){
+            include("section/view-course.php");
+        }elseif(isset($_GET['product-details'])){
+            include("section/view-product.php");
         }else{
             include("section/hero.php");
             include("section/feature.php");

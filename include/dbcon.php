@@ -3,9 +3,9 @@
     $db_username = "root";
     $db_password = "";
     $dbname = "orian";
-    $db_username = "defenceb_web";
-    $db_password = "defenceb_web&&";
-    $dbname = "defenceb_web";
+    // $db_username = "defenceb_web";
+    // $db_password = "defenceb_web&&";
+    // $dbname = "defenceb_web";
 
 
     $conn = mysqli_connect($servername, $db_username, $db_password, $dbname);
