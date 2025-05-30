@@ -1,3 +1,10 @@
+<?php
+    require_once '../include/dbcon.php';
+    if(!isset($_SESSION['number'])) {
+        header("Location: ../auth.php?error=Please+login+first!&refer=".urlencode(encryptSt("cart/index.php")));
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -204,132 +211,191 @@
         </style>
     </head>
     <body>
-        <div class="container">
-            <div class="card cart">
-                <h2>Your Learning Cart (3 courses)</h2>
+        <?php
+            // Get user ID from session number
+            $user_id = null;
+            if (isset($_SESSION['number'])) {
+                $stmt = $conn->prepare("SELECT id FROM users WHERE number = ?");
+                $stmt->bind_param("s", $_SESSION['number']);
+                $stmt->execute();
+                $res = $stmt->get_result();
+                if ($row = $res->fetch_assoc()) {
+                    $user_id = $row['id'];
+                }
+                $stmt->close();
+            }
 
-                <div class="course-item">
-                    <div class="course-img">Web Dev</div>
-                    <div class="course-info">
-                        <div class="course-title">Web Development Bootcamp</div>
-                        <div class="course-instructor">By Alex Johnson</div>
+            // Fetch cart items
+            $cart = [];
+            if ($user_id) {
+                $stmt = $conn->prepare("SELECT * FROM cart WHERE user_id = ?");
+                $stmt->bind_param("i", $user_id);
+                $stmt->execute();
+                $cart = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+            }
+
+            $count = count($cart);
+
+            if ($count > 0) {
+                echo '<div class="container">
+                    <div class="card cart">';
+                echo "<h2>Your Cart ($count " . ($count === 1 ? "item" : "items") . ")</h2>";
+                foreach ($cart as $item) {
+                    $type = $item['type'];
+                    $ref_id = $item['ref_id'];
+                    $course = $conn->query("SELECT * FROM `$type` WHERE id = $ref_id")->fetch_assoc();
+                    ?>
+                    <div class="course-item">
+                        <img class="course-img" src="<?=htmlspecialchars($course['img'])?>" alt="">
+                        <div class="course-info">
+                            <div class="course-title"><?=htmlspecialchars($course['title'] ?? $course['name'])?></div>
+                            <div class="course-instructor">
+                                <?php if ($type === 'product'): ?>
+                                    <?=htmlspecialchars($course['type'])?>
+                                <?php else: ?>
+                                    By <?=htmlspecialchars($course['instructor'])?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="course-price">৳ <span class="item-price"><?=$course['price']?></span></div>
                     </div>
-                    <div class="course-price">$49.99</div>
+                    <?php
+                } ?>
                 </div>
-
-                <div class="course-item">
-                    <div class="course-img">Data Sci</div>
-                    <div class="course-info">
-                        <div class="course-title">Data Science with Python</div>
-                        <div class="course-instructor">By Sarah Miller</div>
+                <form action="checkout_hosted.php" method="post" class="card summary">
+                    <h2>Order Summary</h2>
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span id="subtotal">৳0.00</span>
                     </div>
-                    <div class="course-price">$59.99</div>
-                </div>
-
-                <div class="course-item">
-                    <div class="course-img">UI/UX</div>
-                    <div class="course-info">
-                        <div class="course-title">UI/UX Design Masterclass</div>
-                        <div class="course-instructor">By David Chen</div>
+                    <div class="summary-item" id="discount-row" style="display:none;">
+                        <span>Discount <span class="discount-badge" id="discount-code"></span></span>
+                        <span style="color: #f72585;" id="discount-amount"></span>
                     </div>
-                    <div class="course-price">$39.99</div>
+                    <div class="summary-item summary-total">
+                        <span>Total</span>
+                        <span id="total">৳0.00</span>
+                    </div>
+                    <div class="coupon-form">
+                        <input type="text" class="coupon-input" name="coupon_code" placeholder="Enter coupon code" autocomplete="off" />
+                        <button class="coupon-btn" type="button">Apply</button>
+                    </div>
+                    <button class="checkout-btn" type="submit">Checkout</button>
+                    <div style="margin-top: 16px; font-size: 14px; color: var(--text-light); text-align: center;">
+                        <p>Secure payment processing</p>
+                    </div>
+                </form>
+                <script>
+                    // Example coupon codes
+                    const coupons = {
+                        'SAVE20': 20,
+                        'DISCOUNT10': 10
+                    };
+
+                    function calculateSummary(discountValue = 0, code = '') {
+                        const itemPrices = document.querySelectorAll('.item-price');
+                        let subtotal = 0;
+                        itemPrices.forEach(price => {
+                            subtotal += parseFloat(price.textContent);
+                        });
+                        document.getElementById('subtotal').textContent = '৳ ' + subtotal.toFixed(2);
+
+                        let total = subtotal;
+                        if (discountValue > 0) {
+                            document.getElementById('discount-row').style.display = '';
+                            document.getElementById('discount-code').textContent = code;
+                            document.getElementById('discount-amount').textContent = '-৳' + discountValue.toFixed(2);
+                            total = subtotal - discountValue;
+                            if (total < 0) total = 0;
+                        } else {
+                            document.getElementById('discount-row').style.display = 'none';
+                        }
+                        document.getElementById('total').textContent = '৳ ' + total.toFixed(2);
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        calculateSummary();
+                    });
+
+                    document.querySelector('.coupon-btn').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const couponInput = document.querySelector('.coupon-input');
+                        const code = couponInput.value.trim().toUpperCase();
+                        if (code && coupons[code]) {
+                            calculateSummary(coupons[code], code);
+                        } else {
+                            calculateSummary();
+                            if (code) {
+                                alert('Invalid coupon code!');
+                            }
+                        }
+                    });
+                </script>
+            </div>
+            <?php
+            } else { ?>
+            <div class="container" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+                <style>
+                    .empty-cart-state {
+                        text-align: center;
+                        padding: 40px 20px;
+                        background: white;
+                        border-radius: var(--radius);
+                        box-shadow: var(--shadow);
+                        margin: 0 auto;
+                        width: 100%;
+                    }
+                    .empty-cart-icon {
+                        margin-bottom: 24px;
+                    }
+                    .empty-cart-icon svg {
+                        width: 80px;
+                        height: 80px;
+                    }
+                    .empty-cart-state h3 {
+                        font-size: 20px;
+                        font-weight: 600;
+                        margin-bottom: 12px;
+                        color: var(--text);
+                    }
+                    .empty-cart-message {
+                        color: var(--text-light);
+                        margin-bottom: 24px;
+                        font-size: 16px;
+                    }
+                    .browse-courses-btn {
+                        padding: 12px 24px;
+                        background-color: var(--primary);
+                        color: white;
+                        border: none;
+                        border-radius: var(--radius-sm);
+                        font-weight: 500;
+                        cursor: pointer;
+                        transition: background-color 0.2s;
+                        font-size: 16px;
+                    }
+                    .browse-courses-btn:hover {
+                        background-color: var(--primary-dark);
+                    }
+                </style>
+                <div class="empty-cart-state">
+                    <div class="empty-cart-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 4L6 8H18L16 4H8Z" fill="#CBD5E1" stroke="#64748B" stroke-width="1.5"/>
+                            <path d="M6 8L4.5 11.5L3.5 16H20.5L19.5 11.5L18 8H6Z" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+                            <path d="M9 11L12 14L15 11" stroke="#64748B" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="9" cy="19" r="1" fill="#64748B"/>
+                            <circle cx="15" cy="19" r="1" fill="#64748B"/>
+                        </svg>
+                    </div>
+                    <h3>Your cart is empty</h3>
+                    <p class="empty-cart-message">Looks like you haven't added any courses yet.</p>
+                    <button class="browse-courses-btn">Browse Courses</button>
                 </div>
             </div>
-            <form action="checkout_hosted.php" class="card summary">
-                <h2>Order Summary</h2>
-
-                <div class="summary-item">
-                    <span>Subtotal</span>
-                    <span>$149.97</span>
-                </div>
-
-                <div class="summary-item">
-                    <span>Discount <span class="discount-badge">SAVE20</span></span>
-                    <span style="color: #f72585;">-$20.00</span>
-                </div>
-
-                <div class="summary-item summary-total">
-                    <span>Total</span>
-                    <span>$129.97</span>
-                </div>
-
-                <div class="coupon-form">
-                    <input type="text" class="coupon-input" name="coupon_code" placeholder="Enter coupon code" />
-                    <button class="coupon-btn">Apply</button>
-                </div>
-
-                <button class="checkout-btn" type="submit"> Checkout</button>
-
-                <div style="margin-top: 16px; font-size: 14px; color: var(--text-light); text-align: center;">
-                    <p>Secure payment processing</p>
-                </div>
-            </form>
-        </div>
-        <!-- <div class="container" style="display: flex; justify-content: center; align-items: center; height: 100vh;"> 
-            <style>
-                .empty-cart-state {
-                    text-align: center;
-                    padding: 40px 20px;
-                    background: white;
-                    border-radius: var(--radius);
-                    box-shadow: var(--shadow);
-                    margin: 0 auto;
-                    width: 100%;
-                }
-
-                .empty-cart-icon {
-                    margin-bottom: 24px;
-                }
-
-                .empty-cart-icon svg {
-                    width: 80px;
-                    height: 80px;
-                }
-
-                .empty-cart-state h3 {
-                    font-size: 20px;
-                    font-weight: 600;
-                    margin-bottom: 12px;
-                    color: var(--text);
-                }
-
-                .empty-cart-message {
-                    color: var(--text-light);
-                    margin-bottom: 24px;
-                    font-size: 16px;
-                }
-
-                .browse-courses-btn {
-                    padding: 12px 24px;
-                    background-color: var(--primary);
-                    color: white;
-                    border: none;
-                    border-radius: var(--radius-sm);
-                    font-weight: 500;
-                    cursor: pointer;
-                    transition: background-color 0.2s;
-                    font-size: 16px;
-                }
-
-                .browse-courses-btn:hover {
-                    background-color: var(--primary-dark);
-                }
-             </style>
-            <div class="empty-cart-state">
-                <div class="empty-cart-icon">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 4L6 8H18L16 4H8Z" fill="#CBD5E1" stroke="#64748B" stroke-width="1.5"/>
-                    <path d="M6 8L4.5 11.5L3.5 16H20.5L19.5 11.5L18 8H6Z" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
-                    <path d="M9 11L12 14L15 11" stroke="#64748B" stroke-width="1.5" stroke-linecap="round"/>
-                    <circle cx="9" cy="19" r="1" fill="#64748B"/>
-                    <circle cx="15" cy="19" r="1" fill="#64748B"/>
-                    </svg>
-                </div>
-                <h3>Your cart is empty</h3>
-                <p class="empty-cart-message">Looks like you haven't added any courses yet.</p>
-                <button class="browse-courses-btn">Browse Courses</button>
-            </div>
-        </div> -->
+            <?php }
+        ?>
     </body>
 </html>
 <!-- customer_name=John+Doe&customer_mobile=01711xxxxxx&customer_email=you%40example.com&amount=1200 -->

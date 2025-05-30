@@ -66,8 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (verifyPassword($password, $db_password)) {
                 $_SESSION['number'] = $number;
                 $_SESSION['web'] = encryptSt($password);
-                header("Location: home.php");
-                exit();
+                if($_POST['refer'] != 'null') {
+                    $refer = decryptSt($_POST['refer']);
+                    header("Location: $refer");
+                    exit();
+                }else {
+                    header("Location: home.php");
+                    exit();
+                }
             } else {
                 header("location: ?error=Incorrect password!");
                 exit();

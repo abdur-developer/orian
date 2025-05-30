@@ -398,7 +398,7 @@
                     </div>
                 </div>
                 <?php } ?>
-                
+                <input type="hidden" name="refer" value="<?php echo isset($_GET['refer']) ? htmlspecialchars($_GET['refer']) : 'null'; ?>">
                 <div class="form-group">
                     <label for="password">পাসওয়ার্ড</label>
                     <input type="text" name="password" id="password" placeholder="পাসওয়ার্ড প্রবেশ করান" required>
