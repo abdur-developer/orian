@@ -13,6 +13,24 @@ try {
     // Sanitize inputs
     $video = basename($_GET['video']);
     $token = $_GET['token'];
+    session_start();
+    if(!isset($_SESSION['token']) || !isset($_SESSION['count'])) {
+        throw new Exception('Token not found', 403);
+    }
+    if ($_SESSION['token'] !== $token) {
+        throw new Exception('Invalid token', 403);
+    }
+    if (!isset($_SERVER['HTTP_RANGE'])) {
+        $count = (base64_decode($_SESSION['count']) ^ 12345);
+        if($count > 0) {
+            throw new Exception('Invalid request , refresh the page and try again', 403);
+        }else {
+            $count++;
+            $_SESSION['count'] = base64_encode($count ^ 12345); // Reset count
+        }
+        session_write_close();
+    }
+
     $expires = (int)$_GET['expires'];
 
     // Verify token
@@ -26,7 +44,7 @@ try {
     }
 
     // Define video path
-    $videoDir = __DIR__ . '/secure_storage/videos/';
+    $videoDir = __DIR__ . '/../secure_storage/videos/';
     $filePath = realpath($videoDir . $video);
 
     // Security checks

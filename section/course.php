@@ -183,22 +183,14 @@
                         
                         
                         <div class="d-grid gap-2 d-md-flex">
-                            <button onclick="detailsCourse('<?=encryptSt($row['id'])?>')" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                            <button onclick="enrollCourse('<?=encryptSt($row['id'])?>')" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                            <button onclick="location.href = '?course-details=<?=encryptSt($row['id'])?>'" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                            <button onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($row['id'])?>&type=course'" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
                         </div>
                     </div>
                 </div>
             </div>
             <?php } ?>
         </div>
-        <script>
-            function detailsCourse(id) {
-                window.location.href = "?course-details=" + id;
-            }
-            function enrollCourse(id) {
-                window.location.href = "cart/add.php?thanks=" + id + "&type=course";
-            }
-        </script>
         <!-- ================================================== -->
     </div>
 </section>

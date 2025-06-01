@@ -13,7 +13,7 @@ use SslCommerz\SslCommerzNotification;
 
 // getting cart data from database
 $coupon_code = isset($_REQUEST['coupon_code']) ? $_REQUEST['coupon_code'] : '';
-$user_id = $conn->real_escape_string(isset($_SESSION['user_id']) ? decryptSt($_SESSION['user_id']) : '');
+$user_id = $conn->real_escape_string(isset($_COOKIE['user_id']) ? decryptSt($_COOKIE['user_id']) : '');
 
 $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '$user_id'"));
 $sql = "SELECT * FROM cart WHERE user_id = '$user_id'";

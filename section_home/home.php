@@ -214,7 +214,7 @@
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) { ?>
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 col-lg-4" onclick="location.href='index.php?course-details=<?= encryptSt($row['id']) ?>'">
                         <div class="course-card">
                             <img src="<?php echo $row['img']; ?>" class="course-img" alt="Course">
                             <div class="card-body">
@@ -241,11 +241,11 @@
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) { ?>
-                <div class="col-6 col-md-4 col-lg-3">
+                <div class="col-6 col-md-4 col-lg-3" onclick="location.href='index.php?product-details=<?= encryptSt($row['id']) ?>'">
                     <div class="course-card">
                         <img src="<?php echo $row['img']; ?>" class="course-img" alt="Product">
                         <div class="card-body">
-                            <h5 class="course-title"><?php echo $row['title']; ?></h5>
+                            <h5 class="course-title"><?php echo $row['name']; ?></h5>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="price">৳<?php echo $row['price']; ?></span>
                                 <span class="rating"><i class="fas fa-star"></i> <?php echo $row['rating_count']; ?></span>

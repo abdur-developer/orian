@@ -1,6 +1,6 @@
 <?php
     require_once '../include/dbcon.php';
-    if(!isset($_SESSION['number'])) {
+    if(!isset($_COOKIE['number'])) {
         header("Location: ../auth.php?error=Please+login+first!&refer=".urlencode(encryptSt("cart/index.php")));
         exit();
     }
@@ -220,8 +220,8 @@
         <?php
             // Fetch cart items
             $cart = [];
-            if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
-                $user_id = decryptSt($_SESSION['user_id']);
+            if (isset($_COOKIE['user_id']) && !empty($_COOKIE['user_id'])) {
+                $user_id = decryptSt($_COOKIE['user_id']);
                 $stmt = $conn->prepare("SELECT * FROM cart WHERE user_id = ?");
                 $stmt->bind_param("i", $user_id);
                 $stmt->execute();

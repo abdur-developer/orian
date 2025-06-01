@@ -17,9 +17,10 @@ try {
         throw new Exception('Invalid video filename format', 400);
     }
 
-    $videoPath = __DIR__ . '/secure_storage/videos/' . $video;
+    $videoPath = __DIR__ . '/../secure_storage/videos/' . $video;
     if (!file_exists($videoPath)) {
-        throw new Exception('Video file not found', 404);
+        // throw new Exception('Video file not found', 404);
+        throw new Exception($videoPath, 404);
     }
 
     $key = KeyManager::getCurrentKey();
@@ -33,17 +34,22 @@ try {
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'];
 
+    session_start();
+    $_SESSION['token'] = $token; // Store token in session to prevent reuse
+    $_SESSION['count'] = base64_encode(0 ^ 12345);
+    session_write_close();
+
     echo json_encode([
         'status' => 'success',
         'video' => $video,
         'token' => $token,
         'expires' => $expires,
-        'url' => "{$scheme}://{$host}/orian/secure_video.php?" . http_build_query([
+        'url' => "{$scheme}://{$host}/orian/video/secure_video.php?" . http_build_query([
             'video' => $video,
             'token' => $token,
             'expires' => $expires
         ]),
-        'refresh_url' => "{$scheme}://{$host}/orian/generate_token.php?" . http_build_query([
+        'refresh_url' => "{$scheme}://{$host}/orian/video/generate_token.php?" . http_build_query([
             'video' => $video,
             'refresh' => true
         ])

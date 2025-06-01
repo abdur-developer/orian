@@ -1,12 +1,12 @@
 <?php
 require_once '../include/dbcon.php';
-if(!isset($_SESSION['number'])) {
+if(!isset($_COOKIE['number'])) {
     header("Location: ../auth.php?error=Please+login+first!&refer=".urlencode(encryptSt("cart/add.php?type={$_GET['type']}&thanks={$_GET['thanks']}")));
     exit();
 }
 $type = $_GET['type']; //course, product
 $id = decryptSt($_GET['thanks']); //course_id, product_id
-$user_id = decryptSt($_SESSION['user_id']); // Function to get user ID from session or database
+$user_id = decryptSt($_COOKIE['user_id']); // Function to get user ID from session or database
 
 //check if the user already has this item in their cart 
 $sql = "SELECT 1 FROM cart WHERE user_id='$user_id' AND type='$type' AND ref_id='$id'";

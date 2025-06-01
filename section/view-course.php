@@ -1,9 +1,10 @@
 <?php
-$course_id = decryptSt($_GET['course-details']);
+$get_id = $_GET['course-details'] ?? '';
+$course_id = decryptSt($get_id);
 $sql = "SELECT * FROM course WHERE id = '$course_id'";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) == 0) {
-    echo "Course not found.";
+    echo "<script>window.location.href = 'index.php?error=not_found';</script>";
     exit;
 }
 function getTotalModule() {
@@ -28,7 +29,7 @@ function getDetails($module_id) {
 }
 function getTotalTime($module_id) {
     global $conn;
-    $sql = "SELECT SUM(time_minutes) as details_time FROM module_details WHERE module_id = '$module_id'";
+    $sql = "SELECT SUM(time) as details_time FROM module_details WHERE module_id = '$module_id'";
     $row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
     return $row['details_time'];
 }
@@ -530,7 +531,7 @@ $course = mysqli_fetch_assoc($result);
                                                     $result = mysqli_query($conn, $sql);
                                                     while ($module_details = mysqli_fetch_assoc($result)) {
                                                 ?>
-                                                <li class="lecture-item">
+                                                <li class="lecture-item" onclick="seeFree('<?=$module_details['id']?>', '<?=$module_details['is_free']?>')">
                                                     <div class="lecture-icon">
                                                         <i class="fas fa-play-circle"></i>
                                                     </div>
@@ -538,7 +539,7 @@ $course = mysqli_fetch_assoc($result);
                                                         <div class="lecture-title"><?=$module_details['title']?></div>
                                                         <div class="lecture-meta">
                                                             <?php if($module_details['is_free'] != '0') echo "<span class='tag free'>ফ্রি প্রিভিউ</span>"; ?>
-                                                            <span class="lecture-duration"><?=$module_details['time_minutes']?> মিনিট</span>
+                                                            <span class="lecture-duration"><?=$module_details['time']?> মিনিট</span>
                                                         </div>
                                                     </div>
                                                     <?php
@@ -680,7 +681,7 @@ $course = mysqli_fetch_assoc($result);
                         <span class="original-price"><?=$course['old_price']?>৳</span>
                     </div>
                     
-                    <button class="btn-enroll">
+                    <button class="btn-enroll" onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($course['id'])?>&type=course'">
                         <i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন
                     </button>
                     
@@ -710,10 +711,10 @@ $course = mysqli_fetch_assoc($result);
     <!-- Mobile Enroll Button -->
     <div class="mobile-enroll d-lg-none">
         <div class="mobile-price">
-            <span class="current">4000৳</span>
-            <span class="original">6000৳</span>
+            <span class="current"><?= $course['price']?>৳</span>
+            <span class="original"><?=$course['old_price']?>৳</span>
         </div>
-        <button class="btn-mobile-enroll">এনরোল করুন</button>
+        <button class="btn-mobile-enroll" onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($course['id'])?>&type=course'">এনরোল করুন</button>
     </div>
 
     <!-- Bootstrap JS Bundle with Popper -->
@@ -762,6 +763,28 @@ $course = mysqli_fetch_assoc($result);
                 });
             }
         });
+        function seeFree(detailId, isFree) {
+            if (isFree != '0') {
+                // Redirect to the lecture page with post method request
+                const form = document.createElement('form');
+                const input = document.createElement('input');
+                form.method = 'POST';
+                form.action = 'video/index.php';
+                input.type = 'hidden';
+                input.name = 'course_id';
+                input.value = '<?= $get_id ?>';
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'এই লেকচারটি ফ্রি নয়।, দয়া করে কোর্সটি কিনুন।',
+                    footer: '<a href="cart/add.php?thanks=<?=encryptSt($course['id'])?>&type=course">কোর্স কিনতে এখানে ক্লিক করুন</a>'
+                });
+            }
+        }
     </script>
 </body>
 </html>

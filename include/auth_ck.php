@@ -45,13 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        $hashedPassword = encryptPass($password);
         $stmt = $conn->prepare("INSERT INTO users (name, number, email, wish, password) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $name, $number, $email, $wish, $hashedPassword);
+        $stmt->bind_param("sssss", $name, $number, $email, $wish, encryptPass($password));
         if ($stmt->execute()) {
-            $_SESSION['user_id'] = encryptSt($conn->insert_id);
-            $_SESSION['number'] = $number;
-            $_SESSION['web'] = encryptSt($password);
+            addCookie('user_id', encryptSt($conn->insert_id));
+            addCookie('number', encryptSt($number));
+            addCookie('web', encryptSt($password));
             header("Location: home.php");
             exit();
         } else {
@@ -65,9 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db_password = $row['password'];
 
             if (verifyPassword($password, $db_password)) {
-                $_SESSION['user_id'] = encryptSt($row['id']);
-                $_SESSION['number'] = $number;
-                $_SESSION['web'] = encryptSt($password);
+                addCookie('user_id', encryptSt($row['id']));
+                addCookie('number', encryptSt($number));
+                addCookie('web', encryptSt($password));
                 if($_POST['refer'] != 'null') {
                     $refer = decryptSt($_POST['refer']);
                     header("Location: $refer");
@@ -89,9 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 require_once 'include/dbcon.php';
-if (isset($_SESSION['number']) && isset($_SESSION['web'])) {
-    $number = $_SESSION['number'];
-    $web = decryptSt($_SESSION['web']);
+if (isset($_COOKIE['number']) && isset($_COOKIE['web'])) {
+    $number = decryptSt($_COOKIE['number']);
+    $web = decryptSt($_COOKIE['web']);
     $stmt = $conn->prepare("SELECT * FROM `users` WHERE `number` = ?");
     $stmt->bind_param("s", $number);
     $stmt->execute();

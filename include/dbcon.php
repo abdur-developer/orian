@@ -13,8 +13,6 @@
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-
-    session_start();
     mysqli_set_charset($conn, "utf8");
 
     function encryptSt($text){
@@ -29,4 +27,14 @@
     }
     function verifyPassword($password, $hash) {
         return password_verify($password, $hash);
+    }
+    function addCookie($name, $value) {
+        setcookie($name, $value, [
+            'expires' => time() + (86400 * 30),
+            'path' => '/',
+            'domain' => '', //set domain
+            'secure' => true,
+            'httponly' => true,
+            'samesite' => 'Strict'
+        ]);
     }

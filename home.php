@@ -2,12 +2,12 @@
 $user = null;
 // Include database connection
 require_once 'include/dbcon.php';
-if (!isset($_SESSION['number']) || !isset($_SESSION['web'])) {
+if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
     header("Location: auth.php?error=Please login first!");
     exit();
-}else {
-    $user_id = decryptSt($_SESSION['user_id']);
-    $web = decryptSt($_SESSION['web']);
+} else {
+    $user_id = decryptSt($_COOKIE['user_id']);
+    $web = decryptSt($_COOKIE['web']);
     $stmt = $conn->prepare("SELECT * FROM `users` WHERE `id` = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
