@@ -4,6 +4,12 @@
         header("Location: ../auth.php?error=Please+login+first!&refer=".urlencode(encryptSt("cart/index.php")));
         exit();
     }
+    if(isset($_GET['remove']) && !empty($_GET['remove'])) {
+        $item_id = decryptSt($_GET['remove']);
+        $stmt = $conn->prepare("DELETE FROM cart WHERE id = ?");
+        $stmt->bind_param("i", $item_id);
+        $stmt->execute();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -212,29 +218,21 @@
     </head>
     <body>
         <?php
-            // Get user ID from session number
-            $user_id = null;
-            if (isset($_SESSION['number'])) {
-                $stmt = $conn->prepare("SELECT id FROM users WHERE number = ?");
-                $stmt->bind_param("s", $_SESSION['number']);
-                $stmt->execute();
-                $res = $stmt->get_result();
-                if ($row = $res->fetch_assoc()) {
-                    $user_id = $row['id'];
-                }
-                $stmt->close();
-            }
-
             // Fetch cart items
             $cart = [];
-            if ($user_id) {
+            if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
+                $user_id = decryptSt($_SESSION['user_id']);
                 $stmt = $conn->prepare("SELECT * FROM cart WHERE user_id = ?");
                 $stmt->bind_param("i", $user_id);
                 $stmt->execute();
                 $cart = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 $stmt->close();
+            }else {
+                // send to auth page if not logged in
+                echo '<script>
+                    window.location.href = "../auth.php?refer=' . urlencode(encryptSt("cart/index.php")) . '";
+                </script>';
             }
-
             $count = count($cart);
 
             if ($count > 0) {
@@ -247,6 +245,7 @@
                     $course = $conn->query("SELECT * FROM `$type` WHERE id = $ref_id")->fetch_assoc();
                     ?>
                     <div class="course-item">
+
                         <img class="course-img" src="<?=htmlspecialchars($course['img'])?>" alt="">
                         <div class="course-info">
                             <div class="course-title"><?=htmlspecialchars($course['title'] ?? $course['name'])?></div>
@@ -258,13 +257,85 @@
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <div class="course-price">৳ <span class="item-price"><?=$course['price']?></span></div>
+                        <style>
+                            .quantity-control {
+                                display: flex;
+                                align-items: center;
+                                gap: 4px;
+                            }
+                            .qty-btn {
+                                padding: 4px 10px;
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                font-size: 14px;
+                                cursor: pointer;
+                                transition: all 0.2s ease;
+                                color: #555;
+                                font-weight: 900;
+                            }
+                            .qty-btn:hover {
+                                background: #eee;
+                                border-color: #ccc;
+                            }
+                            .qty-input {
+                                width: 40px;
+                                text-align: center;
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                font-size: 14px;
+                                padding: 4px 0;
+                                -moz-appearance: textfield;
+                            }
+                            .qty-input::-webkit-outer-spin-button,
+                            .qty-input::-webkit-inner-spin-button {
+                                -webkit-appearance: none;
+                                margin: 0;
+                            }
+                            .item-price {
+                                display: inline-block;
+                                margin-top: 10px;
+                                font-weight: bold;
+                                color: #333;
+                            }
+                            .remove-btn {
+                                display: inline-block;
+                                text-decoration: none;
+                                margin-left: 40px;
+                                color: red;
+                                font-size: 14px;
+                                transition: color 0.2s ease;
+                            }
+                            .remove-btn:hover {
+                                color: #e74c3c;
+                            }
+                            .qty-btn:first-child {
+                                background:rgb(255, 124, 124);
+                            }
+                            .qty-btn:last-child {
+                                background:rgb(124, 255, 124);
+                            }
+                            
+                        </style>
+
+                        <div class="course-price">
+                            <?php if ($type === 'product'): ?>
+                                <div class="quantity-control">
+                                    <button type="button" class="qty-btn" onclick="updateQuantity('qty_<?=$item['id']?>', -1, '<?=htmlspecialchars($course['price'])?>', this)">-</button>
+                                    <input type="number" id="qty_<?=$item['id']?>"  data-item-id="<?=$item['id']?>" value="<?=htmlspecialchars($item['quantity'] ?? 1)?>" min="1" class="qty-input" readonly />
+                                    <button type="button" class="qty-btn" onclick="updateQuantity('qty_<?=$item['id']?>', 1, '<?=htmlspecialchars($course['price'])?>', this)">+</button>
+                                </div>
+                            <?php endif; ?>
+                            <span class="item-price">
+                                ৳<span class="price-text"><?=htmlspecialchars($course['price'] * ($item['quantity'] ?? 1))?></span>
+                            </span>
+                            <a href="?remove=<?=encryptSt($item['id'])?>" class="remove-btn" title="Remove">✖</a>
+                        </div>
                     </div>
                     <?php
                 } ?>
                 </div>
-                <form action="checkout_hosted.php" method="post" class="card summary">
-                    <h2>Order Summary</h2>
+                <form action="checkout_hosted.php" method="POST" class="card summary">
+                    <h2>Checkout Summary</h2>
                     <div class="summary-item">
                         <span>Subtotal</span>
                         <span id="subtotal">৳0.00</span>
@@ -294,7 +365,7 @@
                     };
 
                     function calculateSummary(discountValue = 0, code = '') {
-                        const itemPrices = document.querySelectorAll('.item-price');
+                        const itemPrices = document.querySelectorAll('.price-text');
                         let subtotal = 0;
                         itemPrices.forEach(price => {
                             subtotal += parseFloat(price.textContent);
@@ -331,6 +402,50 @@
                             }
                         }
                     });
+                    function updateQuantity(inputId, change, base_price, button) {
+                        button.disabled = true; // Disable button to prevent multiple clicks
+                        const input = document.getElementById(inputId);
+                        let currentValue = parseInt(input.value);
+                        if (isNaN(currentValue)) currentValue = 1;
+                        currentValue += change;
+                        if(currentValue > 10) currentValue = 10;                        
+                        if (currentValue < 1) currentValue = 1;
+                        
+
+                        // Update total price
+                        const priceText = input.closest('.course-price').querySelector('.price-text');
+                        const price = parseFloat(priceText.textContent);
+                        const newTotal = currentValue * base_price;
+
+                        fetch("update_quantity.php", {
+                            method : "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                quantity: currentValue,
+                                item_id: input.getAttribute('data-item-id')
+                            })
+                        }).then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        }).then(data => {
+                            if (data.success) {
+                                input.value = currentValue;
+                                priceText.textContent = newTotal.toFixed(2);
+                                calculateSummary();
+                            } else {
+                                alert('Failed to update quantity!');
+                            }
+                            button.disabled = false; // Re-enable button after operation
+                        })
+                        .catch(error => {
+                            console.error('There was a problem with the fetch operation:', error);
+                            button.disabled = false; // Ensure button is re-enabled on error
+                        });
+                    }
                 </script>
             </div>
             <?php

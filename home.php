@@ -6,10 +6,10 @@ if (!isset($_SESSION['number']) || !isset($_SESSION['web'])) {
     header("Location: auth.php?error=Please login first!");
     exit();
 }else {
-    $number = $_SESSION['number'];
+    $user_id = decryptSt($_SESSION['user_id']);
     $web = decryptSt($_SESSION['web']);
-    $stmt = $conn->prepare("SELECT * FROM `users` WHERE `number` = ?");
-    $stmt->bind_param("s", $number);
+    $stmt = $conn->prepare("SELECT * FROM `users` WHERE `id` = ?");
+    $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {

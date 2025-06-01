@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $stmt = $conn->prepare("SELECT * FROM `users` WHERE `number` = ?");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE number = ?");
     $stmt->bind_param("s", $number);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -46,9 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $hashedPassword = encryptPass($password);
-        $stmt = $conn->prepare("INSERT INTO `users` (`name`, `number`, `email`, `wish`, `password`) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO users (name, number, email, wish, password) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $name, $number, $email, $wish, $hashedPassword);
         if ($stmt->execute()) {
+            $_SESSION['user_id'] = encryptSt($conn->insert_id);
             $_SESSION['number'] = $number;
             $_SESSION['web'] = encryptSt($password);
             header("Location: home.php");
@@ -64,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db_password = $row['password'];
 
             if (verifyPassword($password, $db_password)) {
+                $_SESSION['user_id'] = encryptSt($row['id']);
                 $_SESSION['number'] = $number;
                 $_SESSION['web'] = encryptSt($password);
                 if($_POST['refer'] != 'null') {
@@ -81,6 +83,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             header("location: ?error=Invalid credentials!");
             exit();
+        }
+    }
+}
+
+
+require_once 'include/dbcon.php';
+if (isset($_SESSION['number']) && isset($_SESSION['web'])) {
+    $number = $_SESSION['number'];
+    $web = decryptSt($_SESSION['web']);
+    $stmt = $conn->prepare("SELECT * FROM `users` WHERE `number` = ?");
+    $stmt->bind_param("s", $number);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        //reverify the password
+        if (verifyPassword($web, $user['password'])) {
+            if(isset($_GET['refer']) && $_GET['refer'] != 'null') {
+                $refer = decryptSt($_GET['refer']);
+                header("Location: $refer");
+                exit();
+            }else {
+                header("Location: home.php");
+                exit();
+            }
         }
     }
 }

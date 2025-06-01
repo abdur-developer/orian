@@ -11,38 +11,59 @@ include("OrderTransaction.php");
 
 use SslCommerz\SslCommerzNotification;
 
+// getting cart data from database
+$coupon_code = isset($_REQUEST['coupon_code']) ? $_REQUEST['coupon_code'] : '';
+$user_id = $conn->real_escape_string(isset($_SESSION['user_id']) ? decryptSt($_SESSION['user_id']) : '');
+
+$user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '$user_id'"));
+$sql = "SELECT * FROM cart WHERE user_id = '$user_id'";
+
+$result = $conn->query($sql);
+$total_amount = 0;
+$product_category = "";
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $sql = "SELECT * FROM {$row['type']} WHERE id = '{$row['ref_id']}'";
+        $item = mysqli_fetch_assoc($conn->query($sql));
+        $total_amount += $item['price'] * $row['quantity'];
+        $product_category .= $row['type'] . ",";
+    }
+} else {
+    header("Location: ../index.php?msg=Your+cart+is+empty.+Please+add+items+to+your+cart.");
+    exit;
+}
 # Organize the submitted/inputted data
 $post_data = array();
 
-$post_data['total_amount'] = "100.00"; // You cant not pass decimal value here, it will be rounded off
+$post_data['total_amount'] = $total_amount;
 $post_data['currency'] = "BDT";
 $post_data['tran_id'] = "SSLCZ_TEST_" . uniqid();
 
 # CUSTOMER INFORMATION
-$post_data['cus_name'] = "John Doe";
-$post_data['cus_email'] = "john.doe@email.com";
+$post_data['cus_name'] = $user['name'];
+$post_data['cus_email'] = $user['email'];
 $post_data['cus_add1'] = "Dhaka";
 $post_data['cus_add2'] = "Dhaka";
 $post_data['cus_city'] = "Dhaka";
-$post_data['cus_state'] = "Dhaka";
+// $post_data['cus_state'] = "Dhaka";
 $post_data['cus_postcode'] = "1000";
 $post_data['cus_country'] = "Bangladesh";
-$post_data['cus_phone'] = "01711111111";
-$post_data['cus_fax'] = "01711111111";
+$post_data['cus_phone'] = $user['number'];
+// $post_data['cus_fax'] = "01711111111";
 
 # SHIPMENT INFORMATION
 $post_data["shipping_method"] = "YES";
 $post_data['ship_name'] = "Store Test";
 $post_data['ship_add1'] = "Dhaka";
-$post_data['ship_add2'] = "Dhaka";
+// $post_data['ship_add2'] = "Dhaka";
 $post_data['ship_city'] = "Dhaka";
-$post_data['ship_state'] = "Dhaka";
+// $post_data['ship_state'] = "Dhaka";
 $post_data['ship_postcode'] = "1000";
-$post_data['ship_phone'] = "";
+// $post_data['ship_phone'] = "";
 $post_data['ship_country'] = "Bangladesh";
 
-$post_data['emi_option'] = "1";
-$post_data["product_category"] = "Electronic";
+// $post_data['emi_option'] = "1";
+$post_data["product_category"] = $product_category;
 $post_data["product_profile"] = "general";
 $post_data["product_name"] = "Computer";
 $post_data["num_of_item"] = "1";
@@ -137,6 +158,10 @@ $post_data['convenience_fee'] = "3";
 // $post_data["topup_number"] = "01711111111"; # topUpNumber
 
 # First, save the input data into local database table `orders`
+// echo "<pre>";
+// print_r($post_data);
+// echo "</pre>";
+// exit;
 $query = new OrderTransaction();
 $sql = $query->saveTransactionQuery($post_data);
 

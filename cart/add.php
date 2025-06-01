@@ -6,7 +6,14 @@ if(!isset($_SESSION['number'])) {
 }
 $type = $_GET['type']; //course, product
 $id = decryptSt($_GET['thanks']); //course_id, product_id
-$user_id = getUserID(); // Function to get user ID from session or database
+$user_id = decryptSt($_SESSION['user_id']); // Function to get user ID from session or database
+
+//check if the user already has this item in their cart 
+$sql = "SELECT 1 FROM cart WHERE user_id='$user_id' AND type='$type' AND ref_id='$id'";
+if(mysqli_num_rows(mysqli_query($conn, $sql))){
+    header("Location: index.php?error=".urldecode("Item already in cart!"));
+    exit();
+}
 
 $sql = "INSERT INTO cart (user_id, type, ref_id) VALUES ('$user_id', '$type', '$id')";
 
@@ -15,17 +22,3 @@ if($user_id && mysqli_query($conn, $sql)) {
 } else {
     header("Location: index.php?error=".urldecode("Failed to add to cart!"));
 }
-function getUserID() {
-    if (isset($_SESSION['number'])) {
-        $number = $_SESSION['number'];
-        global $conn;
-        $stmt = $conn->prepare("SELECT id FROM `users` WHERE `number` = ?");
-        $stmt->bind_param("s", $number);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_assoc()['id'];
-        }
-    }
-    return null;
-}   

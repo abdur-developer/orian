@@ -149,13 +149,13 @@ ini_set('display_errors', 0);
             $result = $conn->query($sql);
             $row = $result->fetch_array(MYSQLI_ASSOC);
 
-            if ($row['status'] == 'Pending' || $row['status'] == 'Processing') {
+            if ($row['status'] == 'Pending' || $row['status'] == 'Processing') :
                 $validated = $sslc->orderValidate($_POST, $tran_id, $amount, $currency);
 
-                if ($validated) {
+                if ($validated) :
                     $sql = $ot->updateTransactionQuery($tran_id, 'Processing');
 
-                    if ($conn->query($sql) === TRUE) { ?>
+                    if ($conn->query($sql) === TRUE) : ?>
                         <div class="payment-header success">
                             <i class="fas fa-check-circle"></i>
                             <h2>Payment Successful!</h2>
@@ -189,7 +189,7 @@ ini_set('display_errors', 0);
                                 </tr>
                             </table>
                         </div>
-                    <?php } else { ?>
+                    <?php else : ?>
                         <div class="payment-header danger">
                             <i class="fas fa-exclamation-circle"></i>
                             <h2>Error Processing Payment</h2>
@@ -197,10 +197,10 @@ ini_set('display_errors', 0);
                         <div class="payment-body">
                             <p>There was an error updating your payment record. Please contact support with your transaction ID.</p>
                             <p><strong>Error:</strong> <?= $conn->error ?></p>
-                            
+
                         </div>
-                    <?php } ?>
-                <?php } else { ?>
+                    <?php endif; ?>
+                <?php else : ?>
                     <div class="payment-header danger">
                         <i class="fas fa-times-circle"></i>
                         <h2>Payment Verification Failed</h2>
@@ -208,10 +208,10 @@ ini_set('display_errors', 0);
                     <div class="payment-body">
                         <p>The payment could not be validated. Please contact the merchant with your transaction details.</p>
                         <p><strong>Transaction ID:</strong> <?= $tran_id ?></p>
-                        
+
                     </div>
-                <?php } ?>
-            <?php } else { ?>
+                <?php endif; ?>
+            <?php else : ?>
                 <div class="payment-header danger">
                     <i class="fas fa-exclamation-triangle"></i>
                     <h2>Invalid Transaction</h2>
@@ -219,7 +219,7 @@ ini_set('display_errors', 0);
                 <div class="payment-body">
                     <p>This transaction has already been processed or is invalid.</p>
                 </div>
-            <?php } ?>
+            <?php endif; ?>
             <div class="payment-body">
                 <p>Redirecting... wait <span id="countdown">5</span> seconds.</p>
             </div>
@@ -236,7 +236,7 @@ ini_set('display_errors', 0);
         clearInterval(countdown);
         countdownEl.textContent = "Time's up!";
       }else if (seconds == 1) {
-        window.location.replace('http://localhost:8080/orian/home.php', '_self'); // Replace with your redirect URL
+        window.location.replace('../../home.php', '_self'); // Replace with your redirect URL
       }
     }, 1000);
   </script>
