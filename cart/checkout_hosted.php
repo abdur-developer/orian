@@ -10,9 +10,11 @@ include("../include/dbcon.php");
 include("OrderTransaction.php");
 
 use SslCommerz\SslCommerzNotification;
-
 // getting cart data from database
 $coupon_code = isset($_REQUEST['coupon_code']) ? $_REQUEST['coupon_code'] : '';
+$address = isset($_REQUEST['address']) ? $_REQUEST['address'] : '';
+$address_type = isset($_REQUEST['address_type']) ? $_REQUEST['address_type'] : '';
+
 $user_id = $conn->real_escape_string(isset($_COOKIE['user_id']) ? decryptSt($_COOKIE['user_id']) : '');
 
 $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '$user_id'"));
@@ -28,6 +30,23 @@ if ($result->num_rows > 0) {
         $total_amount += $item['price'] * $row['quantity'];
         $product_category .= $row['type'] . ",";
     }
+    if(!empty($address_type)){
+        $shipping = mysqli_fetch_assoc(mysqli_query($conn, "SELECT $address_type FROM system_structure WHERE id = 1"));
+        $total_amount += $shipping[$address_type];
+    }
+    if(!empty($coupon_code)){
+        $sql = "SELECT COUNT(id) AS total FROM orders WHERE user_id = '$user_id' AND coupon = '$coupon_code'";
+        $result = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+
+        if ($result['total'] != 0) {
+            header("Location: index.php?msg=Coupon+code+already+used+previously.");
+            exit;
+        }
+        $coupon = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM coupons WHERE code = '$coupon_code'"));
+        if(!empty($coupon)){
+            $total_amount -= $coupon['discount'];
+        }
+    }
 } else {
     header("Location: ../index.php?msg=Your+cart+is+empty.+Please+add+items+to+your+cart.");
     exit;
@@ -40,9 +59,10 @@ $post_data['currency'] = "BDT";
 $post_data['tran_id'] = "SSLCZ_TEST_" . uniqid();
 
 # CUSTOMER INFORMATION
+$post_data['user_id'] = $user_id;
 $post_data['cus_name'] = $user['name'];
 $post_data['cus_email'] = $user['email'];
-$post_data['cus_add1'] = "Dhaka";
+$post_data['cus_add1'] = $address;
 $post_data['cus_add2'] = "Dhaka";
 $post_data['cus_city'] = "Dhaka";
 // $post_data['cus_state'] = "Dhaka";
@@ -69,7 +89,7 @@ $post_data["product_name"] = "Computer";
 $post_data["num_of_item"] = "1";
 
 # OPTIONAL PARAMETERS
-// $post_data['value_a'] = "Regent Air";
+$post_data['coupon'] = $coupon_code;
 // $post_data['value_b'] = "ref002";
 // $post_data['value_c'] = "ref003";
 // $post_data['value_d'] = "ref004";

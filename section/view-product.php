@@ -259,7 +259,7 @@
     </div>
     <script>
         function addToCart(productId) {
-            window.location.href = "cart/add.php?thanks=" + productId + "&type=product";
+            window.location.href = "cart/add.php?thanks=" + productId + "&nani=<?=encryptSt($product['price'])?>&type=product";
         }
     </script>
   </div>

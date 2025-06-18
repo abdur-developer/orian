@@ -147,79 +147,114 @@ ini_set('display_errors', 0);
             $ot = new OrderTransaction();
             $sql = $ot->getRecordQuery($tran_id);
             $result = $conn->query($sql);
-            $row = $result->fetch_array(MYSQLI_ASSOC);
-
-            if ($row['status'] == 'Pending' || $row['status'] == 'Processing') :
+            $order_row = $result->fetch_array(MYSQLI_ASSOC);
+            if ($order_row['status'] == 'Pending' || $order_row['status'] == 'Processing') {//echo "achi_1";
                 $validated = $sslc->orderValidate($_POST, $tran_id, $amount, $currency);
+                
+                if ($validated) {//echo "achi_2";
+                    // cart update start
+                    $cart_sql = "SELECT * FROM cart WHERE user_id = '{$order_row['user_id']}'";
+                    $cart_result = $conn->query($cart_sql);
+                    if ($cart_result->num_rows > 0) {//echo "achi_3";
+                        while ($cart_row = $cart_result->fetch_assoc()) {
+                            $product_id = $cart_row['ref_id'];
+                            $quantity = $cart_row['quantity'];
+                            
+                            $sql = "INSERT INTO confirm_orders (user_id, product_id, order_id, item_price, total_pay, quantity, type) VALUES ('{$order_row['user_id']}', '{$product_id}', '{$order_row['id']}', '{$cart_row['price']}', '{$amount}', '{$quantity}', '{$cart_row['type']}')";
+                            $conn->query($sql);
 
-                if ($validated) :
-                    $sql = $ot->updateTransactionQuery($tran_id, 'Processing');
+                            $sql = "UPDATE cart SET is_running = 0 WHERE id = '{$cart_row['id']}'";
+                            $conn->query($sql);
+                            
+                            if($cart_row['type'] == "course"){
+                                $sql = "SELECT student_id FROM users WHERE id = '{$order_row['user_id']}'";
+                                $student_id = $conn->query($sql)->fetch_assoc()['student_id'];
+                                if(empty($student_id)){
+                                    do {
+                                        $student_id = random_int(100000, 999999);
+                                        $sql = "SELECT COUNT(*) FROM users WHERE student_id = '$student_id'";
+                                        $result = $conn->query($sql);
+                                        $row_count = $result->fetch_row();
+                                        $exists = $row_count[0];
+                                    } while ($exists > 0);
+                                    
+                                    $sql = "UPDATE users SET student_id = '$student_id' WHERE id = '{$order_row['user_id']}'";
+                                    $conn->query($sql);
+                                }
+                            }
+                        }
 
-                    if ($conn->query($sql) === TRUE) : ?>
-                        <div class="payment-header success">
-                            <i class="fas fa-check-circle"></i>
-                            <h2>Payment Successful!</h2>
-                            <p>Thank you for your purchase</p>
-                        </div>
-                        <div class="payment-body">
-                            <table class="payment-details">
-                                <tr>
-                                    <td>Transaction Status</td>
-                                    <td><span class="status-badge status-success">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Transaction ID</td>
-                                    <td><?= $_POST['tran_id'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Transaction Time</td>
-                                    <td><?= $_POST['tran_date'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Payment Method</td>
-                                    <td><?= $_POST['card_issuer'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Bank Transaction ID</td>
-                                    <td><?= $_POST['bank_tran_id'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Amount Paid</td>
-                                    <td><strong><?= $_POST['amount'] . ' ' . $_POST['currency'] ?></strong></td>
-                                </tr>
-                            </table>
-                        </div>
-                    <?php else : ?>
+                        if($order_row[''])
+
+                        //cart update end
+                        $sql = $ot->updateTransactionQuery($tran_id);
+
+                        if ($conn->query($sql) === TRUE){ ?>
+                            <div class="payment-header success">
+                                <i class="fas fa-check-circle"></i>
+                                <h2>Payment Successful!</h2>
+                                <p>Thank you for your purchase</p>
+                            </div>
+                            <div class="payment-body">
+                                <table class="payment-details">
+                                    <tr>
+                                        <td>Transaction Status</td>
+                                        <td><span class="status-badge status-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transaction ID</td>
+                                        <td><?= $_POST['tran_id'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transaction Time</td>
+                                        <td><?= $_POST['tran_date'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Method</td>
+                                        <td><?= $_POST['card_issuer'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bank Transaction ID</td>
+                                        <td><?= $_POST['bank_tran_id'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amount Paid</td>
+                                        <td><strong><?= $_POST['amount'] . ' ' . $_POST['currency'] ?></strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        <?php }else{ ?>
+                            <div class="payment-header danger">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <h2>Error Processing Payment</h2>
+                            </div>
+                            <div class="payment-body">
+                                <p>There was an error updating your payment record. Please contact support with your transaction ID.</p>
+                                <p><strong>Error:</strong> <?= $conn->error ?></p>
+
+                            </div>
+                        <?php }
+                    } else { ?>
                         <div class="payment-header danger">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <h2>Error Processing Payment</h2>
+                            <i class="fas fa-times-circle"></i>
+                            <h2>Payment Verification Failed</h2>
                         </div>
                         <div class="payment-body">
-                            <p>There was an error updating your payment record. Please contact support with your transaction ID.</p>
-                            <p><strong>Error:</strong> <?= $conn->error ?></p>
+                            <p>The payment could not be validated. Please contact the merchant with your transaction details.</p>
+                            <p><strong>Transaction ID:</strong> <?= $tran_id ?></p>
 
                         </div>
-                    <?php endif; ?>
-                <?php else : ?>
+                    <?php } ?>
+                <?php }else { ?>
                     <div class="payment-header danger">
-                        <i class="fas fa-times-circle"></i>
-                        <h2>Payment Verification Failed</h2>
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h2>Invalid Transaction</h2>
                     </div>
                     <div class="payment-body">
-                        <p>The payment could not be validated. Please contact the merchant with your transaction details.</p>
-                        <p><strong>Transaction ID:</strong> <?= $tran_id ?></p>
-
+                        <p>This transaction has already been processed or is invalid.</p>
                     </div>
-                <?php endif; ?>
-            <?php else : ?>
-                <div class="payment-header danger">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h2>Invalid Transaction</h2>
-                </div>
-                <div class="payment-body">
-                    <p>This transaction has already been processed or is invalid.</p>
-                </div>
-            <?php endif; ?>
+                <?php } ?>
+            <?php } ?>
             <div class="payment-body">
                 <p>Redirecting... wait <span id="countdown">5</span> seconds.</p>
             </div>

@@ -10,6 +10,7 @@ class OrderTransaction {
 
     public function saveTransactionQuery($post_data)
     {
+        $user_id = $post_data['user_id'];
         $name = $post_data['cus_name'];
         $email = $post_data['cus_email'];
         $phone = $post_data['cus_phone'];
@@ -17,9 +18,10 @@ class OrderTransaction {
         $address = $post_data['cus_add1'];
         $transaction_id = $post_data['tran_id'];
         $currency = $post_data['currency'];
+        $coupon = $post_data['coupon'];
 
-        $sql = "INSERT INTO orders (name, email, phone, amount, address, status, transaction_id,currency)
-                                    VALUES ('$name', '$email', '$phone','$transaction_amount','$address','Pending', '$transaction_id','$currency')";
+        $sql = "INSERT INTO orders (user_id, name, email, phone, amount, address, status, transaction_id, currency, coupon)
+                                    VALUES ('$user_id', '$name', '$email', '$phone','$transaction_amount','$address','Pending', '$transaction_id','$currency', '$coupon')";
 
         return $sql;
     }

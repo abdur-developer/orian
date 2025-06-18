@@ -681,7 +681,7 @@ $course = mysqli_fetch_assoc($result);
                         <span class="original-price"><?=$course['old_price']?>৳</span>
                     </div>
                     
-                    <button class="btn-enroll" onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($course['id'])?>&type=course'">
+                    <button class="btn-enroll" onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($course['id'])?>&nani=<?=encryptSt($course['price'])?>&type=course'">
                         <i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন
                     </button>
                     
@@ -714,7 +714,7 @@ $course = mysqli_fetch_assoc($result);
             <span class="current"><?= $course['price']?>৳</span>
             <span class="original"><?=$course['old_price']?>৳</span>
         </div>
-        <button class="btn-mobile-enroll" onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($course['id'])?>&type=course'">এনরোল করুন</button>
+        <button class="btn-mobile-enroll" onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($course['id'])?>&nani=<?=encryptSt($course['price'])?>&type=course'">এনরোল করুন</button>
     </div>
 
     <!-- Bootstrap JS Bundle with Popper -->
@@ -781,7 +781,7 @@ $course = mysqli_fetch_assoc($result);
                     icon: 'error',
                     title: 'Oops...',
                     text: 'এই লেকচারটি ফ্রি নয়।, দয়া করে কোর্সটি কিনুন।',
-                    footer: '<a href="cart/add.php?thanks=<?=encryptSt($course['id'])?>&type=course">কোর্স কিনতে এখানে ক্লিক করুন</a>'
+                    footer: '<a href="cart/add.php?thanks=<?=encryptSt($course['id'])?>&nani=<?=encryptSt($course['price'])?>&type=course">কোর্স কিনতে এখানে ক্লিক করুন</a>'
                 });
             }
         }

@@ -1,11 +1,12 @@
 <?php
 require_once '../include/dbcon.php';
 if(!isset($_COOKIE['number'])) {
-    header("Location: ../auth.php?error=Please+login+first!&refer=".urlencode(encryptSt("cart/add.php?type={$_GET['type']}&thanks={$_GET['thanks']}")));
+    header("Location: ../auth.php?error=Please+login+first!&refer=".urlencode(encryptSt("cart/add.php?type={$_GET['type']}&nani={$_GET['nani']}&thanks={$_GET['thanks']}")));
     exit();
 }
 $type = $_GET['type']; //course, product
 $id = decryptSt($_GET['thanks']); //course_id, product_id
+$price = decryptSt($_GET['nani']); //price of the item
 $user_id = decryptSt($_COOKIE['user_id']); // Function to get user ID from session or database
 
 //check if the user already has this item in their cart 
@@ -15,7 +16,7 @@ if(mysqli_num_rows(mysqli_query($conn, $sql))){
     exit();
 }
 
-$sql = "INSERT INTO cart (user_id, type, ref_id) VALUES ('$user_id', '$type', '$id')";
+$sql = "INSERT INTO cart (user_id, type, price, ref_id) VALUES ('$user_id', '$type', '$price', '$id')";
 
 if($user_id && mysqli_query($conn, $sql)) {
     header("Location: index.php?success=".urldecode("Successfully added to cart!"));

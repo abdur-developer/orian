@@ -169,9 +169,6 @@ if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
             if(isset($_GET['page'])) {
                 $page = $_GET['page'];
                 switch($page) {
-                    case 'shop':
-                        include 'section_home/shop.php';
-                        break;
                     case 'circular':
                         include 'section_home/circular.php';
                         break;
@@ -201,9 +198,9 @@ if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
                     </a>
                 </div>
                 <div class="col">
-                    <a href="?page=shop" class="nav-item">
+                    <a href="cart/" class="nav-item">
                         <i class="fas fa-shopping-bag nav-icon"></i>
-                        <span class="nav-text">শপ</span>
+                        <span class="nav-text">কার্ট</span>
                     </a>
                 </div>
                 <div class="col">

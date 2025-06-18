@@ -10,6 +10,7 @@
         $stmt->bind_param("i", $item_id);
         $stmt->execute();
     }
+    $IS_HAS_PRODUCT = false;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -215,14 +216,30 @@
                 }
             }
         </style>
+        <!-- SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body>
+        <?php
+            if(isset($_REQUEST['msg'])){
+                $error = $_REQUEST['msg'];
+                echo "
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '$error'
+                        });
+                </script>
+                ";
+            }
+        ?>
         <?php
             // Fetch cart items
             $cart = [];
             if (isset($_COOKIE['user_id']) && !empty($_COOKIE['user_id'])) {
                 $user_id = decryptSt($_COOKIE['user_id']);
-                $stmt = $conn->prepare("SELECT * FROM cart WHERE user_id = ?");
+                $stmt = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND is_running = 1");
                 $stmt->bind_param("i", $user_id);
                 $stmt->execute();
                 $cart = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -318,7 +335,8 @@
                         </style>
 
                         <div class="course-price">
-                            <?php if ($type === 'product'): ?>
+                            <?php if ($type == 'product'): 
+                                $IS_HAS_PRODUCT = true; ?>
                                 <div class="quantity-control">
                                     <button type="button" class="qty-btn" onclick="updateQuantity('qty_<?=$item['id']?>', -1, '<?=htmlspecialchars($course['price'])?>', this)">-</button>
                                     <input type="number" id="qty_<?=$item['id']?>"  data-item-id="<?=$item['id']?>" value="<?=htmlspecialchars($item['quantity'] ?? 1)?>" min="1" class="qty-input" readonly />
@@ -344,109 +362,94 @@
                         <span>Discount <span class="discount-badge" id="discount-code"></span></span>
                         <span style="color: #f72585;" id="discount-amount"></span>
                     </div>
+                    <?php if ($IS_HAS_PRODUCT) : ?>
+                        <style>
+                            .address-selector {
+                                display: flex;
+                                gap: 10px;
+                                margin-bottom: 5px;
+                            }
+                            
+                            .address-option {
+                                position: relative;
+                                flex: 1;
+                                max-width: 180px;
+                            }
+                            
+                            .address-option input {
+                                position: absolute;
+                                opacity: 0;
+                                width: 0;
+                                height: 0;
+                            }
+                            
+                            .address-option label span{
+                                font-weight: 300;
+                                font-size: 10px;
+                            }
+                            .address-option label {
+                                display: block;
+                                padding: 2px 5px;
+                                border: 2px solid #e0e0e0;
+                                border-radius: 8px;
+                                background: #f8f8f8;
+                                color: #555;
+                                font-size: 12px;
+                                font-weight: 600;
+                                text-align: center;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                            }
+                            
+                            .address-option input:checked + label {
+                                border-color: #4a90e2;
+                                background: #f0f7ff;
+                                color: #4a90e2;
+                                box-shadow: 0 2px 8px rgba(74, 144, 226, 0.2);
+                            }
+                            
+                            .address-option input:focus + label {
+                                outline: 2px solid #4a90e2;
+                                outline-offset: 2px;
+                            }
+                            
+                            .address-option:hover label {
+                                border-color: #c0c0c0;
+                            }
+                        </style>
+                        <?php
+                            $sql = "SELECT * FROM system_structure WHERE id = 1";
+                            $result = $conn->query($sql);
+                            $str = $result->fetch_assoc();
+                        ?>
+                        <div class="address-selector">
+                            <div class="address-option">
+                                <input type="radio" id="inside" name="address_type" value="inside" amount="<?=htmlspecialchars($str['inside'])?>">
+                                <label for="inside">Inside <?=$str['center']. ' - <span>' . htmlspecialchars($str['inside']) . ' tk</span>'?></label>
+                            </div>
+                            <div class="address-option">
+                                <input type="radio" id="outside" name="address_type" value="outside" amount="<?=htmlspecialchars($str['outside'])?>" checked>
+                                <label for="outside">Outside <?=$str['center']. ' - <span>' . htmlspecialchars($str['outside']) . ' tk</span>'?></label>
+                            </div>
+                        </div>
+                        <div class="coupon-form">
+                            <textarea class="coupon-input" name="address" placeholder="Enter Address" autocomplete="off" required rows="2" maxlength="200" style="resize:vertical; min-height:40px; max-height:60px; line-height:1.4;"></textarea>
+                        </div>
+                    <?php endif; ?>
+                    <div class="coupon-form">
+                        <input type="text" class="coupon-input" id="coupon-input" name="coupon_code" placeholder="Enter coupon code" autocomplete="off" />
+                        <button class="coupon-btn" type="button">Apply</button>
+                    </div>
                     <div class="summary-item summary-total">
                         <span>Total</span>
                         <span id="total">৳0.00</span>
                     </div>
-                    <div class="coupon-form">
-                        <input type="text" class="coupon-input" name="coupon_code" placeholder="Enter coupon code" autocomplete="off" />
-                        <button class="coupon-btn" type="button">Apply</button>
-                    </div>
+
                     <button class="checkout-btn" type="submit">Checkout</button>
                     <div style="margin-top: 16px; font-size: 14px; color: var(--text-light); text-align: center;">
                         <p>Secure payment processing</p>
                     </div>
                 </form>
-                <script>
-                    // Example coupon codes
-                    const coupons = {
-                        'SAVE20': 20,
-                        'DISCOUNT10': 10
-                    };
-
-                    function calculateSummary(discountValue = 0, code = '') {
-                        const itemPrices = document.querySelectorAll('.price-text');
-                        let subtotal = 0;
-                        itemPrices.forEach(price => {
-                            subtotal += parseFloat(price.textContent);
-                        });
-                        document.getElementById('subtotal').textContent = '৳ ' + subtotal.toFixed(2);
-
-                        let total = subtotal;
-                        if (discountValue > 0) {
-                            document.getElementById('discount-row').style.display = '';
-                            document.getElementById('discount-code').textContent = code;
-                            document.getElementById('discount-amount').textContent = '-৳' + discountValue.toFixed(2);
-                            total = subtotal - discountValue;
-                            if (total < 0) total = 0;
-                        } else {
-                            document.getElementById('discount-row').style.display = 'none';
-                        }
-                        document.getElementById('total').textContent = '৳ ' + total.toFixed(2);
-                    }
-
-                    document.addEventListener('DOMContentLoaded', function() {
-                        calculateSummary();
-                    });
-
-                    document.querySelector('.coupon-btn').addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const couponInput = document.querySelector('.coupon-input');
-                        const code = couponInput.value.trim().toUpperCase();
-                        if (code && coupons[code]) {
-                            calculateSummary(coupons[code], code);
-                        } else {
-                            calculateSummary();
-                            if (code) {
-                                alert('Invalid coupon code!');
-                            }
-                        }
-                    });
-                    function updateQuantity(inputId, change, base_price, button) {
-                        button.disabled = true; // Disable button to prevent multiple clicks
-                        const input = document.getElementById(inputId);
-                        let currentValue = parseInt(input.value);
-                        if (isNaN(currentValue)) currentValue = 1;
-                        currentValue += change;
-                        if(currentValue > 10) currentValue = 10;                        
-                        if (currentValue < 1) currentValue = 1;
-                        
-
-                        // Update total price
-                        const priceText = input.closest('.course-price').querySelector('.price-text');
-                        const price = parseFloat(priceText.textContent);
-                        const newTotal = currentValue * base_price;
-
-                        fetch("update_quantity.php", {
-                            method : "POST",
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                quantity: currentValue,
-                                item_id: input.getAttribute('data-item-id')
-                            })
-                        }).then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        }).then(data => {
-                            if (data.success) {
-                                input.value = currentValue;
-                                priceText.textContent = newTotal.toFixed(2);
-                                calculateSummary();
-                            } else {
-                                alert('Failed to update quantity!');
-                            }
-                            button.disabled = false; // Re-enable button after operation
-                        })
-                        .catch(error => {
-                            console.error('There was a problem with the fetch operation:', error);
-                            button.disabled = false; // Ensure button is re-enabled on error
-                        });
-                    }
-                </script>
             </div>
             <?php
             } else { ?>
@@ -511,6 +514,7 @@
             </div>
             <?php }
         ?>
+        <script src="script.js"></script>
     </body>
 </html>
 <!-- customer_name=John+Doe&customer_mobile=01711xxxxxx&customer_email=you%40example.com&amount=1200 -->

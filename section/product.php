@@ -240,8 +240,8 @@
                             <span class="discount"><?= getPercent($row['old_price'], $row['price']); ?> off</span>
                         </div>
                         <div class="product-actions">
-                            <button class="btn btn-add-to-cart" onclick="addToCart('<?= encryptSt($row['id']); ?>')">Add to Cart</button>
-                            <button class="btn btn-quick-view" onclick="viewProduct('<?= encryptSt($row['id']); ?>')"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-add-to-cart" onclick="addToCart('<?= encryptSt($row['id']) ?>', '<?=encryptSt($row['price'])?>')">Add to Cart</button>
+                            <button class="btn btn-quick-view" onclick="viewProduct('<?= encryptSt($row['id']) ?>')"><i class="fas fa-eye"></i></button>
                         </div>
                     </div>
                 </div>
@@ -255,8 +255,8 @@
         </div>
     </div>
     <script>
-        function addToCart(id){
-            window.location.href = "cart/add.php?thanks=" + id+ "&type=product";
+        function addToCart(id, nani){
+            window.location.href = "cart/add.php?thanks=" + id+ "&nani="+nani+"&type=product";
         }
         function viewProduct(id){
             window.location.href = "?product-details=" + id;
