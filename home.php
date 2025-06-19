@@ -1,12 +1,12 @@
 <?php
-$user = null;
-// Include database connection
-require_once 'include/dbcon.php';
-if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
-    header("Location: auth.php?error=Please login first!");
-    exit();
-} else {
+    $user = null;
+    if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
+        header("Location: auth.php?error=Please login first!");
+        exit();
+    }
+    require_once 'include/dbcon.php';
     $user_id = decryptSt($_COOKIE['user_id']);
+    require_once 'include/action.php';
     $web = decryptSt($_COOKIE['web']);
     $stmt = $conn->prepare("SELECT * FROM `users` WHERE `id` = ?");
     $stmt->bind_param("i", $user_id);
@@ -23,7 +23,7 @@ if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
         header("Location: auth.php?error=User not found!");
         exit();
     }
-}
+
 ?><!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -169,6 +169,12 @@ if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
             if(isset($_GET['page'])) {
                 $page = $_GET['page'];
                 switch($page) {
+                    case 'history':
+                        include 'section_home/history.php';
+                        break;
+                    case 'orders':
+                        include 'section_home/orders.php';
+                        break;
                     case 'circular':
                         include 'section_home/circular.php';
                         break;

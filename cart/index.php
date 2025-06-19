@@ -509,7 +509,7 @@
                     </div>
                     <h3>Your cart is empty</h3>
                     <p class="empty-cart-message">Looks like you haven't added any courses yet.</p>
-                    <button class="browse-courses-btn">Browse Courses</button>
+                    <button class="browse-courses-btn" onclick="location.href=&quot;../home.php?page=courses&quot;">Browse Courses</button>
                 </div>
             </div>
             <?php }

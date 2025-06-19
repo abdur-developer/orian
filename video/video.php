@@ -5,6 +5,7 @@
     }
     require '../include/dbcon.php';
     $course_id = decryptSt($_POST['course_id']);
+    $user_id = decryptSt($_COOKIE['user_id']);
     $stmt = $conn->prepare("SELECT * FROM `course` WHERE `id` = ?");
     $stmt->bind_param("i", $course_id);
     $stmt->execute();
@@ -20,16 +21,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ফ্রী কোর্স ভিডিও | <?= htmlspecialchars($course['title'], ENT_QUOTES, 'UTF-8') ?></title>
+    <title><?= htmlspecialchars($course['title'], ENT_QUOTES, 'UTF-8') ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/video.css">
 </head>
 <body>
+    <?php
+        $sql = "SELECT COUNT(id) AS c FROM confirm_orders WHERE user_id = $user_id AND type = 'course' AND product_id = $course_id";
+        $ck_order = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+        if($ck_order['c'] == 0) {            
+            echo '<form id="redirectForm" action="index.php" method="POST" style="display:none;">
+            <input type="hidden" name="course_id" value="'.$_POST['course_id'].'">
+            </form>
+            <script>document.getElementById("redirectForm").submit();</script>';
+        }
+    ?>
     <div class="container">
         <header>
             <div class="logo">
-                <img src="../img/logo.jpg" alt="Logo" class="logo-img">
-                <span class="logo-text">আব্দুর রহমান</span>
+                <a href="../home.php">
+                    <img src="../img/logo.jpg" alt="Logo" class="logo-img">
+                </a>
+                <span class="logo-text"><?= htmlspecialchars($course['title'], ENT_QUOTES, 'UTF-8') ?></span>
             </div>
             <div class="auth-status">
                 <div class="user-avatar">AR</div>
@@ -40,7 +53,7 @@
             <div class="main-player">
                 <div class="video-wrapper">
                     
-                    <video id="main-video" class="main-video" controls controlsList="nodownload noremoteplayback" disablePictureInPicture>
+                    <video id="main-video" class="main-video" controls controlsList="nodownload autoplay noremoteplayback" disablePictureInPicture>
                         <source src="" type="video/mp4">
                         আপনার ব্রাউজার ভিডিও ট্যাগ সাপোর্ট করে না।
                     </video>
@@ -77,7 +90,7 @@
             <div class="playlist">
                 <div class="playlist-header">
                     <span class="playlist-title">কোর্স কন্টেন্ট</span>
-                    <span class="playlist-count">১২ টি</span>
+                    <!-- <span class="playlist-count">১২ টি</span> -->
                 </div>
                 <script>
                     function firstPlayVideo(moduleTitle, videoSrc, description) {
@@ -97,11 +110,11 @@
                         $module_title = "Module {$module_count}: " . htmlspecialchars($course_module['title'], ENT_QUOTES, 'UTF-8');
                         ?>
                         <div class="module-group">
-                            <div class="module-header">
+                            <div class="module-header <?= $module_count != 1 ? 'collapsed' : '' ?>">
                                 <span><?= $module_title ?></span>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
-                            <div class="module-content">
+                            <div class="module-content" style="display: <?= $module_count != 1 ? 'none' : 'flex' ?>;">
                                 <?php
                                     $sql = "SELECT * FROM `module_details` WHERE module_id = '{$course_module['id']}'";
                                     $result = mysqli_query($conn, $sql);

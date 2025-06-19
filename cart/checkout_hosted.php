@@ -56,7 +56,7 @@ $post_data = array();
 
 $post_data['total_amount'] = $total_amount;
 $post_data['currency'] = "BDT";
-$post_data['tran_id'] = "SSLCZ_TEST_" . uniqid();
+$post_data['tran_id'] = "ORDER_" . uniqid();
 
 # CUSTOMER INFORMATION
 $post_data['user_id'] = $user_id;

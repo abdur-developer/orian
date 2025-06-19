@@ -531,7 +531,7 @@ $course = mysqli_fetch_assoc($result);
                                                     $result = mysqli_query($conn, $sql);
                                                     while ($module_details = mysqli_fetch_assoc($result)) {
                                                 ?>
-                                                <li class="lecture-item" onclick="seeFree('<?=$module_details['id']?>', '<?=$module_details['is_free']?>')">
+                                                <li class="lecture-item" onclick="seeFree('<?=$module_details['is_free']?>')">
                                                     <div class="lecture-icon">
                                                         <i class="fas fa-play-circle"></i>
                                                     </div>
@@ -763,7 +763,7 @@ $course = mysqli_fetch_assoc($result);
                 });
             }
         });
-        function seeFree(detailId, isFree) {
+        function seeFree(isFree) {
             if (isFree != '0') {
                 // Redirect to the lecture page with post method request
                 const form = document.createElement('form');

@@ -36,7 +36,7 @@ try {
 
     session_start();
     $_SESSION['token'] = $token; // Store token in session to prevent reuse
-    $_SESSION['count'] = base64_encode(0 ^ 12345);
+    $_SESSION['count'] = 0;
     session_write_close();
 
     echo json_encode([

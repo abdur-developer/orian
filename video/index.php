@@ -5,7 +5,9 @@
     }
     require '../include/dbcon.php';
     $course_id = decryptSt($_POST['course_id']);
-    $stmt = $conn->prepare("SELECT * FROM `course` WHERE `id` = ?");
+    $user_id = decryptSt($_COOKIE['user_id']);
+
+    $stmt = $conn->prepare("SELECT * FROM course WHERE id = ?");
     $stmt->bind_param("i", $course_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -25,6 +27,16 @@
     <link rel="stylesheet" href="../css/video.css">
 </head>
 <body>
+    <?php
+        $sql = "SELECT COUNT(id) AS c FROM confirm_orders WHERE user_id = $user_id AND type = 'course' AND product_id = $course_id";
+        $ck_order = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+        if($ck_order['c'] != 0) {            
+            echo '<form id="redirectForm" action="video.php" method="POST" style="display:none;">
+            <input type="hidden" name="course_id" value="'.$_POST['course_id'].'">
+            </form>
+            <script>document.getElementById("redirectForm").submit();</script>';
+        }
+    ?>
     <div class="container">
         <header>
             <div class="logo">
@@ -40,7 +52,7 @@
             <div class="main-player">
                 <div class="video-wrapper">
                     
-                    <video id="main-video" class="main-video" controls controlsList="nodownload noremoteplayback" disablePictureInPicture>
+                    <video id="main-video" class="main-video" controls controlsList="nodownload autoplay noremoteplayback" disablePictureInPicture>
                         <source src="" type="video/mp4">
                         আপনার ব্রাউজার ভিডিও ট্যাগ সাপোর্ট করে না।
                     </video>
@@ -97,13 +109,13 @@
                         $module_title = "Module {$module_count}: " . htmlspecialchars($course_module['title'], ENT_QUOTES, 'UTF-8');
                         ?>
                         <div class="module-group">
-                            <div class="module-header">
+                            <div class="module-header <?= $module_count != 1 ? 'collapsed' : '' ?>">
                                 <span><?= $module_title ?></span>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
-                            <div class="module-content">
+                            <div class="module-content" style="display: <?= $module_count != 1 ? 'none' : 'flex' ?>;">
                                 <?php
-                                    $sql = "SELECT * FROM `module_details` WHERE module_id = '{$course_module['id']}'";
+                                    $sql = "SELECT * FROM module_details WHERE module_id = '{$course_module['id']}'";
                                     $result = mysqli_query($conn, $sql);
                                     while ($module_details = mysqli_fetch_assoc($result)) {
                                         if($details_count == 0) {
@@ -114,7 +126,7 @@
                                         }
                                 ?>
                                 <div class="playlist-item <?php echo $details_count == 1 ? 'active' : ''; $details_count++ ?>" onclick="playVideo(this, '<?= $module_title ?>')"
-                                    data-video="<?= $module_details['is_free'] == '1' ? $module_details['video'] : 'paid.mp4' ?>"
+                                    data-video="<?= $module_details['is_free'] == '1' ? $module_details['video'] : 'paid.mp4'?>"
                                     data-title="<?= $module_details['title'] ?>"
                                     >
                                     <div class="playlist-item-number"><?= $details_count; ?></div>

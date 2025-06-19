@@ -274,16 +274,16 @@
         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Image" class="avatar">
         <div class="profile-info">
           <h2><?= $user['name'] ?></h2>
-          <?php if($user['student_id']): ?>
+          <?php if($user['student_id'] != null): ?>
           <p>Student ID #<?= $user['student_id'] ?></p>
           <?php endif; ?>
         </div>
       </div>
       
       <nav class="sidebar-nav">
-        <a href="#"><span>🏷️</span> My Courses</a>
-        <a href="#"><span>❤️</span> My Wishlist</a>
-        <a href="#"><span>🔄</span> Purchase History</a>
+        <a href="home.php?page=courses"><span>🏷️</span> My Courses</a>
+        <a href="home.php?page=orders"><span>❤️</span> My Orders</a>
+        <!-- <a href="home.php?page=history"><span>🔄</span> Purchase History</a> -->
         <a href="#" class="active"><span>👤</span> My Profile</a>
       </nav>
     </div>
@@ -293,7 +293,7 @@
         <h1>Personal Information</h1>
       </div>
       
-      <form class="profile-form">
+      <form class="profile-form" action="" method="POST">
         <div class="form-group">
           <div>
             <label class="form-label">First Name</label>
@@ -314,7 +314,7 @@
         
         <div>
           <label class="form-label">Address</label>
-          <textarea class="form-input" placeholder="Enter your address"></textarea>
+          <textarea class="form-input" name="profile_address" placeholder="Enter your address" required><?=$user['address']?></textarea>
         </div>
         
         <div>
@@ -322,11 +322,11 @@
             <label class="form-label">Author Bio</label>
             <span>Max. 500 characters</span>
           </div>
-          <textarea class="form-input" placeholder="Write something about yourself..."></textarea>
+          <textarea class="form-input" name="profile_bio" placeholder="Write something about yourself..." required><?=$user['bio']?></textarea>
         </div>
         
         <div class="form-actions">
-          <button type="button" class="btn btn-secondary">Cancel</button>
+          <!-- <button type="button" class="btn btn-secondary">Cancel</button> -->
           <button type="submit" class="btn btn-primary">Save Changes</button>
         </div>
       </form>

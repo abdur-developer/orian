@@ -21,12 +21,11 @@ try {
         throw new Exception('Invalid token', 403);
     }
     if (!isset($_SERVER['HTTP_RANGE'])) {
-        $count = (base64_decode($_SESSION['count']) ^ 12345);
-        if($count > 0) {
-            throw new Exception('Invalid request , refresh the page and try again', 403);
-        }else {
-            $count++;
-            $_SESSION['count'] = base64_encode($count ^ 12345); // Reset count
+        $count = isset($_SESSION['count']) ? (int)$_SESSION['count'] : 0;
+        if ($count > 0) {
+            throw new Exception('Invalid request, refresh the page and try again', 403);
+        } else {
+            $_SESSION['count'] = ++$count;
         }
         session_write_close();
     }

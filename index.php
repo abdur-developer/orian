@@ -7,16 +7,23 @@ include("section/header.php");
         include("section/nav.php");
         if(isset($_GET['view-blog'])){
             include("section/view-blog.php");
-        }elseif(isset($_GET['course-details'])){
+
+        }elseif(isset($_GET['circular-details'])){            
+            include("section/view-circular.php");
+
+        }elseif(isset($_GET['course-details'])){            
             include("section/view-course.php");
+
         }elseif(isset($_GET['product-details'])){
             include("section/view-product.php");
+
         }else{
             include("section/hero.php");
             include("section/feature.php");
             include("section/course.php");
             include("section/product.php");
             include("section/testimonials.php");
+            include("section/circular.php");
             include("section/blog.php");
             include("section/cta.php");
         }
