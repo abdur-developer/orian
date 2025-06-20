@@ -18,16 +18,17 @@ $address_type = isset($_REQUEST['address_type']) ? $_REQUEST['address_type'] : '
 $user_id = $conn->real_escape_string(isset($_COOKIE['user_id']) ? decryptSt($_COOKIE['user_id']) : '');
 
 $user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '$user_id'"));
-$sql = "SELECT * FROM cart WHERE user_id = '$user_id'";
+$sql = "SELECT * FROM cart WHERE user_id = '$user_id' AND is_running = 1";
 
 $result = $conn->query($sql);
 $total_amount = 0;
+
 $product_category = "";
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $sql = "SELECT * FROM {$row['type']} WHERE id = '{$row['ref_id']}'";
         $item = mysqli_fetch_assoc($conn->query($sql));
-        $total_amount += $item['price'] * $row['quantity'];
+        $total_amount += ($item['price'] * $row['quantity']);
         $product_category .= $row['type'] . ",";
     }
     if(!empty($address_type)){
