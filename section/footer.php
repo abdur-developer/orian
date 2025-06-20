@@ -99,21 +99,21 @@
                 </p>
                 
                 <div class="social-icons mt-4">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" style="text-decoration: none;"><i class="fab fa-youtube"></i></a>
+                    <a href="#" style="text-decoration: none;"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" style="text-decoration: none;"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             
             <div class="col-lg-2 col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="100">
                 <div class="footer-links">
                     <h5>লিংকস</h5>
-                    <a href="/bn">হোম</a>
-                    <a href="/bn/about">আমাদের সম্পর্কে</a>
-                    <a href="/bn/circular">সার্কুলার</a>
-                    <a href="/bn/all-courses">কোর্সসমূহ</a>
-                    <a href="/bn/contact">যোগাযোগ</a>
+                    <a href="#">হোম</a>
+                    <a href="#">আমাদের সম্পর্কে</a>
+                    <a href="#">সার্কুলার</a>
+                    <a href="#">কোর্সসমূহ</a>
+                    <a href="#">যোগাযোগ</a>
                 </div>
             </div>
             
@@ -141,7 +141,7 @@
         </div>
         
         <div class="copyright">
-            <p class="mb-0">© 2025 Abdur Ltd. সকল স্বত্ব সংরক্ষিত</p>
+            <p class="mb-0">© <?= date('Y'); ?> Abdur Ltd. All rights reserved. | সকল স্বত্ব সংরক্ষিত</p>
         </div>
     </div>
 </footer>

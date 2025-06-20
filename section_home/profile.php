@@ -283,8 +283,9 @@
       <nav class="sidebar-nav">
         <a href="home.php?page=courses"><span>🏷️</span> My Courses</a>
         <a href="home.php?page=orders"><span>❤️</span> My Orders</a>
-        <!-- <a href="home.php?page=history"><span>🔄</span> Purchase History</a> -->
         <a href="#" class="active"><span>👤</span> My Profile</a>
+        <!-- <a href="home.php?page=history"><span>🔄</span> Purchase History</a> -->
+        <a href="signout.php"><span>🚪</span> Logout</a>
       </nav>
     </div>
     

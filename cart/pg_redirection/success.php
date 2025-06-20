@@ -261,19 +261,19 @@ ini_set('display_errors', 0);
         </div>
     </div>
     <script>
-    let seconds = 4; // 5 seconds countdown
-    const countdownEl = document.getElementById('countdown');
+        let seconds = 4; // 5 seconds countdown
+        const countdownEl = document.getElementById('countdown');
 
-    const countdown = setInterval(() => {
-      countdownEl.textContent = seconds;
-      seconds--;
-      if (seconds < 0) {
-        clearInterval(countdown);
-        countdownEl.textContent = "Time's up!";
-      }else if (seconds == 1) {
-        window.location.replace('../../home.php', '_self'); // Replace with your redirect URL
-      }
-    }, 1000);
+        const countdown = setInterval(() => {
+        countdownEl.textContent = seconds;
+        seconds--;
+        if (seconds < 0) {
+            clearInterval(countdown);
+            countdownEl.textContent = "Time's up!";
+        }else if (seconds == 1) {
+            window.location.replace('../../home.php', '_self'); // Replace with your redirect URL
+        }
+        }, 1000);
   </script>
 </body>
 </html>

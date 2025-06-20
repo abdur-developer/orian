@@ -162,34 +162,39 @@
                 $sql ="SELECT id, price, img, users, title, description, badge, provider FROM course";
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_assoc($result)){ ?>
-            <div class="col-lg-4 col-md-6">
-                <div class="course-card">
-                    <div class="course-img-container">
-                        <img src="<?= $row['img']; ?>" class="course-img" alt="<?=$row['title']?>">    
-                        <?php if($row['badge'] != null) echo "<span class='course-badge'>{$row['badge']}</span>"; ?>
-                    </div>
-                    <div class="card-body">
-                        <span class="course-provider"><?=$row['provider']?></span>
-                        <h3 class="course-title"><?=$row['title']?></h3>
-                        <p class="course-desc"><?=$row['description']?></p>
-                        
-                        <div class="course-meta">
-                            <span class="course-meta-item"><i class="fas fa-users"></i> <?=$row['users']?> Students</span>
-                            <!-- <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span> -->
-                            <div class="course-price">
-                                মূল্য : <?=$row['price']?>৳
+                    <div class="col-lg-4 col-md-6">
+                        <div class="course-card">
+                            <div class="course-img-container">
+                                <img src="<?= $row['img']; ?>" class="course-img" alt="<?=$row['title']?>">    
+                                <?php if($row['badge'] != null) echo "<span class='course-badge'>{$row['badge']}</span>"; ?>
+                            </div>
+                            <div class="card-body">
+                                <span class="course-provider"><?=$row['provider']?></span>
+                                <h3 class="course-title"><?=$row['title']?></h3>
+                                <p class="course-desc"><?=$row['description']?></p>
+                                
+                                <div class="course-meta">
+                                    <span class="course-meta-item"><i class="fas fa-users"></i> <?=$row['users']?> Students</span>
+                                    <!-- <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span> -->
+                                    <div class="course-price">
+                                        মূল্য : <?=$row['price']?>৳
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="d-grid gap-2 d-md-flex">
+                                    <button onclick="location.href = '?course-details=<?=encryptSt($row['id'])?>'" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
+                                    <button onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($row['id'])?>&nani=<?=encryptSt($row['price'])?>&type=course'" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                                </div>
                             </div>
                         </div>
-                        
-                        
-                        <div class="d-grid gap-2 d-md-flex">
-                            <button onclick="location.href = '?course-details=<?=encryptSt($row['id'])?>'" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                            <button onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($row['id'])?>&nani=<?=encryptSt($row['price'])?>&type=course'" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
-                        </div>
                     </div>
-                </div>
-            </div>
             <?php } ?>
+        </div>
+        <div class="view-all-btn">
+            <a href="home.php?page=courses" class="btn btn-primary">
+                সব কোর্স দেখুন <i class="fas fa-arrow-right ms-2"></i>
+            </a>
         </div>
         <!-- ================================================== -->
     </div>

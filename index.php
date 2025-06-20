@@ -4,6 +4,7 @@ include("section/header.php");
 ?>
 <body>
     <?php
+        include("section/chat.php");
         include("section/nav.php");
         if(isset($_GET['view-blog'])){
             include("section/view-blog.php");

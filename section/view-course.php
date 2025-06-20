@@ -527,7 +527,7 @@ $course = mysqli_fetch_assoc($result);
                                             <ul class="lecture-list">
                                                 <!-- ////////////////////////////////////////////////////////// -->
                                                 <?php
-                                                    $sql = "SELECT * FROM `module_details` WHERE module_id = '{$course_module['id']}'";
+                                                    $sql = "SELECT * FROM module_details WHERE module_id = '{$course_module['id']}'";
                                                     $result = mysqli_query($conn, $sql);
                                                     while ($module_details = mysqli_fetch_assoc($result)) {
                                                 ?>

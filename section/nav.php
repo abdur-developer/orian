@@ -36,7 +36,7 @@
     <i class="fas fa-square"></i>
 </div>
 <div class="floating" style="top: 30%; left: 75%; font-size: 4rem; color: var(--primary);">
-    <i class="fas fa-triangle"></i>
+    <i class="fas fa-play"></i>
 </div>
 <style>
     :root {
@@ -279,7 +279,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php if(isset($_GET['circular'])) echo "active"; ?>" href="?circular">
+                        <a class="nav-link <?php if(isset($_GET['product'])) echo "active"; ?>" href="?product#product">
+                            <div class="nav-icon-wrapper">
+                                <i class="fas fa-shopping-bag me-2"></i>
+                                <span>প্রোডাক্ট</span>
+                            </div>
+                            <span class="nav-highlight"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php if(isset($_GET['circular'])) echo "active"; ?>" href="?circular#circular">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-bullhorn me-2"></i>
                                 <span>সার্কুলার</span>
@@ -288,7 +297,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?courses">
+                        <a class="nav-link <?php if(isset($_GET['courses'])) echo "active"; ?>" href="?courses#courses">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-book me-2"></i>
                                 <span>সকল কোর্স</span>
@@ -297,6 +306,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link <?php if(isset($_GET['blog'])) echo "active"; ?>" href="?blog#blog">
+                            <div class="nav-icon-wrapper">
+                                <i class="fas fa-blog me-2"></i>
+                                <span>ব্লগ</span>
+                            </div>
+                            <span class="nav-highlight"></span>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="?model-test">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-clipboard-list me-2"></i>
@@ -304,7 +322,7 @@
                             </div>
                             <span class="nav-highlight"></span>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
                 
                 <!-- Fixed Login Button -->

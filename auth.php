@@ -420,10 +420,11 @@
                 
                 <div class="signup-link">
                     <?php
+                        $ref = isset($_GET['refer']) ? htmlspecialchars($_GET['refer']) : '';
                         if (isset($_GET['signup'])) {
-                            echo 'আগে থেকেই আছে ? <a href="auth.php">লগইন করুন</a>';
+                            echo 'আগে থেকেই আছে ? <a href="auth.php?refer=' . urlencode($ref) . '">লগইন করুন</a>';
                         } else {
-                            echo 'কোন আকাউন্ট নেই ? <a href="auth.php?signup">রেজিস্টার করুন</a>';
+                            echo 'কোন আকাউন্ট নেই ? <a href="auth.php?signup&refer=' . urlencode($ref) . '">রেজিস্টার করুন</a>';
                         }
                     ?>
                 </div>

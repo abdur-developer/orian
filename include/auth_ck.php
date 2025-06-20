@@ -12,7 +12,7 @@ function encryptPass($password) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['number'], $_POST['password'])) {
-        header("location: ?error=Missing input!");
+        header("location: ?error=Missing+input!");
         exit();
     }
 
@@ -26,11 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }, $_POST['wish'])) : '';
 
     if (strlen($number) < 11) {
-        header("location: ?error=Invalid number!");
+        header("location: ?error=Invalid+number!");
         exit();
     }
     if (strlen($password) < 6) {
-        header("location: ?error=Password must be at least 6 characters!");
+        header("location: ?error=Password+must+be+at+least+6+characters!");
         exit();
     }
 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($signup === 1) {
         if ($result->num_rows > 0) {
-            header("location: ?error=Number already exists!");
+            header("location: ?error=Number+already+exists!");
             exit();
         }
 
@@ -76,11 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit();
                 }
             } else {
-                header("location: ?error=Incorrect password!");
+                header("location: ?error=Incorrect+password!");
                 exit();
             }
         } else {
-            header("location: ?error=Invalid credentials!");
+            header("location: ?error=Invalid+credentials!");
             exit();
         }
     }
@@ -91,7 +91,7 @@ require_once 'include/dbcon.php';
 if (isset($_COOKIE['number']) && isset($_COOKIE['web'])) {
     $number = decryptSt($_COOKIE['number']);
     $web = decryptSt($_COOKIE['web']);
-    $stmt = $conn->prepare("SELECT * FROM `users` WHERE `number` = ?");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE number = ?");
     $stmt->bind_param("s", $number);
     $stmt->execute();
     $result = $stmt->get_result();

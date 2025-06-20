@@ -564,10 +564,10 @@
       const q = quizData[currentQuestion];
       
       // Update progress bar
-      progressBar.style.width = `${((currentQuestion) / quizData.length) * 100}%`;
+      progressBar.style.width = ${((currentQuestion) / quizData.length) * 100}%;
       
       // Set question text
-      questionElement.textContent = `${currentQuestion + 1}. ${q.question}`;
+      questionElement.textContent = ${currentQuestion + 1}. ${q.question};
       
       // Create options
       q.options.forEach((option, index) => {
@@ -676,7 +676,7 @@
       leaderboard.style.display = 'block';
       
       // Update score display
-      scoreDisplay.innerHTML = `আপনার স্কোর: <span>${score}</span>/${quizData.length}`;
+      scoreDisplay.innerHTML = আপনার স্কোর: <span>${score}</span>/${quizData.length};
       
       // Calculate stats
       const correctCount = score;
@@ -684,7 +684,7 @@
       const percentage = Math.round((score / quizData.length) * 100);
       
       // Generate feedback
-      feedbackElement.innerHTML = `
+      feedbackElement.innerHTML = 
         <h3 class="feedback-title">আপনার উত্তর বিশ্লেষণ</h3>
         
         <div class="feedback-stats">
@@ -701,10 +701,10 @@
             <div class="stat-label">সাফল্যের হার</div>
           </div>
         </div>
-      `;
+      ;
       
       userAnswers.forEach((answer, index) => {
-        feedbackElement.innerHTML += `
+        feedbackElement.innerHTML += 
           <div class="feedback-item">
             <div class="feedback-question">প্রশ্ন ${index + 1}: ${answer.question}</div>
             
@@ -713,18 +713,18 @@
               <div class="user-answer ${answer.isCorrect ? 'correct' : ''}">${answer.userAnswer}</div>
             </div>
             
-            ${!answer.isCorrect ? `
+            ${!answer.isCorrect ? 
               <div class="feedback-answer">
                 <div class="answer-label">সঠিক উত্তর:</div>
                 <div class="correct-answer">${answer.correctAnswer}</div>
               </div>
-            ` : ''}
+             : ''}
             
             <div class="feedback-explanation">
               ${answer.explanation}
             </div>
           </div>
-        `;
+        ;
       });
       
       // Update leaderboard with user score
@@ -736,11 +736,11 @@
       leaderboardData.forEach((player, index) => {
           const tr = document.createElement('tr');
           if (player.name === 'আপনি') tr.classList.add('you');
-          tr.innerHTML = `
+          tr.innerHTML = 
               <td class="rank">${index + 1}</td>
               <td>${player.name}</td>
               <td>${player.score}/${quizData.length}</td>
-          `;
+          ;
           leaderboardList.appendChild(tr);
       });
     }

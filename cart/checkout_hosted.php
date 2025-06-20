@@ -178,7 +178,7 @@ $post_data['convenience_fee'] = "3";
 
 // $post_data["topup_number"] = "01711111111"; # topUpNumber
 
-# First, save the input data into local database table `orders`
+# First, save the input data into local database table orders
 // echo "<pre>";
 // print_r($post_data);
 // echo "</pre>";

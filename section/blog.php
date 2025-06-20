@@ -145,7 +145,7 @@
     }
 </style>
 
-<section class="blog-section">
+<section class="blog-section" id="blog">
     <!-- Blog Section -->
     <div class="container">
         <div class="section-title">

@@ -1,14 +1,14 @@
 <?php
     $user = null;
+    require_once 'include/dbcon.php';
     if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
-        header("Location: auth.php?error=Please login first!");
+        header("Location: auth.php?error=Please+login+first!&refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));
         exit();
     }
-    require_once 'include/dbcon.php';
     $user_id = decryptSt($_COOKIE['user_id']);
     require_once 'include/action.php';
     $web = decryptSt($_COOKIE['web']);
-    $stmt = $conn->prepare("SELECT * FROM `users` WHERE `id` = ?");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -16,11 +16,11 @@
         $user = $result->fetch_assoc();
         //reverify the password
         if (!verifyPassword($web, $user['password'])) {
-            header("Location: auth.php?error=Session expired, please login again!");
+            header("Location: auth.php?error=Session+expired,+please+login+again!&refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));
             exit();
         }
     } else {
-        header("Location: auth.php?error=User not found!");
+        header("Location: auth.php?error=User+not+found!&refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));
         exit();
     }
 
@@ -171,6 +171,12 @@
                 switch($page) {
                     case 'history':
                         include 'section_home/history.php';
+                        break;
+                    case 'job_apply':
+                        include 'section_home/job_apply.php';
+                        break;
+                    case 'consultants':
+                        include 'section_home/consultants.php';
                         break;
                     case 'orders':
                         include 'section_home/orders.php';

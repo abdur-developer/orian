@@ -6,7 +6,7 @@
     require '../include/dbcon.php';
     $course_id = decryptSt($_POST['course_id']);
     $user_id = decryptSt($_COOKIE['user_id']);
-    $stmt = $conn->prepare("SELECT * FROM `course` WHERE `id` = ?");
+    $stmt = $conn->prepare("SELECT * FROM course WHERE id = ?");
     $stmt->bind_param("i", $course_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -116,7 +116,7 @@
                             </div>
                             <div class="module-content" style="display: <?= $module_count != 1 ? 'none' : 'flex' ?>;">
                                 <?php
-                                    $sql = "SELECT * FROM `module_details` WHERE module_id = '{$course_module['id']}'";
+                                    $sql = "SELECT * FROM module_details WHERE module_id = '{$course_module['id']}'";
                                     $result = mysqli_query($conn, $sql);
                                     while ($module_details = mysqli_fetch_assoc($result)) {
                                         if($details_count == 0) {

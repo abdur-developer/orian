@@ -55,7 +55,7 @@
                 <p class="cta-text">এখনই এনরোল করুন আপনার পছন্দের কোর্সে এবং চাকরি প্রস্তুতিতে এগিয়ে থাকুন</p>
             </div>
             <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
-                <a href="/bn/all-courses" class="btn btn-light btn-lg"><i class="fas fa-arrow-right me-2"></i> কোর্স ব্রাউজ করুন</a>
+                <a href="home.php?page=courses" class="btn btn-light btn-lg"><i class="fas fa-arrow-right me-2"></i> কোর্স ব্রাউজ করুন</a>
             </div>
         </div>
     </div>

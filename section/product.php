@@ -202,23 +202,22 @@
     }
 </style>
 
-<section id="product-section" class="section product-section">
+<section id="product" class="section product-section">
     <div class="container">
         <h2 class="section-title">Our Products</h2>
         
         <div class="row g-4">
             <?php 
-            $sql = "SELECT * FROM product";
+            $sql = "SELECT * FROM product LIMIT 12";
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)){ ?>
-            <!-- Product <?=$i + 1?> -->
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="product-card">
                     <div class="product-img-container">
                         <span class="product-badge"><?= $row['status']; ?></span>
-                        <div class="product-wishlist">
+                        <!-- <div class="product-wishlist">
                             <i class="far fa-heart"></i>
-                        </div>
+                        </div> -->
                         <img src="<?= $row['img']; ?>" class="product-img" alt="<?= $row['name']; ?>">
                     </div>
                     <div class="product-body">

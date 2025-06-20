@@ -259,7 +259,7 @@
                 foreach ($cart as $item) {
                     $type = $item['type'];
                     $ref_id = $item['ref_id'];
-                    $course = $conn->query("SELECT * FROM `$type` WHERE id = $ref_id")->fetch_assoc();
+                    $course = $conn->query("SELECT * FROM $type WHERE id = $ref_id")->fetch_assoc();
                     ?>
                     <div class="course-item">
 

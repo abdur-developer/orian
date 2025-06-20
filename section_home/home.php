@@ -210,7 +210,7 @@
     <div class="row g-3">
         <!-- ============ -->
         <?php
-            $sql = "SELECT * FROM course ORDER BY `rating` DESC LIMIT 6";
+            $sql = "SELECT * FROM course ORDER BY rating DESC LIMIT 6";
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) { ?>
@@ -237,7 +237,7 @@
     <h2 class="h5 fw-bold mb-3">অর্ডার করুন</h2>
     <div class="row g-3">
         <?php
-        $sql = "SELECT * FROM product ORDER BY `rating_count` DESC LIMIT 8";
+        $sql = "SELECT * FROM product ORDER BY rating_count DESC LIMIT 8";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) { ?>
