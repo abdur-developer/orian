@@ -88,7 +88,7 @@
     }
     
     #chat-section .message {
-      margin: 0;
+      margin: 10px 0;
       padding: 6px 16px;
       border-radius: var(--border-radius);
       max-width: 80%;

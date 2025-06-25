@@ -199,7 +199,7 @@
         <!-- Category 6 -->
         <div class="col-4 col-md-2" onclick="location.href='?page=job_apply'">
             <div class="category-icon">
-                <i class="fas fa-job"></i>
+                <i class="fas fa-briefcase"></i>
             </div>
             <p class="category-title mb-0">জব অ্যাপ্লাই</p>
         </div>
