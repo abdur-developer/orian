@@ -176,7 +176,11 @@
                         include 'section_home/job_apply.php';
                         break;
                     case 'consultants':
-                        include 'section_home/consultants.php';
+                        if(availableConsultants()) {
+                            include 'section_home/chat.php';
+                        }else{
+                            include 'section_home/consultants.php';
+                        }
                         break;
                     case 'orders':
                         include 'section_home/orders.php';
@@ -193,6 +197,8 @@
                     default:
                         include 'section_home/home.php';
                 }
+            }elseif(isset($_GET['view_apply'])) {
+                include 'section_home/view_apply.php';
             } else {
                 include 'section_home/home.php';
             }

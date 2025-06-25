@@ -64,9 +64,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+let coupons = {};
+fetch('coupons.php')
+    .then(response => response.json())
+    .then(data => {
+        coupons = data;
+    })
+    .catch(() => {});
 // Coupon application
 document.querySelector('.coupon-btn').addEventListener('click', function (e) {
     e.preventDefault();
+
     const couponInput = document.getElementById('coupon-input');
     const code = couponInput.value.trim().toUpperCase();
     if (code && coupons[code]) {
@@ -77,6 +85,7 @@ document.querySelector('.coupon-btn').addEventListener('click', function (e) {
             alert('Invalid coupon code!');
         }
     }
+    
 });
 
 // Quantity update function
@@ -122,8 +131,3 @@ function updateQuantity(inputId, change, base_price, button) {
     });
 }
 
-// Example coupon codes
-const coupons = {
-    'SAVE20': 20,
-    'DISCOUNT10': 10
-};

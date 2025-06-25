@@ -148,20 +148,42 @@ ini_set('display_errors', 0);
             $sql = $ot->getRecordQuery($tran_id);
             $result = $conn->query($sql);
             $order_row = $result->fetch_array(MYSQLI_ASSOC);
-            if ($order_row['status'] == 'Pending' || $order_row['status'] == 'Processing') {//echo "achi_1";
+            if ($order_row['status'] == 'Pending' || $order_row['status'] == 'Processing' || isset($_POST['zero'])) {
                 $validated = $sslc->orderValidate($_POST, $tran_id, $amount, $currency);
-                
-                if ($validated) {//echo "achi_2";
+
+                if ($validated || isset($_POST['zero'])) {
                     // cart update start
-                    $cart_sql = "SELECT * FROM cart WHERE user_id = '{$order_row['user_id']}'";
+                    $cart_sql = "SELECT * FROM cart WHERE user_id = '{$order_row['user_id']}' AND is_running = 1";
                     $cart_result = $conn->query($cart_sql);
                     if ($cart_result->num_rows > 0) {//echo "achi_3";
                         while ($cart_row = $cart_result->fetch_assoc()) {
                             $product_id = $cart_row['ref_id'];
                             $quantity = $cart_row['quantity'];
-                            
-                            $sql = "INSERT INTO confirm_orders (user_id, product_id, order_id, item_price, total_pay, quantity, type) VALUES ('{$order_row['user_id']}', '{$product_id}', '{$order_row['id']}', '{$cart_row['price']}', '{$amount}', '{$quantity}', '{$cart_row['type']}')";
+
+                            $validityDays = 0;
+
+                            if ($cart_row['type'] === "consultant") {
+                                $result = $conn->query("SELECT validity FROM consultant WHERE id = '{$product_id}'");
+                                $validityDays = (int) $result->fetch_assoc()['validity'];
+                            } elseif ($cart_row['type'] === "course") {
+                                $validityDays = 365;
+                            }
+
+                            // Build validity expression
+                            $validityExpr = ($cart_row['type'] !== "product")
+                                ? "CURRENT_TIMESTAMP + INTERVAL $validityDays DAY"
+                                : "CURRENT_TIMESTAMP";
+
+                            // Final insert query
+                            $sql = "
+                                INSERT INTO confirm_orders 
+                                    (user_id, product_id, order_id, item_price, total_pay, quantity, type, validity)
+                                VALUES 
+                                    ('{$order_row['user_id']}', '{$product_id}', '{$order_row['id']}', '{$cart_row['price']}', '{$amount}', '{$quantity}', '{$cart_row['type']}', $validityExpr)
+                            ";
+
                             $conn->query($sql);
+
 
                             $sql = "UPDATE cart SET is_running = 0 WHERE id = '{$cart_row['id']}'";
                             $conn->query($sql);
@@ -265,14 +287,14 @@ ini_set('display_errors', 0);
         const countdownEl = document.getElementById('countdown');
 
         const countdown = setInterval(() => {
-        countdownEl.textContent = seconds;
-        seconds--;
-        if (seconds < 0) {
-            clearInterval(countdown);
-            countdownEl.textContent = "Time's up!";
-        }else if (seconds == 1) {
-            window.location.replace('../../home.php', '_self'); // Replace with your redirect URL
-        }
+            countdownEl.textContent = seconds;
+            seconds--;
+            if (seconds < 0) {
+                clearInterval(countdown);
+                countdownEl.textContent = "Time's up!";
+            }else if (seconds == 1) {
+                window.location.replace('../../home.php', '_self'); // Replace with your redirect URL
+            }
         }, 1000);
   </script>
 </body>

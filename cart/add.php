@@ -4,7 +4,7 @@ if(!isset($_COOKIE['number'])) {
     header("Location: ../auth.php?error=Please+login+first!&refer=".urlencode(encryptSt("cart/add.php?type={$_GET['type']}&nani={$_GET['nani']}&thanks={$_GET['thanks']}")));
     exit();
 }
-$type = $_GET['type']; //course, product
+$type = $_GET['type']; //course, product, consultant
 $id = decryptSt($_GET['thanks']); //course_id, product_id
 $price = decryptSt($_GET['nani']); //price of the item
 $user_id = decryptSt($_COOKIE['user_id']); // Function to get user ID from session or database

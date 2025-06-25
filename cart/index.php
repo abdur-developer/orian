@@ -269,6 +269,8 @@
                             <div class="course-instructor">
                                 <?php if ($type === 'product'): ?>
                                     <?=htmlspecialchars($course['type'])?>
+                                <?php elseif ($type === 'consultant'): ?>
+                                    By Instructor
                                 <?php else: ?>
                                     By <?=htmlspecialchars($course['instructor'])?>
                                 <?php endif; ?>

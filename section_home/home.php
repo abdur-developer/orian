@@ -155,6 +155,11 @@
 <!-- Category Section -->
 <div class="category-section">
     <h2 class="h5 fw-bold mb-3">ক্যাটাগরি</h2>
+    <style>
+        .row .col-4{
+            cursor: pointer;
+        }
+    </style>
     <div class="row g-3">
         <!-- Category 1 -->
         <div class="col-4 col-md-2">
@@ -185,18 +190,18 @@
             <p class="category-title mb-0">অ্যাকসেসরিজ</p>
         </div>
         <!-- Category 5 -->
-        <div class="col-4 col-md-2">
+        <div class="col-4 col-md-2" onclick="location.href='?page=consultants'">
             <div class="category-icon">
                 <i class="fas fa-chalkboard-teacher"></i>
             </div>
             <p class="category-title mb-0">মেন্টরশিপ</p>
         </div>
         <!-- Category 6 -->
-        <div class="col-4 col-md-2">
+        <div class="col-4 col-md-2" onclick="location.href='?page=job_apply'">
             <div class="category-icon">
-                <i class="fas fa-newspaper"></i>
+                <i class="fas fa-job"></i>
             </div>
-            <p class="category-title mb-0">সার্কুলার</p>
+            <p class="category-title mb-0">জব অ্যাপ্লাই</p>
         </div>
     </div>
 </div>
@@ -208,7 +213,6 @@
         <a href="#" class="text-primary text-decoration-none small">সব দেখুন</a>
     </div>
     <div class="row g-3">
-        <!-- ============ -->
         <?php
             $sql = "SELECT * FROM course ORDER BY rating DESC LIMIT 6";
             $result = $conn->query($sql);
