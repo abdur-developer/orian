@@ -142,6 +142,7 @@
         
         <div class="copyright">
             <p class="mb-0">© <?= date('Y'); ?> Abdur Ltd. All rights reserved. | সকল স্বত্ব সংরক্ষিত</p>
+            <p class="mb-0"><a href="abdurrahman.php">Developed by Abdur Rahman</a></p>
         </div>
     </div>
 </footer>
