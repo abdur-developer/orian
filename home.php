@@ -175,6 +175,9 @@
                     case 'job_apply':
                         include 'section_home/job_apply.php';
                         break;
+                    case 'quiz':
+                        include 'section_home/quiz.php';
+                        break;
                     case 'consultants':
                         if(availableConsultants()) {
                             include 'section_home/chat.php';

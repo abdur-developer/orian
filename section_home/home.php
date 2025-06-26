@@ -162,32 +162,32 @@
     </style>
     <div class="row g-3">
         <!-- Category 1 -->
-        <div class="col-4 col-md-2">
+        <div class="col-4 col-md-2" onclick="location.href='?page=courses'">
             <div class="category-icon">
                 <i class="fas fa-graduation-cap"></i>
             </div>
             <p class="category-title mb-0">কোর্স</p>
         </div>
         <!-- Category 2 -->
-        <div class="col-4 col-md-2">
+        <div class="col-4 col-md-2" onclick="location.href='?page=book'">
             <div class="category-icon">
                 <i class="fas fa-book"></i>
             </div>
             <p class="category-title mb-0">বই</p>
         </div>
         <!-- Category 3 -->
-        <div class="col-4 col-md-2">
+        <div class="col-4 col-md-2" onclick="location.href='?page=product'">
             <div class="category-icon">
                 <i class="fas fa-tshirt"></i>
             </div>
             <p class="category-title mb-0">পোশাক</p>
         </div>
         <!-- Category 4 -->
-        <div class="col-4 col-md-2">
+        <div class="col-4 col-md-2" onclick="location.href='?page=quiz'">
             <div class="category-icon">
-                <i class="fas fa-glasses"></i>
+                <i class="fas fa-quiz"></i>
             </div>
-            <p class="category-title mb-0">অ্যাকসেসরিজ</p>
+            <p class="category-title mb-0">কুইজ</p>
         </div>
         <!-- Category 5 -->
         <div class="col-4 col-md-2" onclick="location.href='?page=consultants'">

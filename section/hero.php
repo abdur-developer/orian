@@ -250,37 +250,43 @@
             <div class="category-scroll">
                 <a href="#courses" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2997/2997592.png">
+                        <img src="https://cdn-icons-png.flaticon.com/128/2997/2997592.png">
                     </div>
                     <span class="category-name">কোর্স</span>
                 </a>                
                 <a href="?product#product" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/5832/5832416.png">
+                        <img src="https://cdn-icons-png.flaticon.com/128/5832/5832416.png">
                     </div>
                     <span class="category-name">বই</span>
                 </a>                
                 <a href="?product#product" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2954/2954918.png">
+                        <img src="https://cdn-icons-png.flaticon.com/128/2954/2954918.png">
                     </div>
                     <span class="category-name">পোশাক</span>
                 </a>                
                 <a href="?product#product" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3659/3659898.png">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3659/3659898.png">
                     </div>
                     <span class="category-name">ডিভাইস</span>
                 </a>
+                <a href="home.php?page=quiz" class="category-item">
+                    <div class="category-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/128/10292/10292284.png">
+                    </div>
+                    <span class="category-name">কুইজ</span>
+                </a>
                 <a href="home.php?page=consultants" class="category-item">
                     <div class="category-icon">
-                        <img src="https://cdn-icons-png.flaticon.com/512/8790/8790284.png">
+                        <img src="https://cdn-icons-png.flaticon.com/128/8790/8790284.png">
                     </div>
                     <span class="category-name">পরামর্শদাতা</span>
                 </a>
                 <a href="home.php?page=job_apply" class="category-item">
                     <div class="category-icon">
-                        <img src="	https://cdn-icons-png.flaticon.com/512/4115/4115893.png" >
+                        <img src="	https://cdn-icons-png.flaticon.com/128/4115/4115893.png" >
                     </div>
                     <span class="category-name">জব এ্যা‌প্লাই</span>
                 </a>

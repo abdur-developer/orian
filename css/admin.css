@@ -1,0 +1,476 @@
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --accent-color: #4895ef;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --success-color: #4cc9f0;
+    --warning-color: #f8961e;
+    --danger-color: #f72585;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Topbar Styles */
+.topbar {
+    height: 70px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.topbar .logo {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-icon {
+    margin-right: 10px;
+    color: var(--accent-color);
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.notification-bell {
+    position: relative;
+    color: var(--dark-color);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--danger-color);
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-color);
+}
+
+.username {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    height: calc(100vh - 70px);
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    top: 70px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.menu-title {
+    padding: 10px 25px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #adb5bd;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    color: #495057;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.menu-item:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+    border-left: 3px solid var(--primary-color);
+}
+
+.menu-item.active {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+    border-left: 3px solid var(--primary-color);
+}
+
+.menu-icon {
+    width: 24px;
+    margin-right: 12px;
+    color: var(--primary-color);
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px;
+    margin-top: 70px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+/* Cards */
+.stats-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s;
+    border-left: 4px solid var(--primary-color);
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.card-icon.users {
+    background-color: rgba(76, 201, 240, 0.1);
+    color: var(--success-color);
+}
+
+.card-icon.services {
+    background-color: rgba(248, 150, 30, 0.1);
+    color: var(--warning-color);
+}
+
+.card-icon.revenue {
+    background-color: rgba(72, 149, 239, 0.1);
+    color: var(--accent-color);
+}
+
+.card-icon.visitors {
+    background-color: rgba(247, 37, 133, 0.1);
+    color: var(--danger-color);
+}
+
+.card-title {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+.card-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 5px;
+}
+
+.card-change {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.card-change.positive {
+    color: #28a745;
+}
+
+.card-change.negative {
+    color: #dc3545;
+}
+
+/* Recent Activity */
+.activity-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+    margin-bottom: 25px;
+}
+
+.activity-item {
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(67, 97, 238, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.activity-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.activity-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--dark-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.activity-desc {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.activity-time {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--dark-color);
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+/* Overlay for mobile sidebar */
+.sidebar-overlay {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Responsive Styles */
+@media (max-width: 1199.98px) {
+    .card-value {
+    font-size: 20px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+    transform: translateX(-100%);
+    }
+    
+    .sidebar.active {
+    transform: translateX(0);
+    }
+    
+    .main-content {
+    margin-left: 0;
+    }
+
+    .menu-toggle {
+    display: block;
+    }
+
+    .topbar .logo {
+    font-size: 20px;
+    }
+
+    .username {
+    display: none;
+    }
+
+    .user-profile i {
+    display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .topbar {
+    padding: 0 15px;
+    }
+
+    .main-content {
+    padding: 15px;
+    }
+
+    .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    }
+
+    .breadcrumb {
+    margin-top: 10px;
+    }
+
+    .activity-item {
+    flex-direction: column;
+    }
+
+    .activity-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+    }
+
+    .activity-title, .activity-desc {
+    white-space: normal;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .topbar {
+    height: 60px;
+    }
+
+    .sidebar {
+    top: 60px;
+    height: calc(100vh - 60px);
+    }
+
+    .sidebar-overlay {
+    top: 60px;
+    }
+
+    .main-content {
+    margin-top: 60px;
+    }
+
+    .logo-icon {
+    font-size: 18px;
+    }
+
+    .topbar .logo {
+    font-size: 18px;
+    }
+
+    .notification-bell {
+    font-size: 18px;
+    }
+
+    .profile-img {
+    width: 35px;
+    height: 35px;
+    }
+
+    .stats-card {
+    padding: 15px;
+    }
+
+    .card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    }
+
+    .card-value {
+    font-size: 18px;
+    }
+
+    .page-title {
+    font-size: 20px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}

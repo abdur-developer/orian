@@ -34,7 +34,7 @@
         background: var(--accent);
     }
 
-    .footer-links a {
+    .footer-links a, .developer a {
         color: rgba(255,255,255,0.7);
         display: block;
         margin-bottom: 10px;
@@ -42,7 +42,7 @@
         transition: all 0.3s ease;
     }
 
-    .footer-links a:hover {
+    .footer-links a:hover, .developer a:hover {
         color: var(--accent);
         padding-left: 5px;
     }
@@ -142,7 +142,11 @@
         
         <div class="copyright">
             <p class="mb-0">© <?= date('Y'); ?> Abdur Ltd. All rights reserved. | সকল স্বত্ব সংরক্ষিত</p>
-            <p class="mb-0"><a href="abdurrahman.php">Developed by Abdur Rahman</a></p>
+            <p class="developer">
+                <a href="abdurrahman.php">
+                    <i class="fas fa-link"></i> Developed by Abdur Rahman
+                </a>
+            </p>
         </div>
     </div>
 </footer>
