@@ -299,7 +299,7 @@ $circular = mysqli_fetch_assoc($result);
                     <span class="job-meta-item"><i class="fas fa-users"></i> শূন্য পদ: <?=$circular['vacancy']?></span>
                 </div>
             </div>
-            <img src="<?=$circular['img']?>" class="job-thumbnail">
+            <img src="admin/upload/<?=$circular['img']?>" class="job-thumbnail">
             <div class="job-content">
                 <?=$circular['description']?>
                 <a href="<?=$circular['g_form_link']?>" target="_blank" class="apply-btn">আবেদন করুন <i class="fas fa-arrow-right ms-2"></i></a>
@@ -316,7 +316,7 @@ $circular = mysqli_fetch_assoc($result);
             $result = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_assoc($result)) { ?>
                 <a href="?circular-details=<?=encryptSt($row['id'])?>" class="suggested-job">
-                    <img src="<?=$row['img']?>" alt="<?=$row['title']?>" class="suggested-job-img">
+                    <img src="admin/upload/<?=$row['img']?>" alt="<?=$row['title']?>" class="suggested-job-img">
                     <div class="suggested-job-content">
                         <h4 class="suggested-job-title"><?=$row['title']?></h4>
                         <p class="suggested-job-org"><?=$row['organization']?></p>
@@ -335,7 +335,7 @@ $circular = mysqli_fetch_assoc($result);
              $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) { ?>
                     <a href="?circular-details=<?=encryptSt($row['id'])?>" class="suggested-job">
-                        <img src="<?=$row['img']?>" alt="<?=$row['title']?>" class="suggested-job-img">
+                        <img src="admin/upload/<?=$row['img']?>" alt="<?=$row['title']?>" class="suggested-job-img">
                         <div class="suggested-job-content">
                             <h4 class="suggested-job-title"><?=$row['title']?></h4>
                             <p class="suggested-job-org"><?=$row['organization']?></p>

@@ -159,7 +159,7 @@
             while($row = mysqli_fetch_assoc($result)){ ?>
             <div class="blog-card">
                 <div class="blog-image">
-                    <img src="<?=$row['img']?>" >
+                    <img src="admin/upload/<?=$row['img']?>" >
                 </div>
                 <div class="blog-content">
                     <span class="blog-date"><?=$row['dateline']?></span>

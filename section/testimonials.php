@@ -82,7 +82,17 @@
                     </div>
                     <p class="testimonial-text"><?=$row['message']?></p>
                     <div class="testimonial-author">
-                        <img src="<?=$row['img']?>" alt="Student">
+                        <?php
+                            $imgSrc = '';
+                            if (!empty($row['img'])) {
+                                if (strpos($row['img'], 'https://randomuser.me/') === 0) {
+                                    $imgSrc = htmlspecialchars($row['img']);
+                                } else {
+                                    $imgSrc = 'upload/' . htmlspecialchars($row['img']);
+                                }
+                            }
+                        ?>
+                        <img src="<?=$imgSrc?>" alt="Student">
                         <div class="author-info">
                             <h5><?=$row['name']?></h5>
                             <p><?=$row['sector']?></p>

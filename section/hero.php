@@ -221,23 +221,32 @@
 <section class="hero-section">
     <div class="container">
         <!-- Modern Carousel -->
+        <?php
+            $sql = "SELECT img FROM slider";
+            $result = $conn->query($sql);
+
+            $carouselItems = '';
+            $carouselIndicators = '';
+            $index = 0;
+
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $active = $index === 0 ? 'active' : '';
+                    $carouselItems .= "<div class='carousel-item $active'><img src='" . htmlspecialchars($row['img']) . "' class='d-block w-100' alt='Slide " . ($index + 1) . "'></div>";
+                    $carouselIndicators .= "<button type='button' data-bs-target='#modernCarousel' data-bs-slide-to='$index'" . ($index === 0 ? " class='active'" : "") . "></button>";
+
+                    $index++;
+                }
+            } else {
+                // Fallback if no images found
+                $carouselItems = '<div class="carousel-item active"><img src="https://picsum.photos/600" class="d-block w-100" alt="No Images"></div>';
+                $carouselIndicators = '<button type="button" data-bs-target="#modernCarousel" data-bs-slide-to="0" class="active"></button>';
+            }
+        ?>
+
         <div id="modernCarousel" class="carousel slide modern-carousel" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" class="d-block w-100" alt="Learning Community">
-                </div>
-                <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="d-block w-100" alt="Online Education">
-                </div>
-                <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="d-block w-100" alt="Graduation Celebration">
-                </div>
-            </div>
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#modernCarousel" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#modernCarousel" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#modernCarousel" data-bs-slide-to="2"></button>
-            </div>
+            <div class="carousel-inner"><?= $carouselItems; ?></div>
+            <div class="carousel-indicators"><?= $carouselIndicators; ?></div>
         </div>
 
         <!-- Modern Category Section -->

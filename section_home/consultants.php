@@ -194,7 +194,7 @@
 
         <div class="plan-price">
           <span class="price-amount">৳<?=$result2['price']?></span>
-          <span class="price-duration">/ ৩ মাস</span>
+          <span class="price-duration">/ <?=$result2['validity']?> days</span>
           <span class="price-savings">সেভ ২৫%</span>
         </div>
         

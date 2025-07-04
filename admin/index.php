@@ -1,3 +1,4 @@
+<?php require_once 'admin.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,20 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../js/admin.js"></script>
 </head>
 <body>
-
+  <?php
+    if (isset($_GET['error'])) {
+        $error_message = htmlspecialchars($_GET['error']);
+        echo "<script>toast('$error_message', 'error');</script>";
+    }
+    if (isset($_GET['success'])) {
+        $success_message = htmlspecialchars($_GET['success']);
+        echo "<script>toast('$success_message');</script>";
+    }
+  ?>
   <!-- Topbar -->
   <div class="topbar">
     <div style="display: flex; align-items: center;">
@@ -23,10 +35,10 @@
     </div>
     
     <div class="topbar-right">
-      <div class="notification-bell">
+      <!-- <div class="notification-bell">
         <i class="fas fa-bell"></i>
         <span class="notification-badge">3</span>
-      </div>
+      </div> -->
       
       <div class="user-profile">
         <img src="https://randomuser.me/api/portraits/men/32.jpg" class="profile-img" alt="Profile">
@@ -42,190 +54,87 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-menu">
-      <div class="menu-title">Main</div>
-      <a href="#" class="menu-item active">
-        <i class="fas fa-tachometer-alt menu-icon"></i>
-        Dashboard
-      </a>
-      
-      <div class="menu-title">Management</div>
-      <a href="#" class="menu-item">
-        <i class="fas fa-tree menu-icon"></i>
-        User Management
-      </a>
-      <a href="#" class="menu-item">
-        <i class="fas fa-concierge-bell menu-icon"></i>
-        Services
-      </a>
-      <a href="#" class="menu-item">
-        <i class="fas fa-video menu-icon"></i>
-        Course
-      </a>
-      <a href="#" class="menu-item">
-        <i class="fas fa-sitemap menu-icon"></i>
-        Footer Content
-      </a>
-      
-      <div class="menu-title">System</div>
-      <!-- <a href="#" class="menu-item">
-        <i class="fas fa-user-shield menu-icon"></i>
-        Access Control
-      </a> -->
-      <a href="#" class="menu-item">
-        <i class="fas fa-cog menu-icon"></i>
-        Settings
-      </a>
-      <a href="#" class="menu-item">
-        <i class="fas fa-sign-out-alt menu-icon"></i>
-        Logout
-      </a>
+      <?php
+        //h=>href, i=>icon class, t=>title
+        $menus = [
+          'Main' => [
+            ['h' => '?q=dashboard', 'i' => 'tachometer-alt', 't' => 'Dashboard']
+          ],
+          'Management' => [
+            //['h' => '?q=cart', 'i' => 'shopping-cart', 't' => 'Cart'],
+            //['h' => '?q=category', 'i' => 'th-list', 't' => 'Category'],
+            ['h' => '?q=chat_suggestions', 'i' => 'comments', 't' => 'Chat Suggestions'],
+            ['h' => '?q=circulars', 'i' => 'newspaper', 't' => 'Circulars'],
+            ['h' => '?q=confirm_orders', 'i' => 'check-circle', 't' => 'Confirm Orders'],
+            ['h' => '?q=consultant', 'i' => 'user-tie', 't' => 'Consultant'],
+            ['h' => '?q=coupons', 'i' => 'tags', 't' => 'Coupons'],
+            ['h' => '?q=course', 'i' => 'video', 't' => 'Course'],
+            //['h' => '?q=course_module', 'i' => 'puzzle-piece', 't' => 'Course Module'],
+            ['h' => '?q=job_apply', 'i' => 'briefcase', 't' => 'Job Apply'],
+            ['h' => '?q=messages', 'i' => 'envelope', 't' => 'Messages'],
+            //['h' => '?q=module_details', 'i' => 'cubes', 't' => 'Module Details'],
+            //['h' => '?q=orders', 'i' => 'box', 't' => 'Orders'],
+            ['h' => '?q=post', 'i' => 'thumbtack', 't' => 'Post'],
+            ['h' => '?q=product', 'i' => 'box-open', 't' => 'Product'],
+            ['h' => '?q=questions', 'i' => 'question-circle', 't' => 'Questions'],
+            //['h' => '?q=slider', 'i' => 'image', 't' => 'Slider'],
+            //['h' => '?q=system_structure', 'i' => 'project-diagram', 't' => 'System Structure'],
+            ['h' => '?q=testimonials', 'i' => 'comment-dots', 't' => 'Testimonials'],
+            ['h' => '?q=users', 'i' => 'users', 't' => 'Users']
+          ],
+          'System' => [
+            // ['h' => '?q=access_control', 'i' => 'user-shield', 't' => 'Access Control'],
+            ['h' => '?q=settings', 'i' => 'cog', 't' => 'Settings'],
+            ['h' => 'logout.php', 'i' => 'sign-out-alt', 't' => 'Logout']
+          ]
+        ];
+
+        $active = $_GET['q'] ?? 'dashboard';
+
+        foreach ($menus as $section => $items) {
+          echo "<div class='menu-title'>$section</div>";
+          foreach ($items as $item) {
+            $isActive = ($active === ltrim(strstr($item['h'], '='), '=')) ? 'active' : '';
+            echo "<a href='{$item['h']}' class='menu-item $isActive'><i class='fas fa-{$item['i']} menu-icon'></i>{$item['t']}</a>";
+          }
+        }
+      ?>
     </div>
   </div>
 
+
+
+
   <!-- Main Content -->
   <div class="main-content">
-    <div class="page-header">
-      <h1 class="page-title">Dashboard Overview</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-        </ol>
-      </nav>
-    </div>
+<!-- ======================================== -->
+
+  <?php
+    $q = $_REQUEST['q'] ?? ''; // page value
+    $e = $_REQUEST['e'] ?? ''; // edit view value
+
+    $allowed_q = [
+      "dashboard", "cart", "category", "chat_suggestions", "circulars",
+      "confirm_orders", "consultant", "coupons", "course", "course_module",
+      "job_apply", "messages", "module_details", "orders", "post",
+      "product", "questions", "system_structure", "testimonials",
+      "users", "settings", "slider", "edit_notice"
+    ];
+    $allowed_e = [
+      "circulars", "post", "product", "questions", "testimonials"
+    ];
+
+    if ($q && in_array($q, $allowed_q)) include "sec/{$q}.php";
+    elseif($e && in_array($e, $allowed_e)) include "view/{$e}.php";
+    else include "sec/dashboard.php";
     
-    <!-- Stats Cards -->
-    <div class="row">
-      <div class="col-md-6 col-lg-3 fade-in" style="animation-delay: 0.1s;">
-        <div class="stats-card">
-          <div class="card-icon users">
-            <i class="fas fa-users"></i>
-          </div>
-          <div class="card-title">Total Users</div>
-          <div class="card-value">1,254</div>
-          <div class="card-change positive">
-            <i class="fas fa-arrow-up"></i> 12.5% from last month
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-6 col-lg-3 fade-in" style="animation-delay: 0.2s;">
-        <div class="stats-card">
-          <div class="card-icon services">
-            <i class="fas fa-concierge-bell"></i>
-          </div>
-          <div class="card-title">Active Services</div>
-          <div class="card-value">48</div>
-          <div class="card-change positive">
-            <i class="fas fa-arrow-up"></i> 3 new this week
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-6 col-lg-3 fade-in" style="animation-delay: 0.3s;">
-        <div class="stats-card">
-          <div class="card-icon revenue">
-            <i class="fas fa-dollar-sign"></i>
-          </div>
-          <div class="card-title">Total Revenue</div>
-          <div class="card-value">$24,560</div>
-          <div class="card-change positive">
-            <i class="fas fa-arrow-up"></i> 8.2% from last quarter
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-6 col-lg-3 fade-in" style="animation-delay: 0.4s;">
-        <div class="stats-card">
-          <div class="card-icon visitors">
-            <i class="fas fa-chart-line"></i>
-          </div>
-          <div class="card-title">Monthly Visitors</div>
-          <div class="card-value">12,458</div>
-          <div class="card-change negative">
-            <i class="fas fa-arrow-down"></i> 2.1% from last month
-          </div>
-        </div>
-      </div>
-    </div>
+  ?>
+
+
+
+
+<!-- ======================================== -->
     
-    <div class="row mt-4">
-      <div class="col-lg-8 fade-in" style="animation-delay: 0.5s;">
-        <div class="activity-card">
-          <h5 class="mb-4">Recent Activities</h5>
-          
-          <div class="activity-item">
-            <div class="activity-icon">
-              <i class="fas fa-user-plus"></i>
-            </div>
-            <div class="activity-details">
-              <div class="activity-title">New user registered</div>
-              <div class="activity-desc">John Smith has created an account</div>
-              <div class="activity-time">10 minutes ago</div>
-            </div>
-          </div>
-          
-          <div class="activity-item">
-            <div class="activity-icon">
-              <i class="fas fa-tree"></i>
-            </div>
-            <div class="activity-details">
-              <div class="activity-title">Course added</div>
-              <div class="activity-desc">New course on environmental science added</div>
-              <div class="activity-time">2 hours ago</div>
-            </div>
-          </div>
-          
-          <div class="activity-item">
-            <div class="activity-icon">
-              <i class="fas fa-tools"></i>
-            </div>
-            <div class="activity-details">
-              <div class="activity-title">Service request</div>
-              <div class="activity-desc">New maintenance request for street lights</div>
-              <div class="activity-time">5 hours ago</div>
-            </div>
-          </div>
-          
-          <div class="activity-item">
-            <div class="activity-icon">
-              <i class="fas fa-comment-dollar"></i>
-            </div>
-            <div class="activity-details">
-              <div class="activity-title">Payment received</div>
-              <div class="activity-desc">$250 payment for property tax</div>
-              <div class="activity-time">1 day ago</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-lg-4 fade-in" style="animation-delay: 0.6s;">
-        <div class="activity-card">
-          <h5 class="mb-4">Quick Actions</h5>
-          
-          <button class="btn btn-primary w-100 mb-3">
-            <i class="fas fa-plus-circle mr-2"></i> Add New Service
-          </button>
-          
-          <button class="btn btn-outline-primary w-100 mb-3">
-            <i class="fas fa-tree mr-2"></i> Add New Course
-          </button>
-          
-          <button class="btn btn-outline-primary w-100 mb-3">
-            <i class="fas fa-user-cog mr-2"></i> Manage Users
-          </button>
-          
-          <button class="btn btn-outline-primary w-100 mb-3">
-            <i class="fas fa-chart-pie mr-2"></i> View Reports
-          </button>
-          
-          <button class="btn btn-outline-primary w-100">
-            <i class="fas fa-cog mr-2"></i> System Settings
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
