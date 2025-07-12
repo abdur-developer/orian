@@ -9,9 +9,9 @@ if(isset($_POST['profile_address']) && isset($_POST['profile_bio'])) {
         header("Location: home.php?page=profile&error=Failed+to+update+profile");
     }
 }
-function availableConsultants(){
+function availableConsultants($id){
     global $conn;
-    $sql = "SELECT * FROM confirm_orders WHERE type = 'consultant' AND validity >= NOW()";    
+    $sql = "SELECT 1 FROM confirm_orders WHERE user_id = '$id' AND type = 'consultant' LIMIT 1";
     $result = mysqli_query($conn, $sql);
     return mysqli_num_rows($result) > 0;
 }

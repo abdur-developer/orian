@@ -1,19 +1,12 @@
 <?php
-    // Search functionality
-    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-    $search_condition = '';
-    if (!empty($search)) {
-        $search = $conn->real_escape_string($search);
-        $search_condition = " WHERE name LIKE '%$search%' OR email LIKE '%$search%'";
-    }
-
     // Fetch data
-    $sql = "SELECT confirm_orders.status, users.name AS user_name, product.name AS product_name, orders.phone AS order_phone
+    $sql = "SELECT confirm_orders.id, confirm_orders.status, users.name AS user_name, product.name AS product_name, orders.phone AS order_phone
         FROM confirm_orders 
         JOIN users ON confirm_orders.user_id = users.id
         JOIN product ON confirm_orders.product_id = product.id
         JOIN orders ON confirm_orders.order_id = orders.id
-        $search_condition ORDER BY confirm_orders.id ASC";
+        WHERE confirm_orders.type = 'product' 
+        ORDER BY confirm_orders.id ASC";
     $result = $conn->query($sql);
 ?>
 <div class="container">
@@ -24,22 +17,6 @@
                     <i class="fas fa-truck-loading me-2"></i>
                     Orders Awaiting Delivery
                 </h3>
-                <div class="d-flex align-items-center">
-                    <form class="d-flex search-box" method="get" action="">
-                        <div class="input-group">
-                            <input type="hidden" name="q" value="messages">
-                            <input type="text" name="search" class="form-control border-end-0" placeholder="Search users..." value="<?= htmlspecialchars($search) ?>">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                            </button>
-                            <?php if (!empty($search)): ?>
-                                <a href="?q=messages" class="btn btn-danger ms-1">
-                                    <i class="fas fa-times"></i>
-                                </a>
-                            <?php endif; ?>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
         
@@ -49,11 +26,11 @@
                     <table class="table table-hover user-table">
                         <thead>
                             <tr>
-                                <th width="20%">Name</th>
+                                <th width="25%">Name</th>
                                 <th width="20%">Phone</th>
-                                <th width="20%">Product</th>
+                                <th width="25%">Product</th>
                                 <th width="20%">Status</th>
-                                <th width="20%" class="text-center">Actions</th>
+                                <th width="10%" class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,7 +45,7 @@
                                     </div>
                                 </td>
                                 <td><?= htmlspecialchars($row["order_phone"]) ?></td>
-                                <td><?= htmlspecialchars($row["product_name"]) ?></td>
+                                <td><?= htmlspecialchars(chotoKro($row["product_name"])) ?></td>
                                 <td>
                                     <span class="status-badge status-inactive">
                                         <i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i>
@@ -76,15 +53,9 @@
                                     </span>
                                 </td>
                                 <td class="text-center action-buttons">
-                                    <button class="btn btn-sm btn-view me-1" title="View">
+                                    <button class="btn btn-sm btn-view me-1" title="View" onclick="location.href='?e=confirm_orders&id=<?= encryptSt($row['id']) ?>'">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    <!-- <button class="btn btn-sm btn-edit me-1" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-delete" title="Delete">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button> -->
                                 </td>
                             </tr>
                             <?php endwhile; ?>

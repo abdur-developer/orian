@@ -141,9 +141,9 @@
 <?php
     if (!empty($id_list)) {
         $id_string = implode(',', array_map('intval', $id_list));
-        $sql = "SELECT * FROM course WHERE id NOT IN ($id_string) ORDER BY rating DESC";
+        $sql = "SELECT * FROM course WHERE status = 1 AND id NOT IN ($id_string) ORDER BY rating DESC";
     } else {
-        $sql = "SELECT * FROM course ORDER BY rating DESC";
+        $sql = "SELECT * FROM course WHERE status = 1 ORDER BY rating DESC";
     }
     $result = $conn->query($sql);
     if ($result->num_rows > 0) { ?>

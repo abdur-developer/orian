@@ -7,6 +7,7 @@
     }
     $user_id = decryptSt($_COOKIE['user_id']);
     require_once 'include/action.php';
+
     $web = decryptSt($_COOKIE['web']);
     $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->bind_param("i", $user_id);
@@ -36,6 +37,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts - Bengali -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom CSS -->
     <style>
         :root {
@@ -142,8 +144,11 @@
         }
         
     </style>
+
 </head>
 <body>
+    <span id="user_id_from_local_db" class="d-none"><?= htmlspecialchars($user_id) ?></span>
+
     <!-- Header -->
     <header class="header py-3">
         <div class="container">
@@ -179,7 +184,11 @@
                         include 'section_home/quiz.php';
                         break;
                     case 'consultants':
-                        if(availableConsultants()) {
+                        // DELETE expaire Feild
+                        $sql = "DELETE FROM confirm_orders WHERE type = 'consultant' AND validity < NOW()";
+                        mysqli_query($conn, $sql);
+                        
+                        if(availableConsultants($user_id)) {
                             include 'section_home/chat.php';
                         }else{
                             include 'section_home/consultants.php';

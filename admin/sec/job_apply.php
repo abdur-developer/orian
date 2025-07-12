@@ -129,7 +129,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modal_<?=$row['id']?>_Label"><?=$row['name']?></h5>
-                        <button class="btn btn-success ms-3 add-new" data-bs-toggle="modal" data-bs-target="#addItemModel">
+                        <button class="btn btn-success ms-3 add-new" onclick="location.href='?e=job_apply&parent_id=<?= encryptSt($row['id']) ?>'">
                             <i class="fas fa-plus me-1"></i> Add more
                         </button>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -139,8 +139,18 @@
                         $sql_sub = "SELECT id, parent_id, name FROM job_apply WHERE parent_id = ".$row['id'];
                         $sub_apply = mysqli_query($conn, $sql_sub);
                         while($sub_row = mysqli_fetch_assoc($sub_apply)){ ?>
-                            <div class="sub-item" onclick="location.href='?view_apply=<?=encryptSt($sub_row['id'])?>'">
-                                <span class="sub-item-icon"><i class="fas fa-book"></i></span><?=$sub_row['name']?>
+                            <div class="d-flex justify-content-around">
+                                <div class="sub-item">
+                                  <span class="sub-item-icon"><i class="fas fa-book"></i></span><?=$sub_row['name']?>
+                                </div>
+                                <div class="ms-auto d-flex align-items-center action-buttons">
+                                  <button class="btn btn-outline-primary btn-sm me-2" title="Edit" onclick="location.href='?e=job_apply&id=<?= encryptSt($sub_row['id']) ?>'">
+                                    <i class="fas fa-edit"></i>
+                                  </button>
+                                  <button class="btn btn-delete btn-outline-danger btn-sm" title="Delete" data-bs-toggle="modal" data-id="<?= htmlspecialchars($sub_row["id"]) ?>"  data-bs-target="#deleteItemModel">
+                                    <i class="fas fa-trash-alt"></i>
+                                  </button>
+                                </div>
                             </div>
                         <?php } ?>
                     </div>
@@ -148,53 +158,58 @@
             </div>
         </div>
 <?php } ?>
-<!-- Add New Modal -->
-<div class="modal fade" id="addItemModel" tabindex="-1" aria-labelledby="addItemModelLabel" aria-hidden="true">
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteItemModel" tabindex="-1" aria-labelledby="deleteItemModelLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="addItemModelLabel"><i class="fas fa-user-plus me-2"></i>Add New</h5>
+                <h5 class="modal-title" id="deleteItemModelLabel"><i class="fas fa-trash-alt me-2"></i>Delete Confirmation</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addUserForm">
-                    <div class="mb-3">
-                        <label for="userName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="userName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="userEmail" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="userEmail" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="userRole" class="form-label">Role</label>
-                        <select class="form-select" id="userRole" required>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                            <option value="editor">Editor</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="userStatus" id="statusActive" value="1" checked>
-                            <label class="form-check-label" for="statusActive">
-                                Active
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="userStatus" id="statusInactive" value="0">
-                            <label class="form-check-label" for="statusInactive">
-                                Inactive
-                            </label>
-                        </div>
-                    </div>
-                </form>
+                <p>Are you sure you want to delete this chat suggestion? This action cannot be undone.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary" data-id="" id="btnConfirmDelete">Save</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Custom JS -->
+<script>
+    // Tooltip initialization
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.btn-delete').forEach(function(button) {
+        button.addEventListener('click', function() {
+          const itemId = this.getAttribute('data-id');
+          console.log(itemId);
+          document.getElementById('btnConfirmDelete').setAttribute('data-id', itemId);
+        });
+      });
+
+      document.getElementById('btnConfirmDelete').addEventListener('click', function() {
+        const idToDelete = this.getAttribute('data-id');
+        fetch('api/delete.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ id: idToDelete, table: 'job_apply' })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            location.reload();
+          } else {
+            toast(data.message, 'error');
+          }
+        })
+        .catch(error => {
+          toast('An error occurred while deleting.', 'error');
+        });
+      });
+    });
+</script>

@@ -1,6 +1,6 @@
 <?php
     // Pagination settings
-    $limit = 1;
+    $limit = 10;
     $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
     $start_from = ($page - 1) * $limit;
 
@@ -46,9 +46,6 @@
                             <?php endif; ?>
                         </div>
                     </form>
-                    <!-- <button class="btn btn-success ms-3 add-new" data-bs-toggle="modal" data-bs-target="#addItemModel">
-                        <i class="fas fa-plus me-1"></i> Add New
-                    </button> -->
                 </div>
             </div>
         </div>
@@ -59,11 +56,10 @@
                     <table class="table table-hover user-table">
                         <thead>
                             <tr>
-                                <th width="20%">Name</th>
-                                <th width="20%">Number</th>
+                                <th width="25%">Name</th>
                                 <th width="25%">Email</th>
-                                <th width="15%">Status</th>
-                                <th width="20%" class="text-center">Actions</th>
+                                <th width="25%">Status</th>
+                                <th width="25%" class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,7 +73,6 @@
                                         <?= htmlspecialchars($row["name"]) ?>
                                     </div>
                                 </td>
-                                <td><?= htmlspecialchars($row["number"]) ?></td>
                                 <td><?= htmlspecialchars($row["email"]) ?></td>
                                 <td>
                                     <span class="status-badge <?= $row['status'] == 1 ? 'status-active' : 'status-inactive' ?>">
@@ -86,14 +81,8 @@
                                     </span>
                                 </td>
                                 <td class="text-center action-buttons">
-                                    <button class="btn btn-sm btn-view me-1" title="View">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-edit me-1" title="Edit">
+                                    <button class="btn btn-sm btn-edit me-1" title="Edit" onclick="location.href='?e=users&id=<?= encryptSt($row['id']) ?>'">
                                         <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-delete" title="Delete">
-                                        <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -181,57 +170,6 @@
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
-        </div>
-    </div>
-</div>
-
-<!-- Add New Modal -->
-<div class="modal fade" id="addItemModel" tabindex="-1" aria-labelledby="addItemModelLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="addItemModelLabel"><i class="fas fa-user-plus me-2"></i>Add New</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addUserForm">
-                    <div class="mb-3">
-                        <label for="userName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="userName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="userEmail" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="userEmail" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="userRole" class="form-label">Role</label>
-                        <select class="form-select" id="userRole" required>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                            <option value="editor">Editor</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="userStatus" id="statusActive" value="1" checked>
-                            <label class="form-check-label" for="statusActive">
-                                Active
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="userStatus" id="statusInactive" value="0">
-                            <label class="form-check-label" for="statusInactive">
-                                Inactive
-                            </label>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
         </div>
     </div>
 </div>

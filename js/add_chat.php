@@ -18,13 +18,13 @@ if (!isset($data['user_id']) || !isset($data['messages'])) {
     echo json_encode(['error' => 'Invalid input']);
     exit;
 }
-
 $userId = $data['user_id'];
 $message = $data['messages'];
+$sender = $data['type'];
+
 require_once "../include/dbcon.php";
 
 $stmt = $conn->prepare("INSERT INTO messages (user_id, message, sender) VALUES (?, ?, ?)");
-$sender = 1;
 $stmt->bind_param("isi", $userId, $message, $sender);
 $stmt->execute();
 $stmt->close();

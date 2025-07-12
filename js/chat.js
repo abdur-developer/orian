@@ -21,7 +21,8 @@ getAnalytics(app);
 
 // Globals
 let lastMessageId = 0;
-const userId = 1;
+const userIdElem = document.getElementById("user_id_from_local_db");
+const userId = userIdElem && !isNaN(parseInt(userIdElem.innerText, 10)) ? parseInt(userIdElem.innerText, 10) : null;
 
 // Load messages (initial or new only)
 function loadMessages(initial = false) {
@@ -93,22 +94,18 @@ function sendMessage(event) {
         },
         body: JSON.stringify({
             user_id: userId,
-            messages: message
+            messages: message,
+            type: 1 //user
         })
     })
     .then(res => res.json())
-    .then(() => {
-
+    .then((res) => {
+        if (res.success) {
+            const adminStatusRef = ref(db, `/message_status/admin/user_${userId}`);
+            set(adminStatusRef, "unread");
+        }
     });
-    // showTypingIndicator();
-
-    // setTimeout(() => {
-    //     hideTypingIndicator();
-    //     appendAIResponse(message);
-    //     scrollToBottom();
-    // }, 1500 + Math.random() * 2000);
 }
-// ✅ Expose to global scope
 window.sendMessage = sendMessage;
 
 // Show user message immediately
@@ -120,42 +117,6 @@ function appendLocalMessage(msg) {
     chatBody.appendChild(div);
 }
 
-// Simulated AI reply
-/*function appendAIResponse(userMsg) {
-    const responses = [
-        `You're asking about "${userMsg}". Could you explain more?`,
-        `Interesting point: "${userMsg}". What exactly are you curious about?`,
-        `Regarding "${userMsg}", here's what I can say.`,
-        `"${userMsg}" is quite important! Let me help you with that.`,
-        `I've noted your message: "${userMsg}". Here's a quick answer...`
-    ];
-    const reply = responses[Math.floor(Math.random() * responses.length)];
-
-    const chatBody = document.getElementById("chatBody");
-    const div = document.createElement("div");
-    div.className = "message admin";
-    div.innerHTML = `${reply} <span class="message-time">${getCurrentTime()}</span>`;
-    chatBody.appendChild(div);
-}
-
-// Typing indicator
-function showTypingIndicator() {
-    const chatBody = document.getElementById("chatBody");
-    if (document.getElementById("typingIndicator")) return;
-    const div = document.createElement("div");
-    div.id = "typingIndicator";
-    div.className = "typing-indicator";
-    div.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
-    chatBody.appendChild(div);
-    scrollToBottom();
-}
-
-function hideTypingIndicator() {
-    const typingDiv = document.getElementById("typingIndicator");
-    if (typingDiv) typingDiv.remove();
-}
-*/
-// Time formatter
 function getCurrentTime() {
     const now = new Date();
     let h = now.getHours(), m = now.getMinutes();

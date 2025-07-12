@@ -10,7 +10,7 @@ $price = decryptSt($_GET['nani']); //price of the item
 $user_id = decryptSt($_COOKIE['user_id']); // Function to get user ID from session or database
 
 //check if the user already has this item in their cart 
-$sql = "SELECT 1 FROM cart WHERE user_id='$user_id' AND type='$type' AND ref_id='$id'";
+$sql = "SELECT 1 FROM cart WHERE user_id = '$user_id' AND type='$type' AND ref_id = '$id' AND is_running = 1";
 if(mysqli_num_rows(mysqli_query($conn, $sql))){
     header("Location: index.php?error=".urldecode("Item already in cart!"));
     exit();

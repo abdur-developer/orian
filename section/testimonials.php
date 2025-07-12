@@ -88,7 +88,7 @@
                                 if (strpos($row['img'], 'https://randomuser.me/') === 0) {
                                     $imgSrc = htmlspecialchars($row['img']);
                                 } else {
-                                    $imgSrc = 'upload/' . htmlspecialchars($row['img']);
+                                    $imgSrc = 'admin/upload/' . htmlspecialchars($row['img']);
                                 }
                             }
                         ?>

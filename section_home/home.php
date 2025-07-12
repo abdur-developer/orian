@@ -185,7 +185,7 @@
         <!-- Category 4 -->
         <div class="col-4 col-md-2" onclick="location.href='?page=quiz'">
             <div class="category-icon">
-                <i class="fas fa-quiz"></i>
+                <i class="fas fa-question-circle"></i>
             </div>
             <p class="category-title mb-0">কুইজ</p>
         </div>
@@ -214,7 +214,7 @@
     </div>
     <div class="row g-3">
         <?php
-            $sql = "SELECT * FROM course ORDER BY rating DESC LIMIT 6";
+            $sql = "SELECT * FROM course WHERE status = 1 ORDER BY rating DESC LIMIT 6";
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) { ?>

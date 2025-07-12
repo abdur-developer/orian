@@ -218,7 +218,7 @@
                         <!-- <div class="product-wishlist">
                             <i class="far fa-heart"></i>
                         </div> -->
-                        <img src="<?= $row['img']; ?>" class="product-img" alt="<?= $row['name']; ?>">
+                        <img src="admin/upload/<?= $row['img']; ?>" class="product-img" alt="<?= $row['name']; ?>">
                     </div>
                     <div class="product-body">
                         <span class="product-category"><?= $row['type']; ?></span>

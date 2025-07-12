@@ -30,7 +30,7 @@
       </button>
       <div class="logo">
         <i class="fas fa-city logo-icon"></i>
-        Defence24BD Admin
+        Defence24BD
       </div>
     </div>
     
@@ -42,7 +42,7 @@
       
       <div class="user-profile">
         <img src="https://randomuser.me/api/portraits/men/32.jpg" class="profile-img" alt="Profile">
-        <span class="username">Abdur</span>
+        <span class="username">Admin</span>
         <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
       </div>
     </div>
@@ -57,9 +57,9 @@
       <?php
         //h=>href, i=>icon class, t=>title
         $menus = [
-          'Main' => [
-            ['h' => '?q=dashboard', 'i' => 'tachometer-alt', 't' => 'Dashboard']
-          ],
+          // 'Main' => [
+          //   ['h' => '?q=dashboard', 'i' => 'tachometer-alt', 't' => 'Dashboard']
+          // ],
           'Management' => [
             //['h' => '?q=cart', 'i' => 'shopping-cart', 't' => 'Cart'],
             //['h' => '?q=category', 'i' => 'th-list', 't' => 'Category'],
@@ -71,7 +71,7 @@
             ['h' => '?q=course', 'i' => 'video', 't' => 'Course'],
             //['h' => '?q=course_module', 'i' => 'puzzle-piece', 't' => 'Course Module'],
             ['h' => '?q=job_apply', 'i' => 'briefcase', 't' => 'Job Apply'],
-            ['h' => '?q=messages', 'i' => 'envelope', 't' => 'Messages'],
+            ['h' => 'chat.php', 'i' => 'envelope', 't' => 'Messages'],
             //['h' => '?q=module_details', 'i' => 'cubes', 't' => 'Module Details'],
             //['h' => '?q=orders', 'i' => 'box', 't' => 'Orders'],
             ['h' => '?q=post', 'i' => 'thumbtack', 't' => 'Post'],
@@ -118,15 +118,19 @@
       "confirm_orders", "consultant", "coupons", "course", "course_module",
       "job_apply", "messages", "module_details", "orders", "post",
       "product", "questions", "system_structure", "testimonials",
-      "users", "settings", "slider", "edit_notice"
+      "users", "settings", "slider", "edit_notice", "course_module",
+      "module_details"
     ];
     $allowed_e = [
-      "circulars", "post", "product", "questions", "testimonials"
+      "circulars", "post", "product", "questions", "testimonials",
+      "course", "course_module", "module_details", "job_apply",
+      "users", "confirm_orders"
     ];
 
     if ($q && in_array($q, $allowed_q)) include "sec/{$q}.php";
     elseif($e && in_array($e, $allowed_e)) include "view/{$e}.php";
-    else include "sec/dashboard.php";
+    else include "sec/users.php";
+    // else include "sec/dashboard.php";
     
   ?>
 

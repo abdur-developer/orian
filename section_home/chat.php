@@ -236,7 +236,6 @@
     }
 </style>
 <section id="chat-section">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="js/chat.js"></script>
     <div class="chat-container">
         <div class="chat-header">
@@ -245,7 +244,7 @@
         </div>
         <div class="chat-body" id="chatBody">
             <div class="message admin">
-                Hi there! 👋 I'm Alamin, your AI assistant. How can I help you today?
+                Hi there! 👋 I'm Alamin, your Mentor. How can I help you today?
                 <span class="message-time">Just now</span>
             </div>
         </div>
@@ -272,10 +271,10 @@
 </section>
 <?php
     function isFree() {
-        global $conn;
+        global $conn, $user_id;
         $sql = "SELECT c.price FROM confirm_orders o 
                 JOIN consultant c ON o.product_id = c.id 
-                WHERE o.type = 'consultant' AND o.validity >= NOW()";
+                WHERE o.type = 'consultant' AND o.validity >= NOW() AND o.user_id = '$user_id'";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
             if ($row['price'] != 0) {

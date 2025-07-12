@@ -159,7 +159,7 @@
         <!-- ================================================== -->      
         <div class="row g-4">
             <?php 
-                $sql ="SELECT id, price, img, users, title, description, badge, provider FROM course";
+                $sql ="SELECT id, price, img, users, title, description, badge, provider FROM course WHERE status = 1";
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_assoc($result)){ ?>
                     <div class="col-lg-4 col-md-6">
