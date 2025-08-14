@@ -165,7 +165,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="course-card">
                             <div class="course-img-container">
-                                <img src="<?= $row['img']; ?>" class="course-img" alt="<?=$row['title']?>">    
+                                <img src="admin/upload/<?= $row['img']; ?>" class="course-img" alt="<?=$row['title']?>">    
                                 <?php if($row['badge'] != null) echo "<span class='course-badge'>{$row['badge']}</span>"; ?>
                             </div>
                             <div class="card-body">
