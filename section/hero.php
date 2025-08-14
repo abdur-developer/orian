@@ -110,11 +110,13 @@
     
     .category-scroll {
         display: flex;
-        overflow-x: auto;
+        flex-wrap: wrap;
         padding-bottom: 1rem;
+        overflow-x: auto;
         scrollbar-width: none; /* Firefox */
+        justify-content: space-around;
     }
-    
+
     .category-scroll::-webkit-scrollbar {
         display: none; /* Chrome/Safari */
     }
@@ -263,7 +265,7 @@
                     </div>
                     <span class="category-name">কোর্স</span>
                 </a>                
-                <a href="?product#product" class="category-item">
+                <!-- <a href="?product#product" class="category-item">
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/5832/5832416.png">
                     </div>
@@ -274,12 +276,12 @@
                         <img src="https://cdn-icons-png.flaticon.com/128/2954/2954918.png">
                     </div>
                     <span class="category-name">পোশাক</span>
-                </a>                
+                </a>                 -->
                 <a href="?product#product" class="category-item">
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/3659/3659898.png">
                     </div>
-                    <span class="category-name">ডিভাইস</span>
+                    <span class="category-name">কেনাকাটা</span>
                 </a>
                 <a href="home.php?page=quiz" class="category-item">
                     <div class="category-icon">

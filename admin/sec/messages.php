@@ -66,7 +66,7 @@
                             <?php while($row = $result->fetch_assoc()): ?>
                             <tr>
                                 <td>
-                                    <?php $row["name"] = "ABDUR"; ?>
+                                    <?php //$row["name"] = "ABDUR"; ?>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar me-2">
                                             <img src="https://ui-avatars.com/api/?name=<?= urlencode($row["name"]) ?>&background=random" class="rounded-circle" width="30" alt="User Avatar">

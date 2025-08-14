@@ -1,7 +1,7 @@
 <style>
     /* Floating Elements */
     .floating {
-        position: absolute;
+        position: fixed;
         animation: floating 6s ease-in-out infinite;
         z-index: 0;
         opacity: 0.1;

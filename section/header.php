@@ -3,7 +3,31 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abdur Ltd - চাকরির প্রস্তুতি প্ল্যাটফর্ম</title>
+    <title>ProtiSheba - Believe on yourself</title>
+    <meta name="description" content="ProtiSheba - Believe on yourself. Your trusted platform for defense-related information and services in Bangladesh.">
+    <meta name="keywords" content="ProtiSheba, Bangladesh Army, Bangladesh Navy, Bangladesh Air Force, Defense, Military, Armed Forces">
+    <meta name="author" content="ProtiSheba">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://defence24bd.com/">
+    <meta property="og:title" content="ProtiSheba - Believe on yourself">
+    <meta property="og:description" content="ProtiSheba - Believe on yourself. Your trusted platform for defense-related information and services in Bangladesh.">
+    <meta property="og:image" content="https://defence24bd.com/img/course.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://defence24bd.com/">
+    <meta property="twitter:title" content="ProtiSheba - Believe on yourself">
+    <meta property="twitter:description" content="ProtiSheba - Believe on yourself. Your trusted platform for defense-related information and services in Bangladesh.">
+    <meta property="twitter:image" content="https://defence24bd.com/img/course.jpg">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="img/logo.jpg">
+    <link rel="apple-touch-icon" href="img/logo.jpg">
+    <link rel="canonical" href="https://defence24bd.com/">
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
