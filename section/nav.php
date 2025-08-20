@@ -254,8 +254,8 @@
     <nav class="navbar navbar-expand-lg fixed-top navbar-light">
         <div class="container">
             <a class="navbar-brand" href="index.php">
-                <img src="img/logo.jpg" alt="Defence 24 bd" class="logo img-fluid" style="height: 40px;">
-                Defence 24 bd
+                <img src="img/logo.jpg" alt="ProtiSheba" class="logo img-fluid" style="height: 40px;">
+                ProtiSheba
             </a>
             
             <!-- Fixed Mobile Toggle Button -->

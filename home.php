@@ -154,7 +154,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-4 col-7">
-                    <h1 class="h5 fw-bold mb-0 header-title">Defence Academy</h1>
+                    <h1 class="h5 fw-bold mb-0 header-title">ProtiSheba</h1>
                 </div>
                 <div class="col-md-6 col-5 mt-md-0 mt-2 search-group">
                     <div class="input-group">
