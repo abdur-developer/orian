@@ -220,7 +220,7 @@
                 while ($row = $result->fetch_assoc()) { ?>
                     <div class="col-md-6 col-lg-4" onclick="location.href='index.php?course-details=<?= encryptSt($row['id']) ?>'">
                         <div class="course-card">
-                            <img src="<?php echo $row['img']; ?>" class="course-img" alt="Course">
+                            <img src="admin/upload/<?php echo $row['img']; ?>" class="course-img" alt="Course">
                             <div class="card-body">
                                 <h5 class="course-title"><?php echo $row['title']; ?></h5>
                                 <p class="instructor mb-2"><?php echo $row['instructor']; ?></p>
@@ -247,7 +247,7 @@
             while ($row = $result->fetch_assoc()) { ?>
                 <div class="col-6 col-md-4 col-lg-3" onclick="location.href='index.php?product-details=<?= encryptSt($row['id']) ?>'">
                     <div class="course-card">
-                        <img src="<?php echo $row['img']; ?>" class="course-img" alt="Product">
+                        <img src="admin/upload/<?php echo $row['img']; ?>" class="course-img" alt="Product">
                         <div class="card-body">
                             <h5 class="course-title"><?php echo $row['name']; ?></h5>
                             <div class="d-flex justify-content-between align-items-center">

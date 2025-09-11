@@ -110,7 +110,7 @@
                             $row = $course_result->fetch_assoc(); ?>
                             <div class="col-md-6 col-lg-4" onclick="openCourse('<?= encryptSt($row['id']) ?>')">
                                 <div class="course-card">
-                                    <img src="<?php echo $row['img']; ?>" class="course-img" alt="Course">
+                                    <img src="admin/upload/<?php echo $row['img']; ?>" class="course-img" alt="Course">
                                     <div class="card-body">
                                         <h5 class="course-title"><?php echo $row['title']; ?></h5>
                                         <p class="instructor mb-2">by <?php echo $row['instructor']; ?></p>
