@@ -55,7 +55,7 @@ async function initPlayer(videoName) {
 }
 
 async function getToken(videoName) {
-    const response = await fetch(generate_token.php?video=${encodeURIComponent(videoName)});
+    const response = await fetch(`generate_token.php?video=${encodeURIComponent(videoName)}`);
     if (!response.ok) {
         throw new Error('Failed to get token');
     }
@@ -87,9 +87,9 @@ async function refreshToken() {
 videoPlayer.addEventListener('error', () => {
     if (videoPlayer.error && videoPlayer.error.code === MediaError.MEDIA_ERR_NETWORK) {
         refreshToken().then(() => {
-            videoPlayer.src = secure_video.php?video=${encodeURIComponent(
+            videoPlayer.src = `secure_video.php?video=${encodeURIComponent(
                 new URL(videoPlayer.src).searchParams.get('video')
-            )}&token=${currentToken}&expires=${currentExpires};
+            )}&token=${currentToken}&expires=${currentExpires}`;
             videoPlayer.load();
         });
     }
