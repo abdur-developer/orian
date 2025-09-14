@@ -69,7 +69,7 @@
                         <!-- Short Text -->
                         <div class="form-floating mb-4">
                             <input type="text" name="sort_text" class="form-control" id="sort_text" 
-                                   value="<?= htmlspecialchars($row['sort_text']) ?>">
+                                   value="<?= htmlspecialchars($row['sort_text']) ?>" maxlength="225">
                             <label for="sort_text"><i class="fas fa-info-circle me-1 text-muted"></i>Short Text</label>
                         </div>
                         
