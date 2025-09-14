@@ -46,7 +46,7 @@
                         <!-- Title -->
                         <div class="form-floating mb-4">
                             <input type="text" name="title" class="form-control" id="title" 
-                                   value="<?= htmlspecialchars($row['title']) ?>" required>
+                                   value="<?= htmlspecialchars($row['title']) ?>" required maxlength="225">
                             <label for="title"><i class="fas fa-heading me-1 text-muted"></i>Title</label>
                             <div class="invalid-feedback">Please provide a title</div>
                         </div>
