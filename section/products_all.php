@@ -204,11 +204,9 @@
 
 <section id="product" class="section product-section">
     <div class="container">
-        <h2 class="section-title">Our Products</h2>
-        
         <div class="row">
             <?php 
-            $sql = "SELECT * FROM product LIMIT 8";
+            $sql = "SELECT * FROM product";
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)){ ?>
             <div class="col-xl-3 col-lg-4 col-6">
@@ -251,11 +249,6 @@
                     return round((($oldPrice - $currentPrice) / $oldPrice) * 100) . '%';
                 }
             ?>
-        </div>
-        <div class="view-all-btn">
-            <a href="?products" class="btn btn-primary">
-                সব প্রোডাক্ট দেখুন <i class="fas fa-arrow-right ms-2"></i>
-            </a>
         </div>
     </div>
     <script>

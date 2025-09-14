@@ -13,7 +13,7 @@
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        margin-bottom: 2.5rem;
+        margin-bottom: 0.5rem;
     }
     
     .modern-carousel .carousel-inner {
@@ -251,6 +251,29 @@
             <div class="carousel-indicators"><?= $carouselIndicators; ?></div>
         </div>
 
+        <!-- Offer Banner -->
+        <style>
+            .offer-banner {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                max-height: 150px;
+                margin-bottom: 1rem;
+            }
+            .offer-banner img{
+                max-width: 100%;
+            }
+        </style>
+        <div class="offer-banner">
+            <?php
+                $sql = "SELECT * FROM offer_banner WHERE id = 1";
+                $offer = mysqli_fetch_assoc($conn->query($sql));
+            ?>
+            <a href="<?= htmlspecialchars($offer['link']) ?>" target="_blank" rel="noopener noreferrer">
+                <img src="<?= htmlspecialchars($offer['img']) ?>" alt="">
+            </a>
+        </div>
+
         <!-- Modern Category Section -->
         <div class="category-section">
             <div class="category-title">
@@ -302,6 +325,147 @@
                     <span class="category-name">জব এ্যা‌প্লাই</span>
                 </a>
             </div>
+        </div>
+        <style>
+            /* পণ্য গ্রিড স্টাইল */
+            #feature_product {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+                margin-bottom: 40px;
+            }
+            
+            .product-card {
+                background-color: white;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                position: relative;
+                text-decoration: none;
+                color: inherit;
+            }
+            
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            }
+            
+            .discount-badge {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background-color: #f57224;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                font-weight: bold;
+                z-index: 10;
+            }
+            
+            .product-image {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .product-info {
+                padding: 15px;
+            }
+            
+            .product-title {
+                font-size: 14px;
+                font-weight: 600;
+                margin-bottom: 10px;
+                height: 40px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+            
+            .product-pricing {
+                display: flex;
+                margin-bottom: 15px;
+                justify-content: space-around;
+            }
+            
+            .current-price {
+                color: #f57224;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            
+            .original-price {
+                text-decoration: line-through;
+                color: #999;
+                font-size: 14px;
+            }
+            
+            .add-to-cart {
+                background-color: #f57224;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                width: 100%;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background-color 0.3s ease;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .add-to-cart i {
+                margin-right: 8px;
+            }
+            
+            .add-to-cart:hover {
+                background-color: #e0651d;
+            }
+            
+            
+            /* রেসপন্সিভ স্টাইল */
+            @media (max-width: 768px) {            
+                #feature_product {
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                }
+            }
+            
+            @media (max-width: 480px) {
+                #feature_product {
+                    grid-template-columns: 1fr;
+                }
+            }
+            
+        </style>
+        <h2 class="section-title" style="margin-top: 20px;">Feature Products</h2>
+        <div id="feature_product">
+            <?php            
+                $sql = "SELECT * FROM product WHERE is_feature = 1 LIMIT 4";
+                $result = mysqli_query($conn, $sql);
+                while($row = mysqli_fetch_assoc($result)){
+                    ?>
+                    <a class="product-card" href="?product-details=<?= encryptSt($row['id']) ?>">
+                        <div class="discount-badge"><?= $row['status']; ?></div>
+                        <img src="admin/upload/<?= $row['img']; ?>" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title"><?= $row['name']; ?></h3>
+                            <div class="product-pricing">
+                                <span class="current-price">৳ <?= $row['price']; ?></span>
+                                <span class="original-price">৳ <?= $row['old_price']; ?></span>
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('<?= encryptSt($row['id']) ?>', '<?=encryptSt($row['price'])?>')">
+                                <i class="fas fa-shopping-cart"></i> কার্টে যোগ করুন
+                            </button>
+                        </div>
+                    </a>
+                    <?php
+                }
+            ?>
         </div>
     </div>
 </section>

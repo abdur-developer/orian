@@ -12,6 +12,9 @@ include("section/header.php");
         }elseif(isset($_GET['circular-details'])){            
             include("section/view-circular.php");
 
+        }elseif(isset($_GET['products'])){            
+            include("section/products_all.php");
+
         }elseif(isset($_GET['course-details'])){            
             include("section/view-course.php");
 
@@ -20,13 +23,13 @@ include("section/header.php");
 
         }else{
             include("section/hero.php");
-            include("section/course.php");
             include("section/product.php");
-            include("section/testimonials.php");
+            include("section/course.php");
             include("section/circular.php");
             include("section/blog.php");
             include("section/feature.php");
             include("section/cta.php");
+            include("section/testimonials.php");
         }
         include("section/footer.php");
     ?>
