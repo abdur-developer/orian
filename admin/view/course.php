@@ -25,7 +25,7 @@
 ?>
 
 <!-- Quill CSS -->
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<!-- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"> -->
 
 <div class="container my-5">
     <div class="card shadow-lg border-0">
@@ -42,7 +42,7 @@
             <!-- <php if ($result->num_rows > 0): ?> -->
             <form action="action/update_course.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                 <input type="hidden" name="id" value="<?= htmlspecialchars($row['id']) ?>">
-                <input type="hidden" name="overview" id="quill-html">
+                <!-- <input type="hidden" name="overview" id="quill-html"> -->
                 
                 <div class="row g-4">
                     <!-- Left Column -->
@@ -157,8 +157,9 @@
                                 <i class="fas fa-align-left me-1 text-muted"></i>Overview
                             </label>
                             <div id="quill-editor" style="height: 300px;">
-                                <?= $row['overview'] ?>
+                                <textarea name="overview" style="height: 300px; width: 100%;"><?= $row['overview'] ?></textarea>
                             </div>
+                                
                             <small class="text-muted">Write detailed overview with formatting options</small>
                         </div>
                         <!-- rating -->
@@ -210,44 +211,44 @@
 </div>
 
 <!-- Quill JS -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<!-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> -->
 <script>
     document.getElementById('statusToggle').addEventListener('change', function() {
         const label = this.nextElementSibling;
         label.textContent = this.checked ? 'Active' : 'Inactive';
     });
     // Initialize Quill Editor
-    const quill = new Quill('#quill-editor', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                [{ 'header': [1, 2, 3, false] }],
-                [{ 'align': [] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                ['link']
-            ]
-        },
-        placeholder: 'Write detailed overview here...'
-    });
+    // const quill = new Quill('#quill-editor', {
+    //     theme: 'snow',
+    //     modules: {
+    //         toolbar: [
+    //             [{ 'header': [1, 2, 3, false] }],
+    //             [{ 'align': [] }],
+    //             ['bold', 'italic', 'underline', 'strike'],
+    //             [{ 'color': [] }, { 'background': [] }],
+    //             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    //             ['link']
+    //         ]
+    //     },
+    //     placeholder: 'Write detailed overview here...'
+    // });
 
     // Set initial content from database
-    quill.root.innerHTML = `<?= $row['overview'] ?>`;
+    // quill.root.innerHTML = `<?= $row['overview'] ?>`;
 
     // Form submission handler
-    document.querySelector('form').addEventListener('submit', function(e) {
-        // Get HTML content from Quill and put it in hidden input
-        const quillHtml = document.getElementById('quill-html');
-        quillHtml.value = quill.root.innerHTML;
+    // document.querySelector('form').addEventListener('submit', function(e) {
+    //     // Get HTML content from Quill and put it in hidden input
+    //     const quillHtml = document.getElementById('quill-html');
+    //     quillHtml.value = quill.root.innerHTML;
         
-        // Basic form validation
-        if (!this.checkValidity()) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        this.classList.add('was-validated');
-    });
+    //     // Basic form validation
+    //     if (!this.checkValidity()) {
+    //         e.preventDefault();
+    //         e.stopPropagation();
+    //     }
+    //     this.classList.add('was-validated');
+    // });
     //ki thakbe
     document.getElementById('add-ki-thakbe').addEventListener('click', function() {
         const container = document.getElementById('ki-thakbe-container');
