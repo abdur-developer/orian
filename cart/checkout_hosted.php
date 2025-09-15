@@ -11,6 +11,7 @@ include("OrderTransaction.php");
 
 use SslCommerz\SslCommerzNotification;
 // getting cart data from database
+$cod = isset($_REQUEST['cod']) ? $_REQUEST['cod'] : '';
 $coupon_code = isset($_REQUEST['coupon_code']) ? $_REQUEST['coupon_code'] : '';
 $address = isset($_REQUEST['address']) ? $_REQUEST['address'] : '';
 $address_type = isset($_REQUEST['address_type']) ? $_REQUEST['address_type'] : '';
@@ -101,6 +102,23 @@ if ($conn->query($sql) === TRUE) {
             <input type="hidden" name="card_issuer" value="null">
             <input type="hidden" name="tran_date" value="<?= date('Y-m-d H:i:s'); ?>">
             <input type="hidden" name="zero" value="1">
+            <input type="hidden" name="cod" value="0">
+        </form>
+        
+        <script>
+            document.getElementById('redirectForm').submit();
+        </script>
+    <?php
+    }elseif($cod == "555"){?>
+        <form id="redirectForm" action="pg_redirection/success.php" method="post">
+            <input type="hidden" name="tran_id" value="<?= htmlspecialchars($post_data['tran_id']); ?>">
+            <input type="hidden" name="amount" value="0">
+            <input type="hidden" name="currency" value="BDT">
+            <input type="hidden" name="bank_tran_id" value="null">
+            <input type="hidden" name="card_issuer" value="null">
+            <input type="hidden" name="tran_date" value="<?= date('Y-m-d H:i:s'); ?>">
+            <input type="hidden" name="zero" value="0">
+            <input type="hidden" name="cod" value="1">
         </form>
         
         <script>

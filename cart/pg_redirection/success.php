@@ -155,7 +155,7 @@ ini_set('display_errors', 0);
                     // cart update start
                     $cart_sql = "SELECT * FROM cart WHERE user_id = '{$order_row['user_id']}' AND is_running = 1";
                     $cart_result = $conn->query($cart_sql);
-                    if ($cart_result->num_rows > 0) {//echo "achi_3";
+                    if ($cart_result->num_rows > 0) {
                         while ($cart_row = $cart_result->fetch_assoc()) {
                             $product_id = $cart_row['ref_id'];
                             $quantity = $cart_row['quantity'];
@@ -206,7 +206,7 @@ ini_set('display_errors', 0);
                             }
                         }
 
-                        if($order_row[''])
+                        // if($order_row[''])
 
                         //cart update end
                         $sql = $ot->updateTransactionQuery($tran_id);
@@ -214,7 +214,7 @@ ini_set('display_errors', 0);
                         if ($conn->query($sql) === TRUE){ ?>
                             <div class="payment-header success">
                                 <i class="fas fa-check-circle"></i>
-                                <h2>Payment Successful!</h2>
+                                <h2>Order Successful!</h2>
                                 <p>Thank you for your purchase</p>
                             </div>
                             <div class="payment-body">

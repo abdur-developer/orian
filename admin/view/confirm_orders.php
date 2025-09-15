@@ -319,7 +319,7 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                     <th width="45%">Product</th>
                                     <th class="text-end">Price</th>
                                     <th class="text-center">Quantity</th>
-                                    <th class="text-end">Total</th>
+                                    <th class="text-end">Total Paid</th>
                                     <th class="text-center">Status</th>
                                 </tr>
                             </thead>
@@ -337,9 +337,9 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-end align-middle"><?= $order['currency'].number_format($products['item_price'], 2) ?></td>
+                                    <td class="text-end align-middle"><?= $order['currency']." ".number_format($products['item_price'], 2) ?></td>
                                     <td class="text-center align-middle"><?= $products['quantity'] ?></td>
-                                    <td class="text-end align-middle"><?= $order['currency'].number_format($products['total_pay'], 2) ?></td>
+                                    <td class="text-end align-middle"><?= $order['currency']." ".number_format($products['total_pay'], 2) ?></td>
                                     <td class="text-center align-middle">
                                         <span class="badge bg-<?= getItemStatusColor($products['item_status']) ?>">
                                             <?= ucfirst($products['item_status']) ?>
@@ -348,21 +348,21 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                 </tr>
                             </tbody>
                             <tfoot>
-                                <tr class="total-row">
+                                <!-- <tr class="total-row">
                                     <th colspan="3" class="text-end">Subtotal</th>
-                                    <td class="text-end"><?= $order['currency'].number_format($products['total_pay'], 2) ?></td>
+                                    <td class="text-end"><?= $order['currency']." ".number_format($products['total_pay'], 2) ?></td>
                                     <td></td>
-                                </tr>
+                                </tr> -->
                                 <?php if ($order['coupon']): ?>
                                 <tr>
                                     <th colspan="3" class="text-end">Discount (<?= htmlspecialchars($order['coupon']) ?>)</th>
-                                    <td class="text-end text-danger">-<?= $order['currency'].number_format($products['total_pay'] - $order['amount'], 2) ?></td>
+                                    <td class="text-end text-danger">-<?= $order['currency']." ".number_format($products['total_pay'] - $order['amount'], 2) ?></td>
                                     <td></td>
                                 </tr>
                                 <?php endif; ?>
                                 <tr class="total-row">
-                                    <th colspan="3" class="text-end">Total</th>
-                                    <td class="text-end fw-bold"><?= $order['currency'].number_format($order['amount'], 2) ?></td>
+                                    <th colspan="3" class="text-end">Total <span style="font-size: 11px; font-weight: 500;">(with shipping charge)</span></th>
+                                    <td class="text-end fw-bold"><?= $order['currency']." ".number_format($order['amount'], 2) ?></td>
                                     <td></td>
                                 </tr>
                             </tfoot>
@@ -411,7 +411,7 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                     <div class="col-md-6 mb-3">
                                         <h6 class="small text-muted mb-1">Payment Method</h6>
                                         <p class="mb-0">
-                                            <?php if ($order['transaction_id']): ?>
+                                            <?php if ($products['total_pay'] != 0): ?>
                                                 <span class="badge bg-success bg-opacity-10 text-success">
                                                     <i class="fas fa-check-circle me-1"></i> Paid Online
                                                 </span>
@@ -433,8 +433,8 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                     <div class="col-md-6">
                                         <h6 class="small text-muted mb-1">Payment Status</h6>
                                         <p class="mb-0">
-                                            <span class="badge bg-<?= $order['transaction_id'] ? 'success' : 'warning' ?> bg-opacity-10 text-<?= $order['transaction_id'] ? 'success' : 'warning' ?>">
-                                                <?= $order['transaction_id'] ? 'Paid' : 'Pending' ?>
+                                            <span class="badge bg-<?= $products['total_pay'] != 0 ? 'success' : 'warning' ?> bg-opacity-10 text-<?= $products['total_pay'] != 0 ? 'success' : 'warning' ?>">
+                                                <?= $products['total_pay'] != 0 ? 'Paid' : 'Pending' ?>
                                             </span>
                                         </p>
                                     </div>

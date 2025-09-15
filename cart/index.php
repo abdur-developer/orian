@@ -10,7 +10,6 @@
         $stmt->bind_param("i", $item_id);
         $stmt->execute();
     }
-    $IS_HAS_PRODUCT = false;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -233,6 +232,9 @@
                 </script>
                 ";
             }
+            $hasProduct = false;
+            $hasConsultant = false;
+            $hasCourse = false;
         ?>
         <?php
             // Fetch cart items
@@ -267,13 +269,18 @@
                         <div class="course-info">
                             <div class="course-title"><?=htmlspecialchars($course['title'] ?? $course['name'])?></div>
                             <div class="course-instructor">
-                                <?php if ($type === 'product'): ?>
-                                    <?=htmlspecialchars($course['type'])?>
-                                <?php elseif ($type === 'consultant'): ?>
-                                    By Instructor
-                                <?php else: ?>
-                                    By <?=htmlspecialchars($course['instructor'])?>
-                                <?php endif; ?>
+                                <?php
+                                    if ($type === 'product'): 
+                                        $hasProduct = true;
+                                        echo htmlspecialchars($course['type']);
+                                    elseif ($type === 'consultant'): 
+                                        $hasConsultant = true;
+                                        echo "By Instructor";
+                                    else: 
+                                        $hasCourse = true;
+                                        echo "By" . htmlspecialchars($course['instructor']);
+                                    endif;
+                                ?>
                             </div>
                         </div>
                         <style>
@@ -337,8 +344,7 @@
                         </style>
 
                         <div class="course-price">
-                            <?php if ($type == 'product'): 
-                                $IS_HAS_PRODUCT = true; ?>
+                            <?php if ($type == 'product'): ?>
                                 <div class="quantity-control">
                                     <button type="button" class="qty-btn" onclick="updateQuantity('qty_<?=$item['id']?>', -1, '<?=htmlspecialchars($course['price'])?>', this)">-</button>
                                     <input type="number" id="qty_<?=$item['id']?>"  data-item-id="<?=$item['id']?>" value="<?=htmlspecialchars($item['quantity'] ?? 1)?>" min="1" class="qty-input" readonly />
@@ -364,7 +370,7 @@
                         <span>Discount <span class="discount-badge" id="discount-code"></span></span>
                         <span style="color: #f72585;" id="discount-amount"></span>
                     </div>
-                    <?php if ($IS_HAS_PRODUCT) : ?>
+                    <?php if ($hasProduct) : ?>
                         <style>
                             .address-selector {
                                 display: flex;
@@ -446,6 +452,24 @@
                         <span>Total</span>
                         <span id="total">৳0.00</span>
                     </div>
+
+                    
+                    <?php if ($hasConsultant || $hasCourse): ?>
+                        <label for="ssl" style="font-size: 14px; color: var(--text-light);">
+                            <input type="radio" name="cod" id="ssl" checked>
+                            Online payment (SSLCommerz)
+                        </label>
+                    <?php elseif($hasProduct): ?>
+                        <label for="cod" style="font-size: 14px; color: var(--text-light);">
+                            <input type="radio" name="cod" id="cod" value="555" checked>
+                            Cash on Delivery (COD)
+                        </label>
+                        <br>
+                        <label for="ssl" style="font-size: 14px; color: var(--text-light);">
+                            <input type="radio" name="cod" id="ssl">
+                            Online payment (SSLCommerz)
+                        </label>
+                    <?php endif; ?>
 
                     <button class="checkout-btn" type="submit">Checkout</button>
                     <div style="margin-top: 16px; font-size: 14px; color: var(--text-light); text-align: center;">
