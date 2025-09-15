@@ -200,13 +200,97 @@
             width: 100%;
         }
     }
+    .top-sort-list{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px auto;
+    }
+    @media (max-width: 768px) {
+        .top-sort-list{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+    }
+    .sort-list{
+        max-width: 300px;
+    }
+    .sort-list select{
+        width: 100%;
+        display: block;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--bs-body-color);
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: var(--bs-border-radius);
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
 </style>
+<?php
 
+function getName($id){
+    global $conn;
+    $sql = "SELECT name FROM category_product WHERE id='".mysqli_real_escape_string($conn, $id)."'";
+    $result = mysqli_query($conn, $sql);
+    if($row = mysqli_fetch_assoc($result)){
+        return $row['name'];
+    }
+    return 'All Products';
+}
+?>
 <section id="product" class="section product-section">
     <div class="container">
+        <div class="top-sort-list">
+            <h2 class="section-title"><?= 
+                isset($_GET['name']) ? $_GET['name'] : (isset($_GET['category']) ? getName($_GET['category']) : 'All Products')
+            ?></h2>
+            <div class="sort-list">
+                <form action="" method="get" id="categoryForm">
+                    <!-- //?products&category=<?= $row['id'] ?>&name=<?= str_replace(' ', '+', $row['name']) ?> -->
+                    <select name="category" id="categorySelect" onchange="document.getElementById('categoryForm').submit()">
+                        <?php
+                            $sql = "SELECT * FROM category_product";
+                            $result = mysqli_query($conn, $sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                $selected = (isset($_GET['category']) && $_GET['category'] == $row['id']) ? 'selected' : '';
+                                echo "<option value='".$row['id']."' $selected>".$row['name']."</option>";
+                            }
+                        ?>
+                    </select>
+                    <input type="hidden" name="products" value="0">
+                </form>
+            </div>
+            <div class="sort-list">
+                <form action="" method="get" id="priceForm">
+                    <input type="hidden" name="products" value="0">
+                    <?php if(isset($_GET['category'])){ ?>
+                        <input type="hidden" name="category" value="<?= isset($_GET['category']) ? $_GET['category'] : '' ?>">
+                        <input type="hidden" name="name" value="<?= isset($_GET['name']) ? $_GET['name'] : '' ?>">
+                    <?php } ?>
+                    
+                    <select name="price" id="categorySelect" onchange="document.getElementById('priceForm').submit()">
+                        <option disabled <?= isset($_GET['price']) ? "" : "selected"?>>Random Sort Price</option>
+                        <option value='ASC' <?= isset($_GET['price']) && $_GET['price'] == "ASC" ? "selected" : "" ?>>Price low to high</option>
+                        <option value='DESC' <?= isset($_GET['price']) && $_GET['price'] == "DESC" ? "selected" : "" ?>>Price high to low</option>
+                    </select>
+                </form>
+            </div>
+        </div>
         <div class="row">
             <?php 
             $sql = "SELECT * FROM product";
+
+            if(isset($_GET['price'])){
+                $sql .= " ORDER BY price ".$_GET['price'];
+            }
 
             if(isset($_GET['category'])){
                 $sql .= " WHERE type='".mysqli_real_escape_string($conn, $_GET['category'])."'";
