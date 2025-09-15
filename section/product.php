@@ -241,19 +241,13 @@
     </style>
     <h2 class="cate-title">Categories</h2>
     <div class="categories-container">
-        <a href="#" class="category-item">Electronics</a>      
-        <a href="#" class="category-item">Fashion & Apparel</a>      
-        <a href="#" class="category-item">Beauty & Personal Care</a>      
-        <a href="#" class="category-item">Home & Living</a>      
-        <a href="#" class="category-item">Groceries & Essentials</a>      
-        <a href="#" class="category-item">Health & Wellness</a>      
-        <a href="#" class="category-item">Sports & Outdoors</a>      
-        <a href="#" class="category-item">Books & Stationery</a>      
-        <a href="#" class="category-item">Toys & Games</a>      
-        <a href="#" class="category-item">Automotive</a>      
-        <a href="#" class="category-item">Jewelry & Watches</a>      
-        <a href="#" class="category-item">Pet Supplies</a>      
-        <a href="#" class="category-item">Digital Products & Services</a>
+        <?php
+            $sql = "SELECT * FROM category_product";
+            $result = mysqli_query($conn, $sql);
+            while($row = mysqli_fetch_assoc($result)){ ?>
+                <a href="?products&category=<?= $row['id'] ?>&name=<?= str_replace(' ', '+', $row['name']) ?>" class="category-item"><?= $row['name'] ?></a>
+        <?php }
+        ?>
     </div>
     <div class="container">
         <h2 class="section-title">Our Products</h2>
@@ -273,7 +267,11 @@
                         <img src="admin/upload/<?= $row['img']; ?>" class="product-img" alt="<?= $row['name']; ?>">
                     </div>
                     <div class="product-body">
-                        <span class="product-category"><?= $row['type']; ?></span>
+                        <span class="product-category"><?php
+                         $sql = "SELECT name FROM category_product WHERE id='".$row['type']."'";
+                         $category = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+                         echo $category['name'];
+                         ?></span>
                         <h3 class="product-name"><?= $row['name']; ?></h3>
                         <div class="product-rating">
                             <div class="product-rating-stars">

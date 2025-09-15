@@ -69,7 +69,11 @@
                             <?php while($row = $result->fetch_assoc()): ?>
                             <tr>
                                 <td><?= htmlspecialchars($row["name"]) ?></td>
-                                <td><?= htmlspecialchars($row["type"]) ?></td>
+                                <td><?php
+                                    $sql = "SELECT name FROM category_product WHERE id='".$row['type']."'";
+                                    $category = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+                                    echo $category['name'];                                
+                                ?></td>
                                 <td><?= htmlspecialchars($row["price"]) ?></td>
                                 <td class="text-center action-buttons">
                                     <button class="btn btn-sm btn-edit me-1" title="Edit" onclick="location.href='?e=product&id=<?= encryptSt($row['id']) ?>'">

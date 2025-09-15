@@ -212,7 +212,13 @@
       </div>
       
       <div class="product-info">
-        <div class="brand"><?=$product['type']?></div>
+        <div class="brand">
+          <?php 
+            $sql = "SELECT name FROM category_product WHERE id='".$product['type']."'";
+            $category = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+            echo $category['name'];
+          ?>
+        </div>
         <h1 class="product-title"><?=$product['name']?></h1>
         
         <div class="rating">

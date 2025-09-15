@@ -207,6 +207,11 @@
         <div class="row">
             <?php 
             $sql = "SELECT * FROM product";
+
+            if(isset($_GET['category'])){
+                $sql .= " WHERE type='".mysqli_real_escape_string($conn, $_GET['category'])."'";
+            }
+
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)){ ?>
             <div class="col-xl-3 col-lg-4 col-6">
@@ -219,7 +224,13 @@
                         <img src="admin/upload/<?= $row['img']; ?>" class="product-img" alt="<?= $row['name']; ?>">
                     </div>
                     <div class="product-body">
-                        <span class="product-category"><?= $row['type']; ?></span>
+                        <span class="product-category">
+                            <?php
+                                $sql = "SELECT name FROM category_product WHERE id='".$row['type']."'";
+                                $category = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+                                echo $category['name'];
+                            ?>
+                        </span>
                         <h3 class="product-name"><?= $row['name']; ?></h3>
                         <div class="product-rating">
                             <div class="product-rating-stars">

@@ -53,8 +53,17 @@
                         
                         <!-- Category -->
                         <div class="form-floating mb-4">
-                            <input type="text" name="type" class="form-control" id="type" 
-                                   value="<?= htmlspecialchars($row['type']) ?>" required>
+                            <select name="type" id="type" class="form-control">
+                                <option disabled>Select Category</option>
+                                <?php
+                                    $sql = "SELECT * FROM category_product";
+                                    $categories = mysqli_query($conn, $sql);
+                                    while($category = mysqli_fetch_assoc($categories)){ ?>
+                                        <option value="<?= $category['id'] ?>" <?= $row['type'] == $category['id'] ? 'selected' : '' ?>>
+                                            <?= $category['name'] ?>
+                                        </option>
+                                    <?php } ?>
+                            </select>
                             <label for="type"><i class="fas fa-building me-1 text-muted"></i>Category</label>
                             <div class="invalid-feedback">Please provide an type name</div>
                         </div>
@@ -102,6 +111,14 @@
                     
                     <!-- Right Column -->
                     <div class="col-md-6">
+                        <!-- Is Feature -->
+                        <div class="form-floating mb-4">
+                            <select name="is_feature" class="form-control" id="is_feature">
+                                <option value="1" <?= $row['is_feature'] == 1 ? 'selected' : '' ?>>Active</option>
+                                <option value="0" <?= $row['is_feature'] == 0 ? 'selected' : '' ?>>Inactive</option>
+                            </select>
+                            <label for="is_feature"><i class="fas fa-toggle-on me-1 text-muted"></i>Is feature</label>
+                        </div>
                         <!-- Description with Quill Editor -->
                         <div class="mb-4">
                             <label for="quill-editor" class="form-label">

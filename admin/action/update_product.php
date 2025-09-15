@@ -14,6 +14,7 @@ $type = trim($_POST['type']);
 $price = intval($_POST['price']);
 $old_price = intval($_POST['old_price']);
 $rating_count = intval($_POST['rating_count']);
+$is_feature = intval($_POST['is_feature']);
 $description = $_POST['description']; // Quill HTML input
 $review = $_POST['review'];
 $status = $_POST['status'];
@@ -67,14 +68,14 @@ try {
     if (!empty($id)) {
         $sql = "UPDATE product SET 
                     name = ?, type = ?, price = ?, old_price = ?, rating_count = ?,
-                    description = ?, img = ?, review = ?, status = ?
+                    description = ?, img = ?, review = ?, status = ?, is_feature = ?
                 WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "ssiiissssi",
+            "ssiiissssii",
             $name, $type, $price, $old_price ,$rating_count, $description,
-            $img_name, $review, $status, $id
+            $img_name, $review, $status, $is_feature, $id
         );
         
         if ($stmt->execute()) {
@@ -86,13 +87,13 @@ try {
         }
     } else {
         $sql = "INSERT INTO product 
-                    (name ,type ,price ,old_price ,rating_count ,img ,description ,review ,status) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    (name ,type ,price ,old_price ,rating_count ,img ,description ,review ,status, is_feature) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "ssiiissss",
-            $name, $type, $price, $old_price, $rating_count, $img_name, $description, $review, $status
+            "ssiiissssi",
+            $name, $type, $price, $old_price, $rating_count, $img_name, $description, $review, $status, $is_feature
         );
         if ($stmt->execute()) {
             $new_id = $conn->insert_id;

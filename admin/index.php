@@ -62,7 +62,7 @@
           // ],
           'Management' => [
             //['h' => '?q=cart', 'i' => 'shopping-cart', 't' => 'Cart'],
-            //['h' => '?q=category', 'i' => 'th-list', 't' => 'Category'],
+            ['h' => '?q=category_product', 'i' => 'th-list', 't' => 'Product Cate...'],
             ['h' => '?q=chat_suggestions', 'i' => 'comments', 't' => 'Chat Suggestions'],
             ['h' => '?q=circulars', 'i' => 'newspaper', 't' => 'Circulars'],
             ['h' => '?q=confirm_orders', 'i' => 'check-circle', 't' => 'Confirm Orders'],
@@ -114,7 +114,7 @@
     $e = $_REQUEST['e'] ?? ''; // edit view value
 
     $allowed_q = [
-      "dashboard", "cart", "category", "chat_suggestions", "circulars",
+      "dashboard", "cart", "category_product", "chat_suggestions", "circulars",
       "confirm_orders", "consultant", "coupons", "course", "course_module",
       "job_apply", "messages", "module_details", "orders", "post",
       "product", "questions", "system_structure", "testimonials",

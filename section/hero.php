@@ -3,7 +3,7 @@
     .hero-section {        
         background-color: #fff;
         position: relative;
-        padding: 100px 0;
+        padding: 100px 0 30px;
         color: black;
         overflow: hidden;
     }
