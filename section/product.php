@@ -202,7 +202,59 @@
     }
 </style>
 
-<section id="product" class="section product-section">
+<section id="product" class="section product-section" style="padding: 40px 0;">
+    <style>
+        .cate-title{
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            padding-left: 20px;
+        }
+        .categories-container {
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .category-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px 10px;
+            margin: 5px;
+            text-align: center;
+            font-weight: 400;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            color: #5a5a5a;
+            display: inline-block;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+    </style>
+    <h2 class="cate-title">Categories</h2>
+    <div class="categories-container">
+        <a href="#" class="category-item">Electronics</a>      
+        <a href="#" class="category-item">Fashion & Apparel</a>      
+        <a href="#" class="category-item">Beauty & Personal Care</a>      
+        <a href="#" class="category-item">Home & Living</a>      
+        <a href="#" class="category-item">Groceries & Essentials</a>      
+        <a href="#" class="category-item">Health & Wellness</a>      
+        <a href="#" class="category-item">Sports & Outdoors</a>      
+        <a href="#" class="category-item">Books & Stationery</a>      
+        <a href="#" class="category-item">Toys & Games</a>      
+        <a href="#" class="category-item">Automotive</a>      
+        <a href="#" class="category-item">Jewelry & Watches</a>      
+        <a href="#" class="category-item">Pet Supplies</a>      
+        <a href="#" class="category-item">Digital Products & Services</a>
+    </div>
     <div class="container">
         <h2 class="section-title">Our Products</h2>
         
