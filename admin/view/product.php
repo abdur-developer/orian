@@ -89,28 +89,6 @@
                             <label for="rating_count"><i class="fas fa-info-circle me-1 text-muted"></i>Rating Count</label>
                         </div>
                         
-                        <!-- Image Upload -->
-                        <div class="mb-4">
-                            <label class="form-label"><i class="fas fa-image me-1 text-muted"></i>Post Image</label>
-                            <?php if (!empty($row['img'])): ?>
-                                <div class="mb-3 text-center">
-                                    <img src="upload/<?= htmlspecialchars($row['img']) ?>" alt="Current Image" 
-                                         class="img-thumbnail rounded" style="max-height: 200px;">
-                                    <div class="form-check mt-2">
-                                        <input class="form-check-input" type="checkbox" name="remove_img" id="remove_img">
-                                        <label class="form-check-label text-danger" for="remove_img">
-                                            Remove current image
-                                        </label>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                            <input type="file" name="img" class="form-control" accept="image/*">
-                            <small class="text-muted">Max size: 2MB (JPEG, PNG)</small>
-                        </div>
-                    </div>
-                    
-                    <!-- Right Column -->
-                    <div class="col-md-6">
                         <!-- Is Feature -->
                         <div class="form-floating mb-4">
                             <select name="is_feature" class="form-control" id="is_feature">
@@ -142,6 +120,64 @@
                             <input type="text" name="review" class="form-control" id="review" 
                                    value="<?= htmlspecialchars($row['review']) ?>">
                             <label for="review"><i class="fas fa-users me-1 text-muted"></i>Review</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div class="col-md-6">
+                        <!-- Image Upload -->
+                        <div class="mb-4">
+                            <label class="form-label"><i class="fas fa-image me-1 text-muted"></i>Post Image 1</label>
+                            <?php if (!empty($row['img'])): ?>
+                                <div class="mb-3 text-center">
+                                    <img src="upload/<?= htmlspecialchars($row['img']) ?>" alt="Current Image" 
+                                         class="img-thumbnail rounded" style="max-height: 200px;">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" name="remove_img" id="remove_img">
+                                        <label class="form-check-label text-danger" for="remove_img">
+                                            Remove current image
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <input type="file" name="img" class="form-control" accept="image/*">
+                            <small class="text-muted">Max size: 2MB (JPEG, PNG)</small>
+                        </div>
+                        <!-- Image Upload -->
+                        <div class="mb-4">
+                            <label class="form-label"><i class="fas fa-image me-1 text-muted"></i>Post Image 2</label>
+                            <?php if (!empty($row['img_2'])): ?>
+                                <div class="mb-3 text-center">
+                                    <img src="upload/<?= htmlspecialchars($row['img_2']) ?>" alt="Current Image" 
+                                         class="img-thumbnail rounded" style="max-height: 200px;">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" name="remove_img_2" id="remove_img_2">
+                                        <label class="form-check-label text-danger" for="remove_img_2">
+                                            Remove current image
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <input type="file" name="img_2" class="form-control" accept="image/*">
+                            <small class="text-muted">Max size: 2MB (JPEG, PNG)</small>
+                        </div>
+                        <!-- Image Upload -->
+                        <div class="mb-4">
+                            <label class="form-label"><i class="fas fa-image me-1 text-muted"></i>Post Image 3</label>
+                            <?php if (!empty($row['img_3'])): ?>
+                                <div class="mb-3 text-center">
+                                    <img src="upload/<?= htmlspecialchars($row['img_3']) ?>" alt="Current Image" 
+                                         class="img-thumbnail rounded" style="max-height: 200px;">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" name="remove_img_3" id="remove_img_3">
+                                        <label class="form-check-label text-danger" for="remove_img_3">
+                                            Remove current image
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <input type="file" name="img_3" class="form-control" accept="image/*">
+                            <small class="text-muted">Max size: 2MB (JPEG, PNG)</small>
                         </div>
                     </div>
                 </div>

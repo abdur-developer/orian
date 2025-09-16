@@ -185,13 +185,16 @@
   </div>
   <div class="body" id="chatBody">
     <div class="message-box bot-message">
-      <strong>AI:</strong> আসসালামু আলাইকুম! আমি AI সহকারী। কিভাবে আপনাকে সাহায্য করতে পারি? 🙏
+      <strong>AI:</strong> আপনি কি আমাদের এজেন্ট এর সাথে কথা বলতে চান? 😊 তাহলে প্রথমে 
+      <a href="auth.php" style="color: #882188ff; text-decoration: underline;">লগইন</a> করতে হবে , তারপর 
+      <a href="home.php?page=consultants" style="color: #882188ff; text-decoration: underline;">পরামর্শদাতা সেকশনে </a>যেতে হবে...
       <div class="timestamp">আজ <?php echo date('h:i A'); ?></div>
-      <div class="suggestions" id="initialSuggestions"></div>
+      <!-- <div class="suggestions" id="initialSuggestions"></div> -->
     </div>
     <div class="message-box bot-message">
-      আপনি চাইলে আমাদের ফেসবুক পেজেও যোগাযোগ করতে পারেন 👉 
-      <a href="#" target="_blank" style="color: #218838; text-decoration: underline;">Facebook Page</a>
+      আমাদের যোগাযোগ করতে পারেন 
+      <br>👉 <a href="https://www.facebook.com/defence24bd" target="_blank" style="color: #218838; text-decoration: underline;">Facebook Page</a>
+      <br>👉 <a href="#" target="_blank" style="color: #218838; text-decoration: underline;">Whatsapp</a>
       <div class="timestamp"><?php echo date('h:i A'); ?></div>
     </div>
   </div>
@@ -214,7 +217,7 @@
       loadInitialSuggestions();
     }
   }
-
+  /*
   // Load initial suggestions
   async function loadInitialSuggestions() {
     const initialSuggestions = document.getElementById("initialSuggestions");
@@ -394,4 +397,5 @@
     // Load initial suggestions when chat is first opened
     document.getElementById("chatbox").addEventListener('click', loadInitialSuggestions, { once: true });
   });
+  */
 </script>

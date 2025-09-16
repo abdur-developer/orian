@@ -19,6 +19,8 @@ $description = $_POST['description']; // Quill HTML input
 $review = $_POST['review'];
 $status = $_POST['status'];
 $remove_img = isset($_POST['remove_img']);
+$remove_img_2 = isset($_POST['remove_img_2']);
+$remove_img_3 = isset($_POST['remove_img_3']);
 
 if (empty($name) || empty($type)) {
     header("Location: ../../admin/?e=product&id=" . encryptSt($id) . "&error=Title+and+Organization+are+required+fields.");
@@ -27,55 +29,85 @@ if (empty($name) || empty($type)) {
 
 try {
     $img_name = null;
+    $img_name_2 = null;
+    $img_name_3 = null;
 
     // Get current image (if exists)
-    $current_img_stmt = $conn->prepare("SELECT img FROM product WHERE id = ?");
+    $current_img_stmt = $conn->prepare("SELECT img, img_2, img_3 FROM product WHERE id = ?");
     $current_img_stmt->bind_param("i", $id);
     $current_img_stmt->execute();
-    $current_img_result = $current_img_stmt->get_result();
-    $current_img = $current_img_result->fetch_assoc()['img'] ?? null;
+    $current_img_result = $current_img_stmt->get_result()->fetch_assoc();
+
+    $current_img = $current_img_result['img'] ?? null;
+    $current_img_2 = $current_img_result['img_2'] ?? null;
+    $current_img_3 = $current_img_result['img_3'] ?? null;
     $current_img_stmt->close();
 
-    // Upload new image if present
-    if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
-        $upload = uploadImage($_FILES['img'], '../upload/', 'product_');
+    $images = [
+        [$remove_img, $current_img],
+        [$remove_img_2, $current_img_2],
+        [$remove_img_3, $current_img_3],
+    ];
 
-        if ($upload['success']) {
-            // Delete previous image if exists
-            if (!empty($current_img) && file_exists('../upload/' . $current_img)) {
-                unlink('../upload/' . $current_img);
+    for ($i = 0; $i < 3; $i++) {
+        $xx = $images[$i]; // Changed $id to $i
+        if ($xx[0] && !empty($xx[1])) {
+            if (file_exists('../upload/' . $xx[1])) {
+                unlink('../upload/' . $xx[1]);
             }
-
-            $img_name = basename($upload['target_file']);
-        } else {
-            header("Location: ../../admin/?e=product&id=" . encryptSt($id) . "&error=" . urlencode($upload['message']));
-            exit();
+            // Set the corresponding variable to null
+            if ($i == 0) {
+                $current_img = null; 
+            }elseif($i == 1){
+                $current_img_2 = null;
+            }else{
+                $current_img_3 = null;
+            }
         }
-
-    } elseif ($remove_img && !empty($current_img)) {
-        // Remove existing image
-        if (file_exists('../upload/' . $current_img)) {
-            unlink('../upload/' . $current_img);
-        }
-        $img_name = null;
-
-    } else {
-        // Keep existing image
-        $img_name = $current_img;
     }
+
+    // Function to handle image upload
+    function handleImageUpload($file, $current_img) {
+        if (isset($file) && $file['error'] === UPLOAD_ERR_OK) {
+            $upload = uploadImage($file, '../upload/', 'product_');
+
+            if ($upload['success']) {
+                // Delete previous image if exists
+                if (!empty($current_img) && file_exists('../upload/' . $current_img)) {
+                    unlink('../upload/' . $current_img);
+                }
+                return basename($upload['target_file']);
+            } else {
+                throw new Exception($upload['message']);
+            }
+        }
+        return $current_img; // Keep existing image
+    }
+
+    // Upload new images
+    try {
+        $img_name = handleImageUpload($_FILES['img'], $current_img);
+        $img_name_2 = handleImageUpload($_FILES['img_2'], $current_img_2);
+        $img_name_3 = handleImageUpload($_FILES['img_3'], $current_img_3);
+    } catch (Exception $e) {
+        header("Location: ../../admin/?e=product&id=" . encryptSt($id) . "&error=" . urlencode($e->getMessage()));
+        exit();
+    }
+    
+    
 
     // Update or Insert
     if (!empty($id)) {
         $sql = "UPDATE product SET 
                     name = ?, type = ?, price = ?, old_price = ?, rating_count = ?,
-                    description = ?, img = ?, review = ?, status = ?, is_feature = ?
+                    description = ?, img = ?, img_2 = ?, img_3 = ?, review = ?, status = ?, is_feature = ?
                 WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "ssiiissssii",
+            "ssiiissssssii",
             $name, $type, $price, $old_price ,$rating_count, $description,
-            $img_name, $review, $status, $is_feature, $id
+            $img_name, $img_name_2, $img_name_3, $review, $status, $is_feature, $id
         );
         
         if ($stmt->execute()) {
@@ -87,12 +119,12 @@ try {
         }
     } else {
         $sql = "INSERT INTO product 
-                    (name ,type ,price ,old_price ,rating_count ,img ,description ,review ,status, is_feature) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    (name ,type ,price ,old_price ,rating_count ,img, img_2, img_3, description ,review ,status, is_feature) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "ssiiissssi",
+            "ssiiissssssi",
             $name, $type, $price, $old_price, $rating_count, $img_name, $description, $review, $status, $is_feature
         );
         if ($stmt->execute()) {

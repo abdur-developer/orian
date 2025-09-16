@@ -208,7 +208,24 @@
   <div class="container-product">
     <div class="product-view">
       <div class="product-gallery">
-        <img src="<?=$product['img']?>" alt="<?=$product['name']?>" class="main-image">
+        <div id="modernCarousel" class="carousel slide modern-carousel" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="admin/upload/<?=$product['img']?>" class="main-image">
+              </div>
+              <div class="carousel-item">
+                <img src="admin/upload/<?=$product['img_2']?>" class="main-image">
+              </div>
+              <div class="carousel-item">
+                <img src="admin/upload/<?=$product['img_3']?>" class="main-image">
+              </div>
+            </div>
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#modernCarousel" data-bs-slide-to="0" class="active"></button>
+              <button type="button" data-bs-target="#modernCarousel" data-bs-slide-to="1"></button>
+              <button type="button" data-bs-target="#modernCarousel" data-bs-slide-to="2"></button>
+            </div>
+        </div>
       </div>
       
       <div class="product-info">

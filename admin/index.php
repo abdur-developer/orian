@@ -57,30 +57,30 @@
       <?php
         //h=>href, i=>icon class, t=>title
         $menus = [
-          // 'Main' => [
-          //   ['h' => '?q=dashboard', 'i' => 'tachometer-alt', 't' => 'Dashboard']
-          // ],
+          'Main' => [
+            // ['h' => '?q=dashboard', 'i' => 'tachometer-alt', 't' => 'Dashboard'],
+            ['h' => '?q=users', 'i' => 'users', 't' => 'Users']
+          ],
           'Management' => [
             //['h' => '?q=cart', 'i' => 'shopping-cart', 't' => 'Cart'],
             ['h' => '?q=category_product', 'i' => 'th-list', 't' => 'Product Cate...'],
-            ['h' => '?q=chat_suggestions', 'i' => 'comments', 't' => 'Chat Suggestions'],
+            // ['h' => '?q=chat_suggestions', 'i' => 'comments', 't' => 'Chat Suggestions'],
             ['h' => '?q=circulars', 'i' => 'newspaper', 't' => 'Circulars'],
             ['h' => '?q=confirm_orders', 'i' => 'check-circle', 't' => 'Confirm Orders'],
             ['h' => '?q=consultant', 'i' => 'user-tie', 't' => 'Consultant'],
             ['h' => '?q=coupons', 'i' => 'tags', 't' => 'Coupons'],
             ['h' => '?q=course', 'i' => 'video', 't' => 'Course'],
-            //['h' => '?q=course_module', 'i' => 'puzzle-piece', 't' => 'Course Module'],
             ['h' => '?q=job_apply', 'i' => 'briefcase', 't' => 'Job Apply'],
             ['h' => 'chat.php', 'i' => 'envelope', 't' => 'Messages'],
             //['h' => '?q=module_details', 'i' => 'cubes', 't' => 'Module Details'],
             //['h' => '?q=orders', 'i' => 'box', 't' => 'Orders'],
+            ['h' => '?e=offer', 'i' => 'puzzle-piece', 't' => 'Offer Banner'],
             ['h' => '?q=post', 'i' => 'thumbtack', 't' => 'Post'],
             ['h' => '?q=product', 'i' => 'box-open', 't' => 'Product'],
             ['h' => '?q=questions', 'i' => 'question-circle', 't' => 'Questions'],
-            //['h' => '?q=slider', 'i' => 'image', 't' => 'Slider'],
+            ['h' => '?q=slider', 'i' => 'image', 't' => 'Slider'],
             //['h' => '?q=system_structure', 'i' => 'project-diagram', 't' => 'System Structure'],
-            ['h' => '?q=testimonials', 'i' => 'comment-dots', 't' => 'Testimonials'],
-            ['h' => '?q=users', 'i' => 'users', 't' => 'Users']
+            ['h' => '?q=testimonials', 'i' => 'comment-dots', 't' => 'Testimonials']
           ],
           'System' => [
             // ['h' => '?q=access_control', 'i' => 'user-shield', 't' => 'Access Control'],
@@ -124,7 +124,7 @@
     $allowed_e = [
       "circulars", "post", "product", "questions", "testimonials",
       "course", "course_module", "module_details", "job_apply",
-      "users", "confirm_orders"
+      "users", "confirm_orders", "category_product", "slider", "offer"
     ];
 
     if ($q && in_array($q, $allowed_q)) include "sec/{$q}.php";

@@ -99,8 +99,8 @@
                 </p>
                 
                 <div class="social-icons mt-4">
-                    <a href="#" style="text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" style="text-decoration: none;"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/defence24bd" style="text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@defence24bd" style="text-decoration: none;"><i class="fab fa-youtube"></i></a>
                     <a href="#" style="text-decoration: none;"><i class="fab fa-linkedin-in"></i></a>
                     <a href="#" style="text-decoration: none;"><i class="fab fa-instagram"></i></a>
                 </div>

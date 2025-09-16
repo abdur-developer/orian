@@ -33,6 +33,10 @@
         transform: scale(1.03);
     }
     
+    .modern-carousel .carousel-item{
+        cursor: pointer;
+    }
+    
     .modern-carousel .carousel-indicators {
         bottom: 20px;
     }
@@ -224,8 +228,7 @@
     <div class="container">
         <!-- Modern Carousel -->
         <?php
-            $sql = "SELECT img FROM slider";
-            $result = $conn->query($sql);
+            $result = $conn->query("SELECT * FROM slider");
 
             $carouselItems = '';
             $carouselIndicators = '';
@@ -234,7 +237,9 @@
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $active = $index === 0 ? 'active' : '';
-                    $carouselItems .= "<div class='carousel-item $active'><img src='" . htmlspecialchars($row['img']) . "' class='d-block w-100' alt='Slide " . ($index + 1) . "'></div>";
+                    $carouselItems .= "<div class='carousel-item $active' onclick=\"window.location.href='" . htmlspecialchars($row['link']) . "'\">
+                        <img src='admin/upload/" . htmlspecialchars($row['img']) . "' class='d-block w-100' alt='Slide_" . ($index + 1) . "'>
+                    </div>";
                     $carouselIndicators .= "<button type='button' data-bs-target='#modernCarousel' data-bs-slide-to='$index'" . ($index === 0 ? " class='active'" : "") . "></button>";
 
                     $index++;
@@ -270,7 +275,7 @@
                 $offer = mysqli_fetch_assoc($conn->query($sql));
             ?>
             <a href="<?= htmlspecialchars($offer['link']) ?>" target="_blank" rel="noopener noreferrer">
-                <img src="<?= htmlspecialchars($offer['img']) ?>" alt="">
+                <img src="admin/upload/<?= htmlspecialchars($offer['img']) ?>" alt="">
             </a>
         </div>
 

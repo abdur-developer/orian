@@ -90,7 +90,7 @@
                         <i class="fas fa-undo me-1"></i> Reset
                     </button>
                     <button type="submit" class="btn btn-primary px-4" id="submit-btn">
-                        <i class="fas fa-save me-1"></i> Update Circular
+                        <i class="fas fa-save me-1"></i> Update Testimonials
                     </button>
                 </div>
             </form>

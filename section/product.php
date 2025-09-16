@@ -218,8 +218,12 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 30px;
             margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
         }
-        .category-item {
+        .ct-item {
             background: white;
             border-radius: 12px;
             padding: 15px 10px;
@@ -238,6 +242,27 @@
             justify-content: center;
             text-decoration: none;
         }
+        @media screen and (max-width: 576px) {
+            .ct-item {
+                padding: 5px;
+                margin: 2px;
+                font-size: 12px;
+                display: none;
+            }
+            .ct-item:nth-child(-n+5) {
+                display: inline-block;
+            }
+            .categories-container{
+                padding: 15px 10px;
+                margin-bottom: 15px;
+                overflow: hidden;
+            }
+            #see-more{
+                background: #5a5a5a;
+                display: inline-block;
+                color: white;
+            }
+        }
     </style>
     <h2 class="cate-title">Categories</h2>
     <div class="categories-container">
@@ -245,9 +270,20 @@
             $sql = "SELECT * FROM category_product";
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)){ ?>
-                <a href="?products&category=<?= $row['id'] ?>&name=<?= str_replace(' ', '+', $row['name']) ?>" class="category-item"><?= $row['name'] ?></a>
-        <?php }
+                <a href="?products&category=<?= $row['id'] ?>&name=<?= str_replace(' ', '+', $row['name']) ?>" class="ct-item"><?= $row['name'] ?></a>
+                <?php }
         ?>
+        <span class="ct-item" id="see-more">See more</span>
+        <script>
+            const btn = document.getElementById('see-more');
+
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.ct-item').forEach(item => {
+                    item.style.display = 'inline-block';
+                });
+                btn.style.display = 'none';
+            });
+        </script>
     </div>
     <div class="container">
         <h2 class="section-title">Our Products</h2>
