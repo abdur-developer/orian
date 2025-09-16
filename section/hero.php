@@ -381,7 +381,7 @@
             }
             
             .product-title {
-                font-size: 14px;
+                font-size: 18px;
                 font-weight: 600;
                 margin-bottom: 10px;
                 height: 40px;
@@ -395,6 +395,8 @@
                 display: flex;
                 margin-bottom: 15px;
                 justify-content: space-around;
+                flex-direction: column;
+                align-items: center;
             }
             
             .current-price {
@@ -433,16 +435,38 @@
             }
             
             
-            /* রেসপন্সিভ স্টাইল */
-            @media (max-width: 768px) {            
+            /* রেসপন্সিভ স্টাইল */            
+            @media (max-width: 567px) {
                 #feature_product {
-                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                    grid-template-columns: 1fr 1fr 1fr;
+                    gap: 5px;
                 }
-            }
-            
-            @media (max-width: 480px) {
-                #feature_product {
-                    grid-template-columns: 1fr;
+                .product-image {
+                    height: 75px;
+                }
+                .product-title {
+                    font-size: 10px;
+                    padding: 2px;
+                    overflow: hidden;
+                    line-height: 1.5em;
+                    max-height: 3em;
+                }
+                .product-info {
+                    padding: 2px;
+                }
+                .product-pricing{
+                    align-items: start;
+                    margin-bottom: 2px;
+                }
+                .current-price{
+                    font-size: 12px;
+                }
+                .original-price{
+                    font-size: 9px;
+                }
+                .add-to-cart {
+                    font-size: 10px;
+                    padding: 5px;
                 }
             }
             
@@ -455,7 +479,7 @@
                 while($row = mysqli_fetch_assoc($result)){
                     ?>
                     <a class="product-card" href="?product-details=<?= encryptSt($row['id']) ?>">
-                        <div class="discount-badge"><?= $row['status']; ?></div>
+                        <!-- <div class="discount-badge"><= $row['status']; ?></div> -->
                         <img src="admin/upload/<?= $row['img']; ?>" class="product-image">
                         <div class="product-info">
                             <h3 class="product-title"><?= $row['name']; ?></h3>
