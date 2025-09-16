@@ -242,6 +242,11 @@
             justify-content: center;
             text-decoration: none;
         }
+        #see-more{
+            background: #5a5a5a;
+            display: none;
+            color: white;
+        }
         @media screen and (max-width: 576px) {
             .ct-item {
                 padding: 5px;
@@ -258,9 +263,7 @@
                 overflow: hidden;
             }
             #see-more{
-                background: #5a5a5a;
                 display: inline-block;
-                color: white;
             }
         }
     </style>
