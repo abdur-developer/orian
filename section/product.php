@@ -247,6 +247,7 @@
             display: none;
             color: white;
         }
+
         @media screen and (max-width: 576px) {
             .ct-item {
                 padding: 5px;
@@ -265,6 +266,10 @@
             #see-more{
                 display: inline-block;
             }
+        }
+        .my-product>* {
+            margin: 0;
+            padding: 0;
         }
     </style>
     <h2 class="cate-title">Categories</h2>
@@ -291,12 +296,12 @@
     <div class="container">
         <h2 class="section-title">Our Products</h2>
         
-        <div class="row">
+        <div class="row my-product">
             <?php 
             $sql = "SELECT * FROM product LIMIT 8";
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)){ ?>
-            <div class="col-xl-3 col-lg-4 col-6">
+            <div class="col-xl-3 col-lg-4 col-6" style="border: solid 0.1px #bcbcbc25;">
                 <div class="product-card">
                     <div class="product-img-container">
                         <span class="product-badge"><?= $row['status']; ?></span>
