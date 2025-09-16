@@ -140,7 +140,31 @@
         }
         
         .blog-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
+        }
+        .blog-content{
+            padding: 5px;
+        }
+        .blog-image {
+            height: 100px;
+        }
+        .blog-title {
+            font-size: 12px;
+            margin-bottom: 1px;
+            font-weight: 500;
+            line-height: 1;
+        }
+        .blog-excerpt {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .read-more{
+            font-size: 12px;
+        }
+        .blog-date{
+            font-size: 12px;
+            padding: 2px 12px;
+            margin-bottom: 2px;
         }
     }
 </style>

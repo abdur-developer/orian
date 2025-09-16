@@ -176,7 +176,7 @@
             margin-bottom: 2px;
         }
         .card-body{
-            padding: 2px;
+            padding: 4px;
         }
     }
 </style>

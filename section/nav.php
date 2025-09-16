@@ -314,6 +314,17 @@
                             <span class="nav-highlight"></span>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link <?php if(isset($_GET['about'])) echo "active"; ?>" href="?about">
+                            <div class="nav-icon-wrapper">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <span>আমাদের সম্পর্কে</span>
+                            </div>
+                            <span class="nav-highlight"></span>
+                        </a>
+                    </li>
+                    
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="?model-test">
                             <div class="nav-icon-wrapper">

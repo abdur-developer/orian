@@ -12,6 +12,9 @@ include("section/header.php");
         }elseif(isset($_GET['circular-details'])){            
             include("section/view-circular.php");
 
+        }elseif(isset($_GET['about'])){            
+            include("section/about.php");
+
         }elseif(isset($_GET['products'])){            
             include("section/products_all.php");
 

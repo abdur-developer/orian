@@ -141,12 +141,12 @@
         </div>
         
         <div class="copyright">
-            <p class="mb-0">© <?= date('Y'); ?> Abdur Ltd. All rights reserved. | সকল স্বত্ব সংরক্ষিত</p>
-            <p class="developer">
+            <p class="mb-0">© <?= date('Y'); ?> ProtiSheba . All rights reserved. | সকল স্বত্ব সংরক্ষিত</p>
+            <!-- <p class="developer">
                 <a href="abdurrahman.php">
                     <i class="fas fa-link"></i> Developed by Abdur Rahman
                 </a>
-            </p>
+            </p> -->
         </div>
     </div>
 </footer>
