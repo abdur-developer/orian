@@ -7,7 +7,6 @@
         overflow: hidden;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
         transition: all 0.3s ease;
-        height: 100%;
         background: white;
     }
     
@@ -142,11 +141,42 @@
     
     @media (max-width: 768px) {
         .course-title {
-            font-size: 18px;
+            font-size: 12px;
+            margin-bottom: 3px;
+            font-weight: 600;
+            line-height: 1;
         }
-        
+        .course-img-container{
+            height: 100px;
+        }
+        .course-meta{
+            flex-direction: column;
+            gap: 5px;
+        }
+        .btn-details, .btn-enroll{
+            padding: 2px;
+            font-weight: 500;
+            font-size: 11px;
+        }
+        .course-provider, .course-meta-item{
+            font-size: 9px;
+        }
+        .course-badge{
+            font-size: 8px;
+            padding: 3px 6px;
+            top: 5px;
+            right: 5px;
+        }
+        .course-price , .course-desc{
+            font-size: 10px;
+            margin-bottom: 0;
+        }
         .course-desc {
             -webkit-line-clamp: 2;
+            margin-bottom: 2px;
+        }
+        .card-body{
+            padding: 2px;
         }
     }
 </style>
@@ -159,10 +189,10 @@
         <!-- ================================================== -->      
         <div class="row g-4">
             <?php 
-                $sql ="SELECT id, price, img, users, title, description, badge, provider FROM course WHERE status = 1";
+                $sql ="SELECT id, price, img, users, title, description, badge, provider FROM course WHERE status = 1 LIMIT 4";
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_assoc($result)){ ?>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-4 col-6">
                         <div class="course-card">
                             <div class="course-img-container">
                                 <img src="admin/upload/<?= $row['img']; ?>" class="course-img" alt="<?=$row['title']?>">    
