@@ -444,7 +444,7 @@
             <div class="section">
                 <h3 class="section-title">About Me</h3>
                 <p class="about-text">
-                    I'm Md Abdur Rahman, an Android app and web developer with 3 years of experience. 
+                    I'm Md Abdur Rahman, an Android app and web developer with 4 years of experience. 
                     I specialize in designing and building user-centered mobile and web solutions that 
                     deliver functionality and ease of use. My goal is to create impactful digital 
                     experiences that meet clients' needs effectively.
@@ -472,7 +472,7 @@
                 <h3 class="section-title">Location</h3>
                 <div class="address-info">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Debigong, Panchagarh, Bangladesh</span>
+                    <span>Debiganj, Panchagarh, Bangladesh</span>
                 </div>
             </div>
         </div>

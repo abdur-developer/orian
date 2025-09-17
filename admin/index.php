@@ -62,6 +62,8 @@
             ['h' => '?q=users', 'i' => 'users', 't' => 'Users']
           ],
           'Management' => [
+            ['h' => '?e=about', 'i' => 'info-circle', 't' => 'About us'],
+            ['h' => '?e=contact', 'i' => 'address-card', 't' => 'Contact Details'],
             //['h' => '?q=cart', 'i' => 'shopping-cart', 't' => 'Cart'],
             ['h' => '?q=category_product', 'i' => 'th-list', 't' => 'Product Cate...'],
             // ['h' => '?q=chat_suggestions', 'i' => 'comments', 't' => 'Chat Suggestions'],
@@ -124,7 +126,8 @@
     $allowed_e = [
       "circulars", "post", "product", "questions", "testimonials",
       "course", "course_module", "module_details", "job_apply",
-      "users", "confirm_orders", "category_product", "slider", "offer"
+      "users", "confirm_orders", "category_product", "slider",
+      "offer", "about", "contact"
     ];
 
     if ($q && in_array($q, $allowed_q)) include "sec/{$q}.php";

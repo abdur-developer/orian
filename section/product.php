@@ -201,7 +201,6 @@
         }
     }
 </style>
-
 <section id="product" class="section product-section" style="padding: 40px 0;">
     <style>
         .cate-title{
@@ -298,7 +297,10 @@
         
         <div class="row my-product">
             <?php 
-            $sql = "SELECT * FROM product LIMIT 8";
+            $sql = "SELECT * FROM product";
+            if($limit){
+                $sql .= " LIMIT 4";
+            }
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)){ ?>
             <div class="col-xl-3 col-lg-4 col-6" style="border: solid 0.1px #bcbcbc25;">
@@ -339,18 +341,15 @@
                     </div>
                 </div>
             </div>
-            <?php }
-                function getPercent($oldPrice, $currentPrice) {
-                    if ($oldPrice == 0) return '0%';
-                    return round((($oldPrice - $currentPrice) / $oldPrice) * 100) . '%';
-                }
-            ?>
+            <?php } ?>
         </div>
-        <div class="view-all-btn">
-            <a href="?products" class="btn btn-primary">
-                সব প্রোডাক্ট দেখুন <i class="fas fa-arrow-right ms-2"></i>
-            </a>
-        </div>
+        <?php if($limit){ ?>
+            <div class="view-all-btn">
+                <a href="?products" class="btn btn-primary">
+                    সব প্রোডাক্ট দেখুন <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        <?php } ?>
     </div>
     <script>
         function addToCart(id, nani){

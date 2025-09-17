@@ -339,10 +339,6 @@ function getName($id){
                 </div>
             </div>
             <?php }
-                function getPercent($oldPrice, $currentPrice) {
-                    if ($oldPrice == 0) return '0%';
-                    return round((($oldPrice - $currentPrice) / $oldPrice) * 100) . '%';
-                }
             ?>
         </div>
     </div>

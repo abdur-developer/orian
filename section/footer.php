@@ -87,6 +87,10 @@
     }
 </style>
 <!-- Footer -->
+ <?php
+    $sql = "SELECT * FROM contact WHERE id=1";
+    $contact = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+ ?>
 <footer>
     <div class="container">
         <div class="row">
@@ -99,10 +103,10 @@
                 </p>
                 
                 <div class="social-icons mt-4">
-                    <a href="https://www.facebook.com/defence24bd" style="text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.youtube.com/@defence24bd" style="text-decoration: none;"><i class="fab fa-youtube"></i></a>
-                    <a href="#" style="text-decoration: none;"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" style="text-decoration: none;"><i class="fab fa-instagram"></i></a>
+                    <a href="<?= htmlspecialchars($contact['facebook']) ?>" style="text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
+                    <a href="<?= htmlspecialchars($contact['youtube']) ?>" style="text-decoration: none;"><i class="fab fa-youtube"></i></a>
+                    <a href="<?= htmlspecialchars($contact['tiktok']) ?>" style="text-decoration: none;"><i class="fab fa-tiktok"></i></a>
+                    <a href="<?= htmlspecialchars($contact['instagram']) ?>" style="text-decoration: none;"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             
@@ -132,16 +136,30 @@
                 <div class="footer-links">
                     <h5>যোগাযোগ</h5>
                     <div class="contact-info">
-                        <p><i class="fas fa-map-marker-alt"></i> ১২৩/বি, ঢাকা, বাংলাদেশ</p>
-                        <p><i class="fas fa-phone-alt"></i> +৮৮০ ১৭১২ ৩৪৫৬৭৮</p>
-                        <p><i class="fas fa-envelope"></i> info@abdurltd.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($contact['location']) ?></p>
+                        <p><i class="fas fa-phone-alt"></i> <?= htmlspecialchars($contact['number']) ?></p>
+                        <p><i class="fas fa-envelope"></i> <?= htmlspecialchars($contact['email']) ?></p>
+                        <?php if($showDev): ?>
+                            <p><a href="abdurrahman.php"><i class="fas fa-link"></i> <span>Developed by Abdur Rahman</span></a></p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
         
         <div class="copyright">
-            <p class="mb-0">© <?= date('Y'); ?> ProtiSheba . All rights reserved. | সকল স্বত্ব সংরক্ষিত</p>
+            <!--
+            <footer class="site-credit">
+                <p>Website Developed by Abdur Rahman</p>
+                <p>Email: abdur09266@gmail.com</p>
+                <p>Whatsapp: +8801709409266</p>
+                <p>for more details visit : https://defence24bd.com/abdurrahman.php</p>
+            </footer>
+            -->
+            <p class="mb-0">
+                <!-- <a href="abdurrahman.php"><i class="fas fa-link"></i></a> -->
+                 <?= date('Y'); ?> ProtiSheba . All rights reserved. | সকল স্বত্ব সংরক্ষিত 
+            </p>
             <!-- <p class="developer">
                 <a href="abdurrahman.php">
                     <i class="fas fa-link"></i> Developed by Abdur Rahman

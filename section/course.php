@@ -189,7 +189,10 @@
         <!-- ================================================== -->      
         <div class="row g-4">
             <?php 
-                $sql ="SELECT id, price, img, users, title, description, badge, provider FROM course WHERE status = 1 LIMIT 4";
+                $sql ="SELECT id, price, img, users, title, description, badge, provider FROM course WHERE status = 1";
+                if($limit){
+                    $sql .= " LIMIT 4";
+                }
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_assoc($result)){ ?>
                     <div class="col-lg-4 col-6">
@@ -221,11 +224,13 @@
                     </div>
             <?php } ?>
         </div>
-        <div class="view-all-btn">
-            <a href="home.php?page=courses" class="btn btn-primary">
-                সব কোর্স দেখুন <i class="fas fa-arrow-right ms-2"></i>
-            </a>
-        </div>
+        <?php if($limit){ ?>
+            <div class="view-all-btn">
+                <a href="home.php?page=courses" class="btn btn-primary">
+                    সব কোর্স দেখুন <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        <?php } ?>
         <!-- ================================================== -->
     </div>
 </section>

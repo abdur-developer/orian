@@ -154,7 +154,10 @@
         </div>
         <div class="blog-grid">
             <?php 
-            $sql = "SELECT id, img, title, sort_text, dateline FROM circulars LIMIT 6";
+            $sql = "SELECT id, img, title, sort_text, dateline FROM circulars";
+            if($limit){
+                $sql .= " LIMIT 4";
+            }
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)){ ?>
             <div class="blog-card">
@@ -173,10 +176,12 @@
             <?php } ?>
         </div>
         
-        <div class="view-all-btn">
-            <a href="home.php?page=circular" class="btn btn-primary">
-                সব সার্কুলার দেখুন <i class="fas fa-arrow-right ms-2"></i>
-            </a>
-        </div>
+        <?php if($limit){ ?>
+            <div class="view-all-btn">
+                <a href="home.php?page=circular" class="btn btn-primary">
+                    সব সার্কুলার দেখুন <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        <?php } ?>
     </div>
 </section>

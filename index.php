@@ -1,45 +1,58 @@
+<?php $showDev = false; ?>
 <?php
+function code_include($name, $limit = true){
+    global $conn, $showDev;
+    include($name);
+    include("section/comment.php");
+}
 require "include/dbcon.php";
-include("section/header.php");
+code_include("section/header.php");
+
 ?>
+
 <body>
     <?php
-        include("section/chat.php");
-        include("section/nav.php");
+        code_include("section/chat.php");
+        code_include("section/nav.php");
         if(isset($_GET['view-blog'])){
-            include("section/view-blog.php");
+            code_include("section/view-blog.php");
 
         }elseif(isset($_GET['circular-details'])){            
-            include("section/view-circular.php");
+            code_include("section/view-circular.php");
 
         }elseif(isset($_GET['about'])){            
-            include("section/about.php");
+            code_include("section/about.php");
 
         }elseif(isset($_GET['products'])){            
-            include("section/products_all.php");
+            code_include("section/products_all.php");
 
         }elseif(isset($_GET['course-details'])){            
-            include("section/view-course.php");
+            code_include("section/view-course.php");
 
         }elseif(isset($_GET['product-details'])){
-            include("section/view-product.php");
+            code_include("section/view-product.php");
 
         }else{
-            include("section/hero.php");
-            include("section/product.php");
-            include("section/course.php");
-            include("section/circular.php");
-            include("section/blog.php");
-            include("section/feature.php");
-            include("section/cta.php");
-            include("section/testimonials.php");
+            code_include("section/hero.php");
+            code_include("section/product.php");
+            code_include("section/course.php");
+            code_include("section/circular.php");
+            code_include("section/feature.php");
+            code_include("section/cta.php");
+            code_include("section/testimonials.php");
+            
+            code_include("section/product.php", false);
+            code_include("section/course.php", false);
+            code_include("section/circular.php", false);
+
+            code_include("section/blog.php");
         }
-        include("section/footer.php");
+        code_include("section/footer.php");
     ?>
     <!-- Back to Top Button -->
     <a href="#" class="btn btn-primary back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </a>
-    <?php include("section/script.php");?>
+    <?php code_include("section/script.php");?>
 </body>
 </html>
