@@ -202,96 +202,98 @@
     }
 </style>
 <section id="product" class="section product-section" style="padding: 40px 0;">
-    <style>
-        .cate-title{
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-            padding-left: 20px;
-        }
-        .categories-container {
-            width: 100%;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-        .ct-item {
-            background: white;
-            border-radius: 12px;
-            padding: 15px 10px;
-            margin: 5px;
-            text-align: center;
-            font-weight: 400;
-            font-size: 16px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border: 1px solid rgba(0,0,0,0.05);
-            color: #5a5a5a;
-            display: inline-block;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-        #see-more{
-            background: #5a5a5a;
-            display: none;
-            color: white;
-        }
-
-        @media screen and (max-width: 576px) {
+    <?php if($limit) : ?>
+        <style>
+            .cate-title{
+                font-size: 24px;
+                font-weight: 600;
+                margin-bottom: 20px;
+                color: var(--text-dark);
+                padding-left: 20px;
+            }
+            .categories-container {
+                width: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                padding: 30px;
+                margin-bottom: 30px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+            }
             .ct-item {
-                padding: 5px;
-                margin: 2px;
-                font-size: 12px;
-                display: none;
-            }
-            .ct-item:nth-child(-n+5) {
-                display: inline-block;
-            }
-            .categories-container{
+                background: white;
+                border-radius: 12px;
                 padding: 15px 10px;
-                margin-bottom: 15px;
+                margin: 5px;
+                text-align: center;
+                font-weight: 400;
+                font-size: 16px;
+                cursor: pointer;
+                position: relative;
                 overflow: hidden;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                border: 1px solid rgba(0,0,0,0.05);
+                color: #5a5a5a;
+                display: inline-block;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
             }
             #see-more{
-                display: inline-block;
+                background: #5a5a5a;
+                display: none;
+                color: white;
             }
-        }
-        .my-product>* {
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-    <h2 class="cate-title">Categories</h2>
-    <div class="categories-container">
-        <?php
-            $sql = "SELECT * FROM category_product";
-            $result = mysqli_query($conn, $sql);
-            while($row = mysqli_fetch_assoc($result)){ ?>
-                <a href="?products&category=<?= $row['id'] ?>&name=<?= str_replace(' ', '+', $row['name']) ?>" class="ct-item"><?= $row['name'] ?></a>
-                <?php }
-        ?>
-        <span class="ct-item" id="see-more">See more</span>
-        <script>
-            const btn = document.getElementById('see-more');
 
-            btn.addEventListener('click', function () {
-                document.querySelectorAll('.ct-item').forEach(item => {
-                    item.style.display = 'inline-block';
+            @media screen and (max-width: 576px) {
+                .ct-item {
+                    padding: 5px;
+                    margin: 2px;
+                    font-size: 12px;
+                    display: none;
+                }
+                .ct-item:nth-child(-n+5) {
+                    display: inline-block;
+                }
+                .categories-container{
+                    padding: 15px 10px;
+                    margin-bottom: 15px;
+                    overflow: hidden;
+                }
+                #see-more{
+                    display: inline-block;
+                }
+            }
+            .my-product>* {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+        <h2 class="cate-title">Categories</h2>
+        <div class="categories-container">
+            <?php
+                $sql = "SELECT * FROM category_product";
+                $result = mysqli_query($conn, $sql);
+                while($row = mysqli_fetch_assoc($result)){ ?>
+                    <a href="?products&category=<?= $row['id'] ?>&name=<?= str_replace(' ', '+', $row['name']) ?>" class="ct-item"><?= $row['name'] ?></a>
+                    <?php }
+            ?>
+            <span class="ct-item" id="see-more">See more</span>
+            <script>
+                const btn = document.getElementById('see-more');
+
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.ct-item').forEach(item => {
+                        item.style.display = 'inline-block';
+                    });
+                    btn.style.display = 'none';
                 });
-                btn.style.display = 'none';
-            });
-        </script>
-    </div>
+            </script>
+        </div>
+    <?php endif; ?>
     <div class="container">
         <h2 class="section-title">Our Products</h2>
         
