@@ -189,7 +189,7 @@
         <!-- ================================================== -->      
         <div class="row g-4">
             <?php 
-                $sql ="SELECT id, price, img, users, title, description, badge, provider FROM course WHERE status = 1";
+                $sql ="SELECT id, price, img, users, title, description, badge, provider, status FROM course";
                 if($limit){
                     $sql .= " LIMIT 4";
                 }
@@ -216,8 +216,12 @@
                                 
                                 
                                 <div class="d-grid gap-2 d-md-flex">
+                                    <?php if($row['status']) : ?>
                                     <button onclick="location.href = '?course-details=<?=encryptSt($row['id'])?>'" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
                                     <button onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($row['id'])?>&nani=<?=encryptSt($row['price'])?>&type=course'" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                                    <?php else: ?>
+                                        <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>শিগ্রই আসছে</button>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
