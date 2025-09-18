@@ -295,7 +295,7 @@ $circular = mysqli_fetch_assoc($result);
                 <div class="job-meta">
                     <span class="job-meta-item"><i class="fas fa-building"></i> <span class="job-organization"><?=$circular['organization']?></span></span>
                     <span class="job-meta-item"><i class="fas fa-map-marker-alt"></i> <?=$circular['location']?></span>
-                    <span class="job-meta-item"><i class="fas fa-calendar-alt"></i> আবেদনের শেষ তারিখ: <?=$row['dateline']?></span>
+                    <span class="job-meta-item"><i class="fas fa-calendar-alt"></i> আবেদনের শেষ তারিখ: <?=$circular['dateline']?></span>
                     <span class="job-meta-item"><i class="fas fa-users"></i> শূন্য পদ: <?=$circular['vacancy']?></span>
                 </div>
             </div>
