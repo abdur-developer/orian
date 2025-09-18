@@ -141,9 +141,9 @@
 <?php
     if (!empty($id_list)) {
         $id_string = implode(',', array_map('intval', $id_list));
-        $sql = "SELECT * FROM course WHERE status = 1 AND id NOT IN ($id_string) ORDER BY rating DESC";
+        $sql = "SELECT * FROM course WHERE id NOT IN ($id_string) ORDER BY rating DESC";
     } else {
-        $sql = "SELECT * FROM course WHERE status = 1 ORDER BY rating DESC";
+        $sql = "SELECT * FROM course ORDER BY rating DESC";
     }
     $result = $conn->query($sql);
     if ($result->num_rows > 0) { ?>
@@ -154,14 +154,15 @@
             </div>
             <div class="row g-3">
                 <?php while ($row = $result->fetch_assoc()) { ?>
-                    <div class="col-md-6 col-lg-4" onclick="location.href='index.php?course-details=<?= encryptSt($row['id']) ?>'">
+                    <div class="col-md-6 col-lg-4" onclick="<?= ($row['status']) ? "location.href='index.php?course-details=".encryptSt($row['id'])."'" : "return null;" ?>"
+                    >
                         <div class="course-card">
                             <img src="admin/upload/<?php echo $row['img']; ?>" class="course-img" alt="Course">
                             <div class="card-body">
                                 <h5 class="course-title"><?php echo $row['title']; ?></h5>
                                 <p class="instructor mb-2"><?php echo $row['instructor']; ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="price">৳<?php echo $row['price']; ?></span>
+                                    <span class="price"><?= ($row['status']) ? "৳ ".$row['price'] : "Upcomming" ?></span>
                                     <span class="rating"><i class="fas fa-star"></i> <?php echo $row['rating']; ?></span>
                                 </div>
                             </div>
