@@ -302,7 +302,11 @@ $circular = mysqli_fetch_assoc($result);
             <img src="admin/upload/<?=$circular['img']?>" class="job-thumbnail">
             <div class="job-content">
                 <?=$circular['description']?>
-                <a href="<?=$circular['g_form_link']?>" target="_blank" class="apply-btn">আবেদন করুন <i class="fas fa-arrow-right ms-2"></i></a>
+                <img src="admin/upload/<?=$circular['img_2']?>" class="d-block m-auto w-50 border">
+                <img src="admin/upload/<?=$circular['img_3']?>"  class="d-block m-auto w-50 border">
+                <div class="d-flex justify-content-end">
+                    <a href="<?=$circular['g_form_link']?>" target="_blank" class="apply-btn">আবেদন করুন <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
             </div>
         </article>
     </main>

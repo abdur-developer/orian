@@ -120,12 +120,12 @@ try {
     } else {
         $sql = "INSERT INTO product 
                     (name ,type ,price ,old_price ,rating_count ,img, img_2, img_3, description ,review ,status, is_feature) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
             "ssiiissssssi",
-            $name, $type, $price, $old_price, $rating_count, $img_name, $description, $review, $status, $is_feature
+            $name, $type, $price, $old_price, $rating_count, $img_name, $img_name_2, $img_name_3, $description, $review, $status, $is_feature
         );
         if ($stmt->execute()) {
             $new_id = $conn->insert_id;

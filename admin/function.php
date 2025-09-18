@@ -42,7 +42,13 @@ function uploadImage(array $img_file, string $target_dir = '../upload/', string 
     }
 
     // Validate MIME type
-    $allowed_mimes = ['image/jpeg'    => 'jpg','image/png'     => 'png','image/gif'     => 'gif','image/svg+xml' => 'svg'];
+    $allowed_mimes = [
+        'image/jpeg' => 'jpg',
+        'image/png'=> 'png',
+        'image/gif'=> 'gif',
+        'image/svg+xml' => 'svg',
+        'image/webp' => 'webp'
+    ];
 
     $file_info = getimagesize($img_file['tmp_name']);
     if (!$file_info || !array_key_exists($file_info['mime'], $allowed_mimes)) {
@@ -76,5 +82,4 @@ function uploadImage(array $img_file, string $target_dir = '../upload/', string 
 
     return ['target_file' => '','success' => false,'message' => 'Failed to save uploaded file.'];
 }
-
 //////////////
