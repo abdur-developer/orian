@@ -294,12 +294,13 @@
                     </div>
                     <span class="category-name">কোর্স</span>
                 </a>                
-                <!-- <a href="?product#product" class="category-item">
+                <a href="?products&category=8&name=Books+&+Stationery" class="category-item">
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/5832/5832416.png">
                     </div>
                     <span class="category-name">বই</span>
                 </a>                
+                <!--
                 <a href="?product#product" class="category-item">
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/2954/2954918.png">
