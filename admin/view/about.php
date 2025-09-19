@@ -30,9 +30,9 @@
                                 <i class="fas fa-align-left me-1 text-muted"></i>আমরা কে
                             </label>
                             <div id="who" style="height: 200px;">
-                                <textarea name="who" style="height: 200px; width: 100%;" maxlength="300"><?= $row['who'] ?></textarea>
+                                <textarea name="who" style="height: 200px; width: 100%;" maxlength="500"><?= $row['who'] ?></textarea>
                             </div>
-                            <small class="text-muted">Enter a brief about text (around 300 characters, including spaces and punctuation).</small>
+                            <small class="text-muted">Enter a brief about text (around 500 characters, including spaces and punctuation).</small>
                         </div>
                         <!-- name -->
                         <div class="mb-4">
@@ -40,9 +40,9 @@
                                 <i class="fas fa-align-left me-1 text-muted"></i>আমাদের লক্ষ্য 
                             </label>
                             <div id="aim" style="height: 200px;">
-                                <textarea name="aim" style="height: 200px; width: 100%;" maxlength="300"><?= $row['aim'] ?></textarea>
+                                <textarea name="aim" style="height: 200px; width: 100%;" maxlength="500"><?= $row['aim'] ?></textarea>
                             </div>
-                            <small class="text-muted">Enter a brief about text (around 300 characters, including spaces and punctuation).</small>
+                            <small class="text-muted">Enter a brief about text (around 500 characters, including spaces and punctuation).</small>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -52,9 +52,9 @@
                                 <i class="fas fa-align-left me-1 text-muted"></i>আমরা কী দিই
                             </label>
                             <div id="service" style="height: 200px;">
-                                <textarea name="service" style="height: 200px; width: 100%;" maxlength="300"><?= $row['service'] ?></textarea>
+                                <textarea name="service" style="height: 200px; width: 100%;" maxlength="500"><?= $row['service'] ?></textarea>
                             </div>
-                            <small class="text-muted">Enter a brief about text (around 300 characters, including spaces and punctuation).</small>
+                            <small class="text-muted">Enter a brief about text (around 500 characters, including spaces and punctuation).</small>
                         </div>
                         <!-- name -->
                         <div class="mb-4">
@@ -62,9 +62,9 @@
                                 <i class="fas fa-align-left me-1 text-muted"></i>কেন আমাদের বেছে নেবেন
                             </label>
                             <div id="why" style="height: 200px;">
-                                <textarea name="why" style="height: 200px; width: 100%;" maxlength="300"><?= $row['why'] ?></textarea>
+                                <textarea name="why" style="height: 200px; width: 100%;" maxlength="500"><?= $row['why'] ?></textarea>
                             </div>
-                            <small class="text-muted">Enter a brief about text (around 300 characters, including spaces and punctuation).</small>
+                            <small class="text-muted">Enter a brief about text (around 500 characters, including spaces and punctuation).</small>
                         </div>
                     </div>
                 </div>
