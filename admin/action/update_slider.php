@@ -25,7 +25,7 @@ try {
     $current_img_stmt->execute();
     $current_img_result = $current_img_stmt->get_result();
     $row = $current_img_result->fetch_assoc();
-    $current_img = $row['img'];
+    $current_img = ($row && isset($row['img'])) ? $row['img'] : null;
     $current_img_stmt->close();
 
     // Upload new image if present
