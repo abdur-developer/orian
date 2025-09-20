@@ -65,7 +65,7 @@ try {
     // Function to handle image upload
     function handleImageUpload($file, $current_img) {
         if (isset($file) && $file['error'] === UPLOAD_ERR_OK) {
-            $upload = uploadImage($file, '../upload/', 'product_');
+            $upload = uploadImage($file, '../upload/', 'post_');
 
             if ($upload['success']) {
                 // Delete previous image if exists

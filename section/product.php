@@ -295,7 +295,7 @@
         </div>
     <?php endif; ?>
     <div class="container">
-        <h2 class="section-title">Our Products</h2>
+        <h2 class="section-title"><?= $limit ? 'Special Deals' : 'Our Products' ?></h2>
         
         <div class="row my-product">
             <?php 
@@ -348,7 +348,7 @@
         <?php if($limit){ ?>
             <div class="view-all-btn">
                 <a href="?products" class="btn btn-primary">
-                    সব প্রোডাক্ট দেখুন <i class="fas fa-arrow-right ms-2"></i>
+                    See All <i class="fas fa-arrow-right ms-2"></i>
                 </a>
             </div>
         <?php } ?>

@@ -1,6 +1,4 @@
-
 <style>
-
     /* Blog View Page Styles */
     .blog-view-page {
         padding: 80px 0 60px;
@@ -332,7 +330,7 @@
             <!-- Main Blog Content -->
             <div class="main-blog">
                 <div class="blog-header-image">
-                    <img src="<?= $post['img'] ?>">
+                    <img src="admin/upload/<?= $post['img'] ?>">
                 </div>
                 
                 <div class="blog-content-wrapper">
@@ -345,13 +343,15 @@
                     
                     <div class="blog-content">
                         <?= $post['text']; ?>
+                        <img src="admin/upload/<?=$post['img_2']?>" class="d-block m-auto w-50 border">
+                        <img src="admin/upload/<?=$post['img_3']?>"  class="d-block m-auto w-50 border">
                     </div>
                 </div>
             </div>
             
             <!-- Blog Sidebar -->
             <div class="blog-sidebar">
-                <h3 class="sidebar-title">সম্পর্কিত ব্লগ পোস্ট</h3>
+                <h3 class="sidebar-title">Related Posts</h3>
                 <?php
                 // Fetch related blog posts (for simplicity, fetching the first 3 posts)    
                 $relatedPosts = mysqli_query($conn, "SELECT id, img, title, date FROM post WHERE id != '$id' LIMIT 3");
@@ -372,7 +372,7 @@
                 
                 <!-- Tags Section -->
                 <div class="tags-section">
-                    <h3 class="sidebar-title">ট্যাগসমূহ</h3>
+                    <h3 class="sidebar-title">Tags</h3>
                     <div class="tags-container">
                         <?php
                         $tags = explode(',', $post['tags']);

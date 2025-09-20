@@ -173,8 +173,8 @@
     <!-- Blog Section -->
     <div class="container">
         <div class="section-title">
-            <h2>আমাদের ব্লগ</h2>
-            <p>ডিফেন্স প্রস্তুতি সম্পর্কিত সর্বশেষ টিপস, গাইড এবং আপডেট পড়ুন</p>
+            <h2>Our Blog</h2>
+            <p>Stay updated with the latest tips, guides, and updates on defense preparation</p>
         </div>
         
         <div class="blog-grid">
@@ -191,7 +191,7 @@
                     <h3 class="blog-title"><?=$row['title']?></h3>
                     <p class="blog-excerpt"><?= htmlspecialchars($row['sort_text'])?>।</p>
                     <a href="?view-blog=<?=$row['id']?>" class="read-more">
-                        আরও পড়ুন <i class="fas fa-arrow-right"></i>
+                        See More <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
