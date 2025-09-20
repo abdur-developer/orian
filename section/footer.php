@@ -3,7 +3,7 @@
     footer {
         background: var(--dark);
         color: white;
-        padding: 80px 0 20px;
+        padding: 20px 0;
         position: relative;
     }
 
@@ -78,9 +78,6 @@
     }
 
     .copyright {
-        border-top: 1px solid rgba(255,255,255,0.1);
-        padding-top: 20px;
-        margin-top: 40px;
         text-align: center;
         color: rgba(255,255,255,0.5);
         font-size: 0.9rem;
@@ -93,60 +90,57 @@
  ?>
 <footer>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-4 mb-5 mb-lg-0" data-aos="fade-up">
-                <div class="footer-logo">
-                    <img src="img/logo.jpg" alt="Abdur" width="50" style="border-radius: 50%;">
-                </div>
-                <p class="footer-about">
-                    সকল চাকরির প্রস্তুতি নিন ঘরে বসে। আমাদের প্ল্যাটফর্মে আপনি পাবেন সামরিক ও বেসামরিক চাকরির সম্পূর্ণ প্রস্তুতি।
-                </p>
-                
-                <div class="social-icons mt-4">
-                    <a href="<?= htmlspecialchars($contact['facebook']) ?>" style="text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
-                    <a href="<?= htmlspecialchars($contact['youtube']) ?>" style="text-decoration: none;"><i class="fab fa-youtube"></i></a>
-                    <a href="<?= htmlspecialchars($contact['tiktok']) ?>" style="text-decoration: none;"><i class="fab fa-tiktok"></i></a>
-                    <a href="<?= htmlspecialchars($contact['instagram']) ?>" style="text-decoration: none;"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            
-            <div class="col-lg-2 col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="100">
-                <div class="footer-links">
-                    <h5>লিংকস</h5>
-                    <a href="#">হোম</a>
-                    <a href="#">আমাদের সম্পর্কে</a>
-                    <a href="#">সার্কুলার</a>
-                    <a href="#">কোর্সসমূহ</a>
-                    <a href="#">যোগাযোগ</a>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
-                <div class="footer-links">
-                    <h5>কোর্স</h5>
-                    <a href="#">সামরিক বাহিনী</a>
-                    <a href="#">বিসিএস প্রস্তুতি</a>
-                    <a href="#">ব্যাংক জব</a>
-                    <a href="#">পুলিশ ও আনসার</a>
-                    <a href="#">শিক্ষক নিবন্ধন</a>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="footer-links">
-                    <h5>যোগাযোগ</h5>
-                    <div class="contact-info">
-                        <p><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($contact['location']) ?></p>
-                        <p><i class="fas fa-phone-alt"></i> <?= htmlspecialchars($contact['number']) ?></p>
-                        <p><i class="fas fa-envelope"></i> <?= htmlspecialchars($contact['email']) ?></p>
-                        <?php if($showDev): ?>
-                            <p><a href="abdurrahman.php"><i class="fas fa-link"></i> <span>Developed by Abdur Rahman</span></a></p>
-                        <?php endif; ?>
+        <?php if($showDev): ?>
+            <div class="row" style="margin-bottom: 40px;">
+                <div class="col-lg-4 mb-5 mb-lg-0" data-aos="fade-up">
+                    <div class="footer-logo">
+                        <img src="img/logo.jpg" alt="Abdur" width="50" style="border-radius: 50%;">
+                    </div>
+                    <p class="footer-about">
+                        Prepare for all jobs from home.
+                    </p>
+                    
+                    <div class="social-icons mt-4">
+                        <a href="<?= htmlspecialchars($contact['facebook']) ?>" style="text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="<?= htmlspecialchars($contact['youtube']) ?>" style="text-decoration: none;"><i class="fab fa-youtube"></i></a>
+                        <a href="<?= htmlspecialchars($contact['tiktok']) ?>" style="text-decoration: none;"><i class="fab fa-tiktok"></i></a>
+                        <a href="<?= htmlspecialchars($contact['instagram']) ?>" style="text-decoration: none;"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
+                
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="100">
+                    <div class="footer-links">
+                        <h5>Links</h5>
+                        <a href="index.php">Home</a>
+                        <a href="index.php?circular#circular">Circulars</a>
+                        <a href="index.php?courses#courses">Courses</a>
+                        <a href="index.php?about#about">About Us</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
+                    <div class="footer-links">
+                        <h5>Courses</h5>
+                        <a href="index.php?courses">Armed Forces</a>
+                        <a href="index.php?courses">BCS Preparation</a>
+                        <a href="index.php?courses">Bank Jobs</a>
+                        <a href="index.php?courses">Police & Ansar</a>
+                    </div>
+                </div>
+                
+                <!-- <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="footer-links">
+                        <h5>Contact us</h5>
+                        <div class="contact-info">
+                            <p><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($contact['location']) ?></p>
+                            <p><i class="fas fa-phone-alt"></i> <?= htmlspecialchars($contact['number']) ?></p>
+                            <p><i class="fas fa-envelope"></i> <?= htmlspecialchars($contact['email']) ?></p>
+                            <p><a href="abdurrahman.php"><i class="fas fa-link"></i> <span>Developer</span></a></p>
+                        </div>
+                    </div>
+                </div> -->
             </div>
-        </div>
-        
+        <?php endif; ?>
         <div class="copyright">
             <!--
             <footer class="site-credit">

@@ -88,7 +88,7 @@
     $about = $conn->query($sql)->fetch_assoc();
 ?>
 <!-- About Us Section -->
-<section class="section">
+<section class="section" id="about">
     <div class="container">
         <h2 class="section-title" data-aos="fade-up">About us</h2>
         <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">

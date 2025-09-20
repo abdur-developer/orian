@@ -323,7 +323,7 @@
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/8790/8790284.png">
                     </div>
-                    <span class="category-name">Consultant</span>
+                    <span class="category-name">Mentor</span>
                 </a>
                 <a href="home.php?page=job_apply" class="category-item">
                     <div class="category-icon">
