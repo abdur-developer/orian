@@ -62,14 +62,14 @@
                         <!-- Location -->
                         <div class="form-floating mb-4">
                             <input type="text" name="location" class="form-control" id="location" 
-                                   value="<?= htmlspecialchars($row['location']) ?>">
+                                   value="<?= htmlspecialchars($row['location']) ?>" required>
                             <label for="location"><i class="fas fa-map-marker-alt me-1 text-muted"></i>Location</label>
                         </div>
                         
                         <!-- Short Text -->
                         <div class="form-floating mb-4">
                             <input type="text" name="sort_text" class="form-control" id="sort_text" 
-                                   value="<?= htmlspecialchars($row['sort_text']) ?>" maxlength="225">
+                                   value="<?= htmlspecialchars($row['sort_text']) ?>" maxlength="225" required>
                             <label for="sort_text"><i class="fas fa-info-circle me-1 text-muted"></i>Short Text</label>
                         </div>
                         <!-- Description with Quill Editor -->
@@ -78,7 +78,7 @@
                                 <i class="fas fa-align-left me-1 text-muted"></i>Description
                             </label>
                             <div id="quill-editor" style="height: 300px;">
-                                <textarea name="description" style="height: 300px; width: 100%;"><?= $row['description'] ?></textarea>
+                                <textarea name="description" style="height: 300px; width: 100%;" required><?= $row['description'] ?></textarea>
                             </div>
                             <small class="text-muted">Write detailed description with formatting options</small>
                         </div>
@@ -86,21 +86,21 @@
                         <!-- Deadline -->
                         <div class="form-floating mb-4">
                             <input type="date" name="dateline" class="form-control" id="dateline" 
-                                   value="<?= htmlspecialchars(date('Y-m-d', strtotime($row['dateline']))) ?>">
+                                   value="<?= htmlspecialchars(date('Y-m-d', strtotime($row['dateline']))) ?>" required>
                             <label for="dateline"><i class="fas fa-calendar-alt me-1 text-muted"></i>Deadline</label>
                         </div>
                         
                         <!-- Google Form Link -->
                         <div class="form-floating mb-4">
                             <input type="url" name="g_form_link" class="form-control" id="g_form_link" 
-                                   value="<?= htmlspecialchars($row['g_form_link']) ?>">
+                                   value="<?= htmlspecialchars($row['g_form_link']) ?>" required>
                             <label for="g_form_link"><i class="fas fa-link me-1 text-muted"></i>Google Form Link</label>
                         </div>
                         
                         <!-- Vacancy -->
                         <div class="form-floating mb-4">
                             <input type="number" name="vacancy" class="form-control" id="vacancy" 
-                                   value="<?= htmlspecialchars($row['vacancy']) ?>">
+                                   value="<?= htmlspecialchars($row['vacancy']) ?>" required>
                             <label for="vacancy"><i class="fas fa-users me-1 text-muted"></i>Vacancy</label>
                         </div>
                         
@@ -116,7 +116,7 @@
                                     <img src="upload/<?= htmlspecialchars($row['img']) ?>" alt="Current Image" 
                                          class="img-thumbnail rounded" style="max-height: 200px;">
                                     <div class="form-check mt-2">
-                                        <input class="form-check-input" type="checkbox" name="remove_img" id="remove_img">
+                                        <input class="form-check-input" type="checkbox" name="remove_img" id="remove_img" required>
                                         <label class="form-check-label text-danger" for="remove_img">
                                             Remove current image
                                         </label>
@@ -135,7 +135,7 @@
                                     <img src="upload/<?= htmlspecialchars($row['img_2']) ?>" alt="Current Image 2" 
                                          class="img-thumbnail rounded" style="max-height: 200px;">
                                     <div class="form-check mt-2">
-                                        <input class="form-check-input" type="checkbox" name="remove_img_2" id="remove_img_2">
+                                        <input class="form-check-input" type="checkbox" name="remove_img_2" id="remove_img_2" required>
                                         <label class="form-check-label text-danger" for="remove_img_2">
                                             Remove current image
                                         </label>
@@ -154,7 +154,7 @@
                                     <img src="upload/<?= htmlspecialchars($row['img_3']) ?>" alt="Current Image 3" 
                                          class="img-thumbnail rounded" style="max-height: 200px;">
                                     <div class="form-check mt-2">
-                                        <input class="form-check-input" type="checkbox" name="remove_img_3" id="remove_img_3">
+                                        <input class="form-check-input" type="checkbox" name="remove_img_3" id="remove_img_3" required>
                                         <label class="form-check-label text-danger" for="remove_img_3">
                                             Remove current image
                                         </label>

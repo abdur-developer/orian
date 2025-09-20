@@ -60,10 +60,38 @@
                         <!-- Short Text -->
                         <div class="form-floating mb-4">
                             <input type="text" name="sort_text" class="form-control" id="sort_text" 
-                                   value="<?= htmlspecialchars($row['sort_text']) ?>">
+                                   value="<?= htmlspecialchars($row['sort_text']) ?>" required maxlength="225">
                             <label for="sort_text"><i class="fas fa-info-circle me-1 text-muted"></i>Short Text</label>
                         </div>
                         
+                        <!-- Description with Quill Editor -->
+                        <div class="mb-4">
+                            <label for="quill-editor" class="form-label">
+                                <i class="fas fa-align-left me-1 text-muted"></i>Description
+                            </label>
+                            <div id="quill-editor" style="height: 300px;">
+                                <textarea name="text" style="height: 300px; width: 100%;" required><?= $row['text'] ?></textarea>
+                            </div>
+                            <small class="text-muted">Write detailed text with formatting options</small>
+                        </div>
+                        
+                        <!-- Date -->
+                        <div class="form-floating mb-4">
+                            <input type="date" name="date" class="form-control" id="date" 
+                                   value="<?= htmlspecialchars(date('Y-m-d', strtotime($row['date']))) ?>" required>
+                            <label for="date"><i class="fas fa-calendar-alt me-1 text-muted"></i>Date</label>
+                        </div>
+                        
+                        <!-- tags -->
+                        <div class="form-floating mb-4">
+                            <input type="text" name="tags" class="form-control" id="tags" 
+                                   value="<?= htmlspecialchars($row['tags']) ?>" required>
+                            <label for="tags"><i class="fas fa-users me-1 text-muted"></i>Tags (separate by comma)</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div class="col-md-6">
                         <!-- Image Upload -->
                         <div class="mb-4">
                             <label class="form-label"><i class="fas fa-image me-1 text-muted"></i>Post Image</label>
@@ -79,36 +107,44 @@
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <input type="file" name="img" class="form-control" accept="image/*">
+                            <input type="file" name="img_1" class="form-control" accept="image/*" required>
                             <small class="text-muted">Max size: 2MB (JPEG, PNG)</small>
                         </div>
-                    </div>
-                    
-                    <!-- Right Column -->
-                    <div class="col-md-6">
-                        <!-- Description with Quill Editor -->
+                        <!-- Image Upload -->
                         <div class="mb-4">
-                            <label for="quill-editor" class="form-label">
-                                <i class="fas fa-align-left me-1 text-muted"></i>Description
-                            </label>
-                            <div id="quill-editor" style="height: 300px;">
-                                <textarea name="text" style="height: 300px; width: 100%;"><?= $row['text'] ?></textarea>
-                            </div>
-                            <small class="text-muted">Write detailed text with formatting options</small>
+                            <label class="form-label"><i class="fas fa-image me-1 text-muted"></i>Post Image</label>
+                            <?php if (!empty($row['img_2'])): ?>
+                                <div class="mb-3 text-center">
+                                    <img src="upload/<?= htmlspecialchars($row['img_2']) ?>" alt="Current Image" 
+                                         class="img-thumbnail rounded" style="max-height: 200px;">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" name="remove_img_2" id="remove_img_2">
+                                        <label class="form-check-label text-danger" for="remove_img_2">
+                                            Remove current image
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <input type="file" name="img_2" class="form-control" accept="image/*" required>
+                            <small class="text-muted">Max size: 2MB (JPEG, PNG)</small>
                         </div>
-                        
-                        <!-- Date -->
-                        <div class="form-floating mb-4">
-                            <input type="date" name="date" class="form-control" id="date" 
-                                   value="<?= htmlspecialchars(date('Y-m-d', strtotime($row['date']))) ?>">
-                            <label for="date"><i class="fas fa-calendar-alt me-1 text-muted"></i>Date</label>
-                        </div>
-                        
-                        <!-- tags -->
-                        <div class="form-floating mb-4">
-                            <input type="text" name="tags" class="form-control" id="tags" 
-                                   value="<?= htmlspecialchars($row['tags']) ?>">
-                            <label for="tags"><i class="fas fa-users me-1 text-muted"></i>Tags (separate by comma)</label>
+                        <!-- Image Upload -->
+                        <div class="mb-4">
+                            <label class="form-label"><i class="fas fa-image me-1 text-muted"></i>Post Image</label>
+                            <?php if (!empty($row['img_3'])): ?>
+                                <div class="mb-3 text-center">
+                                    <img src="upload/<?= htmlspecialchars($row['img_3']) ?>" alt="Current Image" 
+                                         class="img-thumbnail rounded" style="max-height: 200px;">
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" name="remove_img_3" id="remove_img_3">
+                                        <label class="form-check-label text-danger" for="remove_img_3">
+                                            Remove current image
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <input type="file" name="img_3" class="form-control" accept="image/*" required>
+                            <small class="text-muted">Max size: 2MB (JPEG, PNG)</small>
                         </div>
                     </div>
                 </div>

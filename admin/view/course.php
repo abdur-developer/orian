@@ -66,25 +66,25 @@
                         <!-- Instructor -->
                         <div class="form-floating mb-4">
                             <input type="text" name="instructor" class="form-control" id="instructor" 
-                                   value="<?= htmlspecialchars($row['instructor']) ?>">
+                                   value="<?= htmlspecialchars($row['instructor']) ?>" required>
                             <label for="instructor"><i class="fas fa-user-tie me-1 text-muted"></i>Instructor</label>
                         </div>
                         
                         <!-- Short Description -->
                         <div class="form-floating mb-4">
                             <input type="text" name="description" class="form-control" id="description" 
-                                   value="<?= htmlspecialchars($row['description']) ?>">
+                                   value="<?= htmlspecialchars($row['description']) ?>" required maxlength="225">
                             <label for="description"><i class="fas fa-info-circle me-1 text-muted"></i>Short Description</label>
                         </div>
                         <!-- Price -->
                         <div class="form-floating mb-4">
                             <input type="number" name="price" class="form-control" id="price" 
-                                   value="<?= htmlspecialchars($row['price']) ?>">
+                                   value="<?= htmlspecialchars($row['price']) ?>" required>
                             <label for="price"><i class="fas fa-tag me-1 text-muted"></i>Price</label>
                         </div>
                         <div class="form-floating mb-4">
                             <input type="number" name="old_price" class="form-control" id="old_price" 
-                                   value="<?= htmlspecialchars($row['old_price']) ?>">
+                                   value="<?= htmlspecialchars($row['old_price']) ?>" required>
                             <label for="old_price"><i class="fas fa-tag me-1 text-muted"></i>Old Price</label>
                         </div>
 
@@ -121,7 +121,7 @@
                             <?php if (!empty($row['img'])): ?>
                                 <div class="mb-3 text-center">
                                     <img src="upload/<?= htmlspecialchars($row['img']) ?>" alt="Current Image" 
-                                         class="img-thumbnail rounded" style="max-height: 200px;">
+                                         class="img-thumbnail rounded" style="max-height: 200px;" required>
                                     <div class="form-check mt-2">
                                         <input class="form-check-input" type="checkbox" name="remove_img" id="remove_img">
                                         <label class="form-check-label text-danger" for="remove_img">
@@ -145,7 +145,7 @@
                             <div class="form-check form-switch">
                                 <input type="hidden" name="status" value="0"> <!-- Default value when unchecked -->
                                 <input class="form-check-input" type="checkbox" role="switch" id="statusToggle" 
-                                    name="status" value="1" <?= ($row['status'] ?? 0) ? 'checked' : '' ?>>
+                                    name="status" value="1" <?= ($row['status'] ?? 0) ? 'checked' : '' ?> required>
                                 <label class="form-check-label" for="statusToggle">
                                     <?= ($row['status'] ?? 0) ? 'Active' : 'Inactive' ?>
                                 </label>
@@ -165,19 +165,19 @@
                         <!-- rating -->
                         <div class="form-floating mb-4">
                             <input type="number" name="rating" class="form-control" id="rating" 
-                                   value="<?= htmlspecialchars($row['rating']) ?>">
+                                   value="<?= htmlspecialchars($row['rating']) ?>" required step="0.1" min="1" max="5">
                             <label for="rating"><i class="fas fa-tag me-1 text-muted"></i>Rating(1.0-5.0)</label>
                         </div>
                         <!-- users -->
                         <div class="form-floating mb-4">
                             <input type="number" name="users" class="form-control" id="users" 
-                                   value="<?= htmlspecialchars($row['users']) ?>">
+                                   value="<?= htmlspecialchars($row['users']) ?>" required>
                             <label for="users"><i class="fas fa-tag me-1 text-muted"></i>Enrolled Users</label>
                         </div>
                         <!-- badge -->
                         <div class="form-floating mb-4">
                             <input type="text" name="badge" class="form-control" id="badge" 
-                                   value="<?= htmlspecialchars($row['badge']) ?>">
+                                   value="<?= htmlspecialchars($row['badge']) ?>" required>
                             <label for="badge"><i class="fas fa-tag me-1 text-muted"></i>Badge</label>
                         </div>
                         <!-- YouTube Video ID -->
@@ -190,7 +190,7 @@
                         <?php endif; ?>
                         <div class="form-floating mb-4">
                             <input type="text" name="feature_video_id" class="form-control" id="feature_video_id" 
-                                   value="<?= htmlspecialchars($row['feature_video_id']) ?>">
+                                   value="<?= htmlspecialchars($row['feature_video_id']) ?>" required maxlength="20">
                             <label for="feature_video_id"><i class="fab fa-youtube me-1 text-muted"></i>YouTube Video ID</label>
                         </div>
                         
