@@ -5,6 +5,10 @@
     }
     require '../include/dbcon.php';
     $course_id = decryptSt($_POST['course_id']);
+    if(!isset($_COOKIE['user_id']) || empty($_COOKIE['user_id'])) {
+        header("Location: ../auth.php?refer=" . urlencode(encryptSt("index.php?course-details=" . $_POST['course_id'])));
+        exit();
+    }
     $user_id = decryptSt($_COOKIE['user_id']);
 
     $stmt = $conn->prepare("SELECT * FROM course WHERE id = ?");
