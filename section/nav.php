@@ -309,7 +309,7 @@
                         <a class="nav-link <?php if(isset($_GET['blog'])) echo "active"; ?>" href="?blog#blog">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-blog me-2"></i>
-                                <span>Blog</span>
+                                <span>News feed</span>
                             </div>
                             <span class="nav-highlight"></span>
                         </a>

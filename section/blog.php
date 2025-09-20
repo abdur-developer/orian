@@ -173,7 +173,7 @@
     <!-- Blog Section -->
     <div class="container">
         <div class="section-title">
-            <h2>Our Blog</h2>
+            <h2>News Feed</h2>
             <p>Stay updated with the latest tips, guides, and updates on defense preparation</p>
         </div>
         

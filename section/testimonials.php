@@ -59,6 +59,26 @@
         margin-bottom: 0;
     }
 
+    @media screen and (max-width: 768px) {
+        .testimonial-card {
+            padding: 5px;
+        }
+        .testimonial-rating i {
+            font-size: 0.6rem;
+        }
+        .testimonial-text {
+            font-size: 0.8rem;
+            height: 100px;
+            overflow: hidden;
+        }
+        .author-info h5 {
+            font-size: 0.9rem;
+        }
+        .author-info p {
+            font-size: 0.5rem;
+        }
+    }
+
 </style>
 <!-- Testimonials Section -->
 <section class="section">
@@ -68,10 +88,13 @@
         
         <div class="row mt-5">
             <?php
-            $sql = "SELECT * FROM testimonials ORDER BY id DESC LIMIT 3";
+            $sql = "SELECT * FROM testimonials ORDER BY id DESC";
+            if($limit){
+                $sql .= " LIMIT 4";
+            }
             $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)){ ?>
-            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-lg-4 col-md-6 col-6 mb-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="testimonial-card">
                     <div class="testimonial-rating">
                         <i class="fas fa-star"></i>
@@ -102,5 +125,13 @@
             </div>
             <?php } ?>
         </div>
+        
+        <?php if($limit){ ?>
+            <div class="view-all-btn">
+                <a href="?testimonials" class="btn btn-primary">
+                    See All <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        <?php } ?>
     </div>
 </section>

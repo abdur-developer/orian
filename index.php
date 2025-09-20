@@ -34,6 +34,9 @@ code_include("section/header.php");
         }elseif(isset($_GET['product-details'])){
             code_include("section/view-product.php");
 
+        }elseif(isset($_GET['testimonials'])){
+            code_include("section/testimonials.php", false);
+
         }else{
             code_include("section/hero.php");
             code_include("section/product.php");
