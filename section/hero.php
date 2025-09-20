@@ -292,44 +292,44 @@
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/2997/2997592.png">
                     </div>
-                    <span class="category-name">কোর্স</span>
+                    <span class="category-name">Courses</span>
                 </a>                
                 <a href="?products&category=8&name=Books+&+Stationery" class="category-item">
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/5832/5832416.png">
                     </div>
-                    <span class="category-name">বই</span>
+                    <span class="category-name">Books</span>
                 </a>                
                 <!--
-                <a href="?product#product" class="category-item">
+                <a href="?products&category=2&name=Fashion+&+Apparel" class="category-item">
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/2954/2954918.png">
                     </div>
-                    <span class="category-name">পোশাক</span>
+                    <span class="category-name">Cloth</span>
                 </a>                 -->
-                <a href="?product#product" class="category-item">
+                <a href="?products" class="category-item">
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/3659/3659898.png">
                     </div>
-                    <span class="category-name">কেনাকাটা</span>
+                    <span class="category-name">Shopping</span>
                 </a>
                 <a href="home.php?page=quiz" class="category-item">
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/10292/10292284.png">
                     </div>
-                    <span class="category-name">কুইজ</span>
+                    <span class="category-name">Quiz</span>
                 </a>
                 <a href="home.php?page=consultants" class="category-item">
                     <div class="category-icon">
                         <img src="https://cdn-icons-png.flaticon.com/128/8790/8790284.png">
                     </div>
-                    <span class="category-name">পরামর্শদাতা</span>
+                    <span class="category-name">Consultant</span>
                 </a>
                 <a href="home.php?page=job_apply" class="category-item">
                     <div class="category-icon">
                         <img src="	https://cdn-icons-png.flaticon.com/128/4115/4115893.png" >
                     </div>
-                    <span class="category-name">জব এ্যা‌প্লাই</span>
+                    <span class="category-name">Job Apply</span>
                 </a>
             </div>
         </div>
@@ -490,7 +490,7 @@
                                 <span class="original-price">৳ <?= $row['old_price']; ?></span>
                             </div>
                             <button class="add-to-cart" onclick="addToCart('<?= encryptSt($row['id']) ?>', '<?=encryptSt($row['price'])?>')">
-                                <i class="fas fa-shopping-cart"></i> কার্টে যোগ করুন
+                                <i class="fas fa-shopping-cart"></i> Add to cart
                             </button>
                         </div>
                     </a>

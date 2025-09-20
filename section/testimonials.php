@@ -63,8 +63,8 @@
 <!-- Testimonials Section -->
 <section class="section">
     <div class="container">
-        <h2 class="section-title" data-aos="fade-up">শিক্ষার্থীদের কথা</h2>
-        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">আমাদের সফল শিক্ষার্থীদের অভিজ্ঞতা</p>
+        <h2 class="section-title" data-aos="fade-up">What Students Say</h2>
+        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Experiences from our successful students</p>
         
         <div class="row mt-5">
             <?php

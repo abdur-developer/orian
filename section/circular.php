@@ -149,8 +149,8 @@
     <!-- Circuler Section -->
     <div class="container">
         <div class="section-title">
-            <h2>সার্কুলার</h2>
-            <p>সর্বশেষ সার্কুলার এবং নোটিশসমূহ দেখুন</p>        
+            <h2>Circulars</h2>
+            <p>See the latest circulars and notices</p>        
         </div>
         <div class="blog-grid">
             <?php 
@@ -169,7 +169,7 @@
                     <h3 class="blog-title"><?=$row['title']?></h3>
                     <p class="blog-excerpt"><?=$row['sort_text']?>।</p>
                     <a href="?circular-details=<?=encryptSt($row['id'])?>" class="read-more">
-                        আরও পড়ুন <i class="fas fa-arrow-right"></i>
+                        read more <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -179,7 +179,7 @@
         <?php if($limit){ ?>
             <div class="view-all-btn">
                 <a href="home.php?page=circular" class="btn btn-primary">
-                    সব সার্কুলার দেখুন <i class="fas fa-arrow-right ms-2"></i>
+                    View all circulars <i class="fas fa-arrow-right ms-2"></i>
                 </a>
             </div>
         <?php } ?>

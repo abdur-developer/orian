@@ -51,11 +51,11 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8" data-aos="fade-right">
-                <h2 class="cta-title">চাকরি প্রস্তুতি শুরু করতে প্রস্তুত?</h2>
-                <p class="cta-text">এখনই এনরোল করুন আপনার পছন্দের কোর্সে এবং চাকরি প্রস্তুতিতে এগিয়ে থাকুন</p>
+                <h2 class="cta-title">Ready to start your job preparation?</h2>
+                <p class="cta-text">Enroll in your favorite course now and stay ahead in your job preparation</p>
             </div>
             <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
-                <a href="home.php?page=courses" class="btn btn-light btn-lg"><i class="fas fa-arrow-right me-2"></i> কোর্স ব্রাউজ করুন</a>
+                <a href="home.php?page=courses" class="btn btn-light btn-lg"><i class="fas fa-arrow-right me-2"></i> Browse Courses</a>
             </div>
         </div>
     </div>

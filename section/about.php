@@ -90,9 +90,9 @@
 <!-- About Us Section -->
 <section class="section">
     <div class="container">
-        <h2 class="section-title" data-aos="fade-up">আমাদের সম্পর্কে</h2>
+        <h2 class="section-title" data-aos="fade-up">About us</h2>
         <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
-            শিখো। বেড়ে উঠো। সফল হও <span class="academy-name">ব্রাইট ফিউচার একাডেমি</span> এর সাথে।
+            Learn. Grow. Succeed with <span class="academy-name">Bright Future Academy</span>.
         </p>
         
         <div class="row mt-5">
@@ -101,7 +101,7 @@
                     <div class="card-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h4>আমরা কে</h4>
+                    <h4>Who we are</h4>
                     <p><?php echo $about['who']; ?></p>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                     <div class="card-icon">
                         <i class="fas fa-bullseye"></i>
                     </div>
-                    <h4>আমাদের লক্ষ্য</h4>
+                    <h4>Our Aim</h4>
                     <p><?php echo $about['aim']; ?></p>
                 </div>
             </div>
@@ -121,7 +121,7 @@
                     <div class="card-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <h4>আমরা কী দিই</h4>
+                    <h4>What We Provide</h4>
                     <p><?php echo $about['service']; ?></p>
                 </div>
             </div>
@@ -131,7 +131,7 @@
                     <div class="card-icon">
                         <i class="fas fa-star"></i>
                     </div>
-                    <h4>কেন আমাদের বেছে নেবেন</h4>
+                    <h4>Why Choose Us</h4>
                     <p><?php echo $about['why']; ?></p>
                 </div>
             </div>

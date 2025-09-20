@@ -28,6 +28,8 @@ code_include("section/header.php");
 
         }elseif(isset($_GET['course-details'])){            
             code_include("section/view-course.php");
+            code_include("section/feature.php");
+            code_include("section/testimonials.php");
 
         }elseif(isset($_GET['product-details'])){
             code_include("section/view-product.php");
@@ -37,9 +39,7 @@ code_include("section/header.php");
             code_include("section/product.php");
             code_include("section/course.php");
             code_include("section/circular.php");
-            code_include("section/feature.php");
             code_include("section/cta.php");
-            code_include("section/testimonials.php");
             
             code_include("section/product.php", false);
             code_include("section/course.php", false);

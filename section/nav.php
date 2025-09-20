@@ -273,7 +273,7 @@
                         <a class="nav-link <?php if(!isset($_GET)) echo "active"; ?>" href="index.php">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-home me-2"></i>
-                                <span>হোম</span>
+                                <span>Home</span>
                             </div>
                             <span class="nav-highlight"></span>
                         </a>
@@ -282,7 +282,7 @@
                         <a class="nav-link <?php if(isset($_GET['product'])) echo "active"; ?>" href="?product#product">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-shopping-bag me-2"></i>
-                                <span>প্রোডাক্ট</span>
+                                <span>Products</span>
                             </div>
                             <span class="nav-highlight"></span>
                         </a>
@@ -291,7 +291,7 @@
                         <a class="nav-link <?php if(isset($_GET['circular'])) echo "active"; ?>" href="?circular#circular">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-bullhorn me-2"></i>
-                                <span>সার্কুলার</span>
+                                <span>Circulars</span>
                             </div>
                             <span class="nav-highlight"></span>
                         </a>
@@ -300,7 +300,7 @@
                         <a class="nav-link <?php if(isset($_GET['courses'])) echo "active"; ?>" href="?courses#courses">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-book me-2"></i>
-                                <span>সকল কোর্স</span>
+                                <span>Courses</span>
                             </div>
                             <span class="nav-highlight"></span>
                         </a>
@@ -309,7 +309,7 @@
                         <a class="nav-link <?php if(isset($_GET['blog'])) echo "active"; ?>" href="?blog#blog">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-blog me-2"></i>
-                                <span>ব্লগ</span>
+                                <span>Blog</span>
                             </div>
                             <span class="nav-highlight"></span>
                         </a>
@@ -319,7 +319,7 @@
                         <a class="nav-link <?php if(isset($_GET['about'])) echo "active"; ?>" href="?about">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-info-circle me-2"></i>
-                                <span>আমাদের সম্পর্কে</span>
+                                <span>About us</span>
                             </div>
                             <span class="nav-highlight"></span>
                         </a>
@@ -329,7 +329,7 @@
                         <a class="nav-link" href="?model-test">
                             <div class="nav-icon-wrapper">
                                 <i class="fas fa-clipboard-list me-2"></i>
-                                <span>মডেল টেস্ট</span>
+                                <span>Model Test</span>
                             </div>
                             <span class="nav-highlight"></span>
                         </a>
@@ -340,11 +340,11 @@
                 <div class="d-flex ms-lg-3 mt-3 mt-lg-0">
                     <?php if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])): ?>
                         <a href="auth.php" class="btn login-btn px-4 py-2">
-                            <i class="fas fa-sign-in-alt me-2"></i> লগইন
+                            <i class="fas fa-sign-in-alt me-2"></i> Login
                         </a>
                     <?php else: ?>
                         <a href="home.php" class="btn login-btn px-4 py-2">
-                            <i class="fas fa-tachometer-alt me-2"></i> ড্যাশবোর্ড
+                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
                         </a>
                     <?php endif; ?>
                 </div>

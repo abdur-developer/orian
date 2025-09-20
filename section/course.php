@@ -184,8 +184,8 @@
 <section class="section bg-light" id="courses">
     <!-- Main Content -->
     <div class="container">
-        <h2 class="section-title" data-aos="fade-up">আমাদের জনপ্রিয় কোর্সসমূহ</h2>
-        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">সেরা প্রশিক্ষকদের সাথে প্রস্তুতি নিন আপনার পছন্দের চাকরির জন্য</p>
+        <h2 class="section-title" data-aos="fade-up">Popular Courses</h2>
+        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Prepare for your dream job with the best instructors</p>
         <!-- ================================================== -->      
         <div class="row g-4">
             <?php 
@@ -210,17 +210,17 @@
                                     <span class="course-meta-item"><i class="fas fa-users"></i> <?=$row['users']?> Students</span>
                                     <!-- <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span> -->
                                     <div class="course-price">
-                                        মূল্য : <?=$row['price']?>৳
+                                        price : <?=$row['price']?>৳
                                     </div>
                                 </div>
                                 
                                 
                                 <div class="d-grid gap-2 d-md-flex">
                                     <?php if($row['status']) : ?>
-                                    <button onclick="location.href = '?course-details=<?=encryptSt($row['id'])?>'" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>বিস্তারিত দেখুন</button>
-                                    <button onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($row['id'])?>&nani=<?=encryptSt($row['price'])?>&type=course'" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন</button>
+                                    <button onclick="location.href = '?course-details=<?=encryptSt($row['id'])?>'" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>View Details</button>
+                                    <button onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($row['id'])?>&nani=<?=encryptSt($row['price'])?>&type=course'" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>Enroll Now</button>
                                     <?php else: ?>
-                                        <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>শিগ্রই আসছে</button>
+                                        <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>Commming soon</button>
                                     <?php endif; ?>
                                 </div>
                             </div>

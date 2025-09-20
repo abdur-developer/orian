@@ -295,8 +295,8 @@ $circular = mysqli_fetch_assoc($result);
                 <div class="job-meta">
                     <span class="job-meta-item"><i class="fas fa-building"></i> <span class="job-organization"><?=$circular['organization']?></span></span>
                     <span class="job-meta-item"><i class="fas fa-map-marker-alt"></i> <?=$circular['location']?></span>
-                    <span class="job-meta-item"><i class="fas fa-calendar-alt"></i> আবেদনের শেষ তারিখ: <?=$circular['dateline']?></span>
-                    <span class="job-meta-item"><i class="fas fa-users"></i> শূন্য পদ: <?=$circular['vacancy']?></span>
+                    <span class="job-meta-item"><i class="fas fa-calendar-alt"></i> Dateline: <?=$circular['dateline']?></span>
+                    <span class="job-meta-item"><i class="fas fa-users"></i> Vacancy: <?=$circular['vacancy']?></span>
                 </div>
             </div>
             <img src="admin/upload/<?=$circular['img']?>" class="job-thumbnail">
@@ -305,7 +305,7 @@ $circular = mysqli_fetch_assoc($result);
                 <img src="admin/upload/<?=$circular['img_2']?>" class="d-block m-auto w-50 border">
                 <img src="admin/upload/<?=$circular['img_3']?>"  class="d-block m-auto w-50 border">
                 <div class="d-flex justify-content-end">
-                    <a href="<?=$circular['g_form_link']?>" target="_blank" class="apply-btn">আবেদন করুন <i class="fas fa-arrow-right ms-2"></i></a>
+                    <a href="<?=$circular['g_form_link']?>" target="_blank" class="apply-btn">Apply now <i class="fas fa-arrow-right ms-2"></i></a>
                 </div>
             </div>
         </article>
@@ -314,7 +314,7 @@ $circular = mysqli_fetch_assoc($result);
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-card">
-            <h3 class="sidebar-title">সাম্প্রতিক চাকরি</h3>
+            <h3 class="sidebar-title">Recent Jobs</h3>
             <?php
             $sql = "SELECT * FROM circulars ORDER BY created_at DESC LIMIT 3";
             $result = mysqli_query($conn, $sql);
@@ -324,7 +324,7 @@ $circular = mysqli_fetch_assoc($result);
                     <div class="suggested-job-content">
                         <h4 class="suggested-job-title"><?=$row['title']?></h4>
                         <p class="suggested-job-org"><?=$row['organization']?></p>
-                        <p class="suggested-job-deadline">আবেদনের শেষ তারিখ: <?=$row['dateline']?></p>
+                        <p class="suggested-job-deadline">Dateline: <?=$row['dateline']?></p>
                     </div>
                 </a>
             <?php
@@ -333,7 +333,7 @@ $circular = mysqli_fetch_assoc($result);
         </div>
         
         <div class="sidebar-card">
-            <h3 class="sidebar-title">জনপ্রিয় চাকরি</h3>
+            <h3 class="sidebar-title">Popular Jobs</h3>
             <?php
              $sql = "SELECT * FROM circulars ORDER BY view DESC LIMIT 3";
              $result = mysqli_query($conn, $sql);
@@ -343,7 +343,7 @@ $circular = mysqli_fetch_assoc($result);
                         <div class="suggested-job-content">
                             <h4 class="suggested-job-title"><?=$row['title']?></h4>
                             <p class="suggested-job-org"><?=$row['organization']?></p>
-                            <p class="suggested-job-deadline">আবেদনের শেষ তারিখ: <?=$row['dateline']?></p>
+                            <p class="suggested-job-deadline">Dateline: <?=$row['dateline']?></p>
                         </div>
                     </a>
             <?php

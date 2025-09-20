@@ -40,7 +40,7 @@ $course = mysqli_fetch_assoc($result);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>এয়ার ফোর্স কমিশন্ড অফিসার কোর্স</title>
+    <!-- <title>এয়ার ফোর্স কমিশন্ড অফিসার কোর্স</title> -->
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -480,27 +480,27 @@ $course = mysqli_fetch_assoc($result);
             <div class="col-lg-8">
                 <!-- Tabs -->
                 <div class="tab-container">
-                    <div class="tab active" data-tab="curriculum">কোর্স পাঠ্যক্রম</div>
-                    <div class="tab" data-tab="overview">কোর্স ওভারভিউ</div>
-                    <!-- <div class="tab" data-tab="instructor">প্রশিক্ষক</div>
-                    <div class="tab" data-tab="reviews">কোর্স রিভিউ</div> -->
+                    <div class="tab active" data-tab="curriculum">Curriculum</div>
+                    <div class="tab" data-tab="overview">Overview</div>
+                    <!-- <div class="tab" data-tab="instructor">Instructor</div>
+                    <div class="tab" data-tab="reviews">Reviews</div> -->
                 </div>
                 
                 <!-- Tab Contents -->
                 <div class="tab-content active" id="curriculum">
                     <!-- Curriculum Section -->
                     <div class="section-header">
-                        <h2 class="section-title">কোর্স পাঠ্যক্রম</h2>
+                        <h2 class="section-title">Curriculum</h2>
                     </div>
                     
                     <div class="course-stats">
                         <div class="course-stat">
                             <i class="fas fa-list-ul"></i>
-                            <span><?= getTotalModule() ?> সেকশন</span>
+                            <span><?= getTotalModule() ?> Sections</span>
                         </div>
                         <div class="course-stat">
                             <i class="fas fa-play-circle"></i>
-                            <span><?= getTotalDetails() ?> লেকচার</span>
+                            <span><?= getTotalDetails() ?> Lectures</span>
                         </div>
                     </div>
                     <div class="accordion" id="courseAccordion">
@@ -515,9 +515,9 @@ $course = mysqli_fetch_assoc($result);
                                             <div class="section-header-inner">
                                                 <h3 class="section-title-text"><?=$course_module['title']?></h3>
                                                 <div class="section-meta">
-                                                    <span><?=getDetails($course_module['id'])?> লেকচার</span>
+                                                    <span><?=getDetails($course_module['id'])?> Lectures</span>
                                                     <span>•</span>
-                                                    <span><?=getTotalTime($course_module['id'])?> মিনিট</span>
+                                                    <span><?=getTotalTime($course_module['id'])?> Minutes</span>
                                                 </div>
                                             </div>
                                         </button>
@@ -538,8 +538,8 @@ $course = mysqli_fetch_assoc($result);
                                                     <div class="lecture-content">
                                                         <div class="lecture-title"><?=$module_details['title']?></div>
                                                         <div class="lecture-meta">
-                                                            <?php if($module_details['is_free'] != '0') echo "<span class='tag free'>ফ্রি প্রিভিউ</span>"; ?>
-                                                            <span class="lecture-duration"><?=$module_details['time']?> মিনিট</span>
+                                                            <?php if($module_details['is_free'] != '0') echo "<span class='tag free'>Free Preview</span>"; ?>
+                                                            <span class="lecture-duration"><?=$module_details['time']?> Minutes</span>
                                                         </div>
                                                     </div>
                                                     <?php
@@ -565,7 +565,7 @@ $course = mysqli_fetch_assoc($result);
                 <!-- Overview Tab Content (hidden by default) -->
                 <div class="tab-content" id="overview" style="display: none;">
                     <div class="section-header">
-                        <h2 class="section-title">কোর্স ওভারভিউ</h2>
+                        <h2 class="section-title">Overview</h2>
                     </div>
                     <div class="course-overview"><?=$course['overview']?></div>
                 </div>
@@ -663,7 +663,7 @@ $course = mysqli_fetch_assoc($result);
                         <iframe src="https://www.youtube.com/embed/<?=$course['feature_video_id']?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     
-                    <h3 class="includes-title">এই কোর্সে যা পাচ্ছেন :</h3>
+                    <h3 class="includes-title">What You'll Get in This Course:</h3>
                     <ul class="includes-list">
                         <?php 
                             $decoded = json_decode($course['ki_thakbe'], true);
@@ -682,10 +682,10 @@ $course = mysqli_fetch_assoc($result);
                     </div>
                     
                     <button class="btn-enroll" onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($course['id'])?>&nani=<?=encryptSt($course['price'])?>&type=course'">
-                        <i class="fas fa-arrow-right-to-bracket me-2"></i>এনরোল করুন
+                        <i class="fas fa-arrow-right-to-bracket me-2"></i>Enroll Now
                     </button>
-                    
-                    <div class="share-title">কোর্স শেয়ার করুন</div>
+
+                    <!-- <div class="share-title">Share This Course</div>
                     <div class="share-buttons">
                         <a href="#" class="share-button copy">
                             <i class="fas fa-link"></i>
@@ -702,7 +702,7 @@ $course = mysqli_fetch_assoc($result);
                         <a href="#" class="share-button whatsapp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -758,7 +758,7 @@ $course = mysqli_fetch_assoc($result);
                     e.preventDefault();
                     const url = window.location.href;
                     navigator.clipboard.writeText(url).then(() => {
-                        alert('লিংক কপি করা হয়েছে!');
+                        alert('Link copied to clipboard!');
                     });
                 });
             }
@@ -780,7 +780,7 @@ $course = mysqli_fetch_assoc($result);
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'এই লেকচারটি ফ্রি নয়।, দয়া করে কোর্সটি কিনুন।',
+                    text: 'This lecture is not free. Please purchase the course.',
                     footer: '<a href="cart/add.php?thanks=<?=encryptSt($course['id'])?>&nani=<?=encryptSt($course['price'])?>&type=course">কোর্স কিনতে এখানে ক্লিক করুন</a>'
                 });
             }
