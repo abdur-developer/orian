@@ -46,7 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $stmt = $conn->prepare("INSERT INTO users (name, number, email, wish, password) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $name, $number, $email, $wish, encryptPass($password));
+        $hashedPassword = encryptPass($password);
+        $stmt->bind_param("sssss", $name, $number, $email, $wish, $hashedPassword);
         if ($stmt->execute()) {
             addCookie('user_id', encryptSt($conn->insert_id));
             addCookie('number', encryptSt($number));

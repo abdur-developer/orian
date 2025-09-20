@@ -252,24 +252,29 @@
 <section class="blog-view-page">
     <div class="container">
         <div class="blog-container">
+            <?php if ($post): ?>
             <!-- Main Blog Content -->
             <div class="main-blog">
                 <div class="blog-header-image">
-                    <img src="admin/upload/<?= $post['img'] ?>">
+                    <img src="admin/upload/<?= htmlspecialchars($post['img']) ?>">
                 </div>
                 
                 <div class="blog-content-wrapper">
                     <div class="blog-meta">
-                        <span class="blog-date"><?= $post['date']; ?></span>
-                        <span class="blog-category"><?= $post['category']; ?></span>
+                        <span class="blog-date"><?= htmlspecialchars($post['date']); ?></span>
+                        <span class="blog-category"><?= htmlspecialchars($post['category']); ?></span>
                     </div>
                     
-                    <h1 class="blog-title"><?= $post['title']; ?></h1>
+                    <h1 class="blog-title"><?= htmlspecialchars($post['title']); ?></h1>
                     
                     <div class="blog-content">
                         <?= $post['text']; ?>
-                        <img src="admin/upload/<?=$post['img_2']?>" class="d-block m-auto w-50 border">
-                        <img src="admin/upload/<?=$post['img_3']?>"  class="d-block m-auto w-50 border">
+                        <?php if (!empty($post['img_2'])): ?>
+                        <img src="admin/upload/<?= htmlspecialchars($post['img_2']) ?>" class="d-block m-auto w-50 border">
+                        <?php endif; ?>
+                        <?php if (!empty($post['img_3'])): ?>
+                        <img src="admin/upload/<?= htmlspecialchars($post['img_3']) ?>"  class="d-block m-auto w-50 border">
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -284,11 +289,11 @@
                     ?>
                     <div class="related-blog">
                         <div class="related-blog-image">
-                            <img src="<?= $relatedPost['img'] ?>">
+                            <img src="<?= htmlspecialchars($relatedPost['img']) ?>">
                         </div>
                         <div class="related-blog-content">
-                            <h4><a href="?view-blog=<?= $relatedPost['id'] ?>"><?= $relatedPost['title'] ?></a></h4>
-                            <div class="related-blog-date"><?= $relatedPost['date'] ?></div>
+                            <h4><a href="?view-blog=<?= $relatedPost['id'] ?>"><?= htmlspecialchars($relatedPost['title']) ?></a></h4>
+                            <div class="related-blog-date"><?= htmlspecialchars($relatedPost['date']) ?></div>
                         </div>
                     </div>
                     <?php
@@ -300,14 +305,19 @@
                     <h3 class="sidebar-title">Tags</h3>
                     <div class="tags-container">
                         <?php
-                        $tags = explode(',', $post['tags']);
+                        $tags = isset($post['tags']) ? explode(',', $post['tags']) : [];
                         foreach($tags as $tag) {
-                            echo '<a href="#" class="tag">' . trim($tag) . '</a>';
+                            echo '<a href="#" class="tag">' . htmlspecialchars(trim($tag)) . '</a>';
                         }
                         ?>
                     </div>
                 </div>
             </div>
+            <?php else: ?>
+                <div class="main-blog" style="grid-column: 1 / -1; text-align:center; padding: 60px 0;">
+                    <h2>Blog post not found.</h2>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>

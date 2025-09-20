@@ -257,7 +257,7 @@
                     <div class="form-group">
                         <input type="hidden" name="signup" value="1">
                         <label for="name">সম্পূর্ণ নাম</label>
-                        <input type="text" name="name" id="name" placeholder="নাম প্রবেশ করান" required>
+                        <input type="text" name="name" id="name" placeholder="নাম প্রবেশ করান" maxlength="100" required>
                     </div>
                 <?php } ?>
                 <div class="form-group">
