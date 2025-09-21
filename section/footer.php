@@ -128,7 +128,7 @@
                     </div>
                 </div>
                 
-                <!-- <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="300">
                     <div class="footer-links">
                         <h5>Contact us</h5>
                         <div class="contact-info">
@@ -138,7 +138,7 @@
                             <p><a href="abdurrahman.php"><i class="fas fa-link"></i> <span>Developer</span></a></p>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
         <?php endif; ?>
         <div class="copyright">
