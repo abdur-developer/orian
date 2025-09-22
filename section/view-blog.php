@@ -289,7 +289,7 @@
                     ?>
                     <div class="related-blog">
                         <div class="related-blog-image">
-                            <img src="<?= htmlspecialchars($relatedPost['img']) ?>">
+                            <img src="admin/upload/<?= htmlspecialchars($relatedPost['img']) ?>">
                         </div>
                         <div class="related-blog-content">
                             <h4><a href="?view-blog=<?= $relatedPost['id'] ?>"><?= htmlspecialchars($relatedPost['title']) ?></a></h4>
