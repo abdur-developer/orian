@@ -111,20 +111,20 @@
                 <div class="col-lg-2 col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="100">
                     <div class="footer-links">
                         <h5>Links</h5>
-                        <a href="index.php">Home</a>
-                        <a href="index.php?circular#circular">Circulars</a>
-                        <a href="index.php?courses#courses">Courses</a>
-                        <a href="index.php?about#about">About Us</a>
+                        <a href="#">Home</a>
+                        <a href="?circular#circular">Circulars</a>
+                        <a href="?courses#courses">Courses</a>
+                        <a href="?about#about">About Us</a>
                     </div>
                 </div>
                 
                 <div class="col-lg-3 col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="200">
                     <div class="footer-links">
                         <h5>Courses</h5>
-                        <a href="index.php?courses">Armed Forces</a>
-                        <a href="index.php?courses">BCS Preparation</a>
-                        <a href="index.php?courses">Bank Jobs</a>
-                        <a href="index.php?courses">Police & Ansar</a>
+                        <a href="?courses">Armed Forces</a>
+                        <a href="?courses">BCS Preparation</a>
+                        <a href="?courses">Bank Jobs</a>
+                        <a href="?courses">Police & Ansar</a>
                     </div>
                 </div>
                 

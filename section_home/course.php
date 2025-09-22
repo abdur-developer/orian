@@ -154,7 +154,7 @@
             </div>
             <div class="row g-3">
                 <?php while ($row = $result->fetch_assoc()) { ?>
-                    <div class="col-md-6 col-lg-4" onclick="<?= ($row['status']) ? "location.href='index.php?course-details=".encryptSt($row['id'])."'" : "return null;" ?>"
+                    <div class="col-md-6 col-lg-4" onclick="<?= ($row['status']) ? "location.href='?course-details=".encryptSt($row['id'])."'" : "return null;" ?>"
                     >
                         <div class="course-card">
                             <img src="admin/upload/<?php echo $row['img']; ?>" class="course-img" alt="Course">

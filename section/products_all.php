@@ -41,7 +41,7 @@
         position: absolute;
         top: 12px;
         left: 12px;
-        background: var(--accent-color);
+        background: #ff6b6b;
         color: white;
         padding: 3px 8px;
         border-radius: 20px;

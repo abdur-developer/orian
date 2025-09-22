@@ -153,16 +153,13 @@
     <header class="header py-3">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-4 col-7">
-                    <h1 class="h5 fw-bold mb-0 header-title">ProtiSheba</h1>
-                </div>
-                <div class="col-md-6 col-5 mt-md-0 mt-2 search-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control search-bar" placeholder="কোর্স বা বই খুঁজুন...">
-                        <button class="btn btn-primary search-btn" type="button">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
+                <div class="col-12">
+                    <h1 class="h5 fw-bold mb-0 header-title">
+                        <a class="navbar-brand" href="home.php">
+                            <img src="img/logo.jpg" alt="ProtiSheba" class="logo img-fluid" style="height: 40px;">
+                            ProtiSheba
+                        </a>
+                    </h1>
                 </div>
             </div>
         </div>
@@ -171,6 +168,44 @@
     <!-- Main Content -->
     <main class="container my-3">
         <?php
+        function home(){
+            global $conn, $user_id;
+            $limit = true;
+            // include 'section_home/home.php';
+            if(isset($_GET['view-blog'])){
+                include("section/view-blog.php");
+
+            }elseif(isset($_GET['circular-details'])){            
+                include("section/view-circular.php");
+
+            }elseif(isset($_GET['about'])){            
+                include("section/about.php");
+
+            }elseif(isset($_GET['products'])){            
+                include("section/products_all.php");
+
+            }elseif(isset($_GET['course-details'])){            
+                include("section/view-course.php");
+                include("section/feature.php");
+                include("section/testimonials.php");
+
+            }elseif(isset($_GET['product-details'])){
+                include("section/view-product.php");
+
+            }elseif(isset($_GET['testimonials'])){
+                $limit = false;
+                include("section/testimonials.php");
+
+            }else{
+                echo "<style>.hero-section {padding: 0 !important;}</style>";
+                include("section/hero.php");
+                include("section/product.php");
+                include("section/course.php");
+                include("section/circular.php");
+                // include("section/cta.php");                            
+                include("section/blog.php");
+            }
+        }
             if(isset($_GET['page'])) {
                 $page = $_GET['page'];
                 switch($page) {
@@ -207,12 +242,12 @@
                         include 'section_home/profile.php';
                         break;
                     default:
-                        include 'section_home/home.php';
+                        home();
                 }
             }elseif(isset($_GET['view_apply'])) {
                 include 'section_home/view_apply.php';
             } else {
-                include 'section_home/home.php';
+                home();
             }
         ?>
     </main>

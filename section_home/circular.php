@@ -240,7 +240,7 @@
                         </div>
                         <div class="openings"><?= $row['vacancy'] ?> Open Positions</div>
                         <p class="deadline"><i class="fas fa-calendar-times"></i> Deadline: <?=$row['dateline']?></p>
-                        <button class="btn btn-view" onclick="location.href='index.php?circular-details=<?=encryptSt($row['id'])?>'">
+                        <button class="btn btn-view" onclick="location.href='?circular-details=<?=encryptSt($row['id'])?>'">
                             View Details <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>

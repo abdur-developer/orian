@@ -6,7 +6,7 @@ mysqli_query($conn, $sql);
 $sql = "SELECT * FROM circulars WHERE id = '$circular_id'";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) == 0) {
-    echo "<script>window.location.href = 'index.php?error=not_found';</script>";
+    echo "<script>window.location.href = '?error=not_found';</script>";
     exit;
 }
 

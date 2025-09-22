@@ -225,6 +225,40 @@
 
 <!-- Modern Slider & Category Section -->
 <section class="hero-section">
+    <!-- Search Section -->
+    <div class="container mb-3 mt-1">
+        <style>
+            .search-bar {
+                transition: box-shadow 0.3s;
+            }
+            .search-bar:focus-within {
+                box-shadow: 0 4px 16px rgba(37,99,235,0.15);
+            }
+            .search-bar input::placeholder {
+                color: #64748b;
+                opacity: 1;
+                font-size: 1rem;
+            }
+            .search-bar input:focus {
+                background: #f1f5f9;
+            }
+            @media (max-width: 576px) {
+                .search-bar {
+                    padding: 0.25rem 0.5rem;
+                }
+                .search-bar input {
+                    font-size: 0.95rem;
+                }
+            }
+        </style>
+        <form class="search-bar d-flex align-items-center shadow-sm rounded-pill px-3 py-2 bg-white" action="search.php" method="get" role="search" style="margin: 0 auto;">
+            <input class="form-control border-0 bg-transparent flex-grow-1 px-2" type="search" name="search" placeholder="Search everything" aria-label="Search" required style="box-shadow: none; outline: none; font-size: 1.1rem;">
+            <button class="btn btn-primary rounded-pill d-flex align-items-center justify-content-center ms-2" type="submit" style="min-width: 44px; min-height: 44px; box-shadow: 0 2px 8px rgba(37,99,235,0.08);">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+
     <div class="container">
         <!-- Modern Carousel -->
         <?php

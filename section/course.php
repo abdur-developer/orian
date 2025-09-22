@@ -138,6 +138,15 @@
         background: var(--secondary-color);
         transform: translateY(-2px);
     }
+
+    .section-subtitle {
+        color: #666;
+        text-align: center;
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
     
     @media (max-width: 768px) {
         .course-title {
@@ -184,8 +193,10 @@
 <section class="section bg-light" id="courses">
     <!-- Main Content -->
     <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Popular Courses</h2>
-        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Prepare for your dream job with the best instructors</p>
+        <?php if(!$searchTerm): ?>
+            <h2 class="section-title" data-aos="fade-up">Popular Courses</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Prepare for your dream job with the best instructors</p>
+        <?php endif; ?>
         <!-- ================================================== -->      
         <div class="row g-4">
             <?php 
@@ -193,40 +204,53 @@
                 if($limit){
                     $sql .= " LIMIT 4";
                 }
+                
+                if($searchTerm){
+                    $sql .= " WHERE title LIKE '%".$searchTerm."%' OR description LIKE '%".$searchTerm."%'";
+                }
                 $result = mysqli_query($conn, $sql);
-                while($row = mysqli_fetch_assoc($result)){ ?>
-                    <div class="col-lg-4 col-6">
-                        <div class="course-card">
-                            <div class="course-img-container">
-                                <img src="admin/upload/<?= $row['img']; ?>" class="course-img" alt="<?=$row['title']?>">    
-                                <?php if($row['badge'] != null) echo "<span class='course-badge'>{$row['badge']}</span>"; ?>
-                            </div>
-                            <div class="card-body">
-                                <span class="course-provider"><?=$row['provider']?></span>
-                                <h3 class="course-title"><?=$row['title']?></h3>
-                                <p class="course-desc"><?=$row['description']?></p>
-                                
-                                <div class="course-meta">
-                                    <span class="course-meta-item"><i class="fas fa-users"></i> <?=$row['users']?> Students</span>
-                                    <!-- <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span> -->
-                                    <div class="course-price">
-                                        price : <?=$row['price']?>৳
-                                    </div>
+                if(mysqli_num_rows($result) != 0){
+                    while($row = mysqli_fetch_assoc($result)){ ?>
+                        <div class="col-lg-4 col-6">
+                            <div class="course-card">
+                                <div class="course-img-container">
+                                    <img src="admin/upload/<?= $row['img']; ?>" class="course-img" alt="<?=$row['title']?>">    
+                                    <?php if($row['badge'] != null) echo "<span class='course-badge'>{$row['badge']}</span>"; ?>
                                 </div>
-                                
-                                
-                                <div class="d-grid gap-2 d-md-flex">
-                                    <?php if($row['status']) : ?>
-                                    <button onclick="location.href = '?course-details=<?=encryptSt($row['id'])?>'" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>View Details</button>
-                                    <button onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($row['id'])?>&nani=<?=encryptSt($row['price'])?>&type=course'" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>Enroll Now</button>
-                                    <?php else: ?>
-                                        <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>Commming soon</button>
-                                    <?php endif; ?>
+                                <div class="card-body">
+                                    <span class="course-provider"><?=$row['provider']?></span>
+                                    <h3 class="course-title"><?=$row['title']?></h3>
+                                    <p class="course-desc"><?=$row['description']?></p>
+                                    
+                                    <div class="course-meta">
+                                        <span class="course-meta-item"><i class="fas fa-users"></i> <?=$row['users']?> Students</span>
+                                        <!-- <span class="course-meta-item"><i class="fas fa-certificate"></i> Certificate</span> -->
+                                        <div class="course-price">
+                                            price : <?=$row['price']?>৳
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="d-grid gap-2 d-md-flex">
+                                        <?php if($row['status']) : ?>
+                                        <button onclick="location.href = '?course-details=<?=encryptSt($row['id'])?>'" class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>View Details</button>
+                                        <button onclick="location.href = 'cart/add.php?thanks=<?=encryptSt($row['id'])?>&nani=<?=encryptSt($row['price'])?>&type=course'" class="btn btn-enroll flex-grow-1"><i class="fas fa-arrow-right-to-bracket me-2"></i>Enroll Now</button>
+                                        <?php else: ?>
+                                            <button class="btn btn-details flex-grow-1"><i class="fas fa-info-circle me-2"></i>Commming soon</button>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    <?php }
+                }else{ ?>
+                    <div class="blog-card" style="text-align:center; grid-column: 1/-1; box-shadow:none; background:transparent;">
+                        <div class="blog-content">
+                            <h3 class="blog-title" style="color:#7f8c8d;">No courses found</h3>
+                            <p class="blog-excerpt">We couldn't find any courses matching your search.</p>
+                        </div>
                     </div>
-            <?php } ?>
+                <?php } ?>
         </div>
         <?php if($limit){ ?>
             <div class="view-all-btn">

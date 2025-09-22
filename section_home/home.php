@@ -218,7 +218,7 @@
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) { ?>
-                    <div class="col-md-6 col-lg-4" onclick="location.href='index.php?course-details=<?= encryptSt($row['id']) ?>'">
+                    <div class="col-md-6 col-lg-4" onclick="location.href='?course-details=<?= encryptSt($row['id']) ?>'">
                         <div class="course-card">
                             <img src="admin/upload/<?php echo $row['img']; ?>" class="course-img" alt="Course">
                             <div class="card-body">
@@ -245,7 +245,7 @@
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) { ?>
-                <div class="col-6 col-md-4 col-lg-3" onclick="location.href='index.php?product-details=<?= encryptSt($row['id']) ?>'">
+                <div class="col-6 col-md-4 col-lg-3" onclick="location.href='?product-details=<?= encryptSt($row['id']) ?>'">
                     <div class="course-card">
                         <img src="admin/upload/<?php echo $row['img']; ?>" class="course-img" alt="Product">
                         <div class="card-body">

@@ -1,11 +1,18 @@
-<?php $showDev = false; ?>
 <?php
+$showDev = false;
+
+require "include/dbcon.php";
 function code_include($name, $limit = true){
     global $conn, $showDev;
     include($name);
     include("section/comment.php");
 }
-require "include/dbcon.php";
+
+if (isset($_COOKIE['number']) && isset($_COOKIE['web'])){
+    header("location: home.php");
+    exit();
+}
+
 code_include("section/header.php");
 
 ?>

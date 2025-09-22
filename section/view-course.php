@@ -4,7 +4,7 @@ $course_id = decryptSt($get_id);
 $sql = "SELECT * FROM course WHERE id = '$course_id'";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) == 0) {
-    echo "<script>window.location.href = 'index.php?error=not_found';</script>";
+    echo "<script>window.location.href = '?error=not_found';</script>";
     exit;
 }
 function getTotalModule() {

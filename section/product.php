@@ -41,7 +41,7 @@
         position: absolute;
         top: 12px;
         left: 12px;
-        background: var(--accent-color);
+        background: #ff6b6b;
         color: white;
         padding: 3px 8px;
         border-radius: 20px;
@@ -295,54 +295,67 @@
         </div>
     <?php endif; ?>
     <div class="container">
-        <h2 class="section-title"><?= $limit ? 'Special Deals' : 'Our Products' ?></h2>
-        
+        <?php if(!$searchTerm): ?>
+            <h2 class="section-title"><?= $limit ? 'Special Deals' : 'Our Products' ?></h2>
+        <?php endif; ?>
         <div class="row my-product">
             <?php 
             $sql = "SELECT * FROM product";
             if($limit){
                 $sql .= " LIMIT 4";
             }
+            if($searchTerm){
+                $sql .= " WHERE name LIKE '%".$searchTerm."%' OR description LIKE '%".$searchTerm."%'";
+            }
             $result = mysqli_query($conn, $sql);
-            while($row = mysqli_fetch_assoc($result)){ ?>
-            <div class="col-xl-3 col-lg-4 col-6" style="border: solid 0.1px #bcbcbc25;">
-                <div class="product-card">
-                    <div class="product-img-container">
-                        <span class="product-badge"><?= $row['status']; ?></span>
-                        <!-- <div class="product-wishlist">
-                            <i class="far fa-heart"></i>
-                        </div> -->
-                        <img src="admin/upload/<?= $row['img']; ?>" class="product-img" alt="<?= $row['name']; ?>">
-                    </div>
-                    <div class="product-body">
-                        <span class="product-category"><?php
-                         $sql = "SELECT name FROM category_product WHERE id='".$row['type']."'";
-                         $category = mysqli_fetch_assoc(mysqli_query($conn, $sql));
-                         echo $category['name'];
-                         ?></span>
-                        <h3 class="product-name"><?= $row['name']; ?></h3>
-                        <div class="product-rating">
-                            <div class="product-rating-stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+            if(mysqli_num_rows($result) != 0){
+                while($row = mysqli_fetch_assoc($result)){ ?>
+                    <div class="col-xl-3 col-lg-4 col-6" style="border: solid 0.1px #bcbcbc25;">
+                        <div class="product-card">
+                            <div class="product-img-container">
+                                <span class="product-badge"><?= $row['status']; ?></span>
+                                <!-- <div class="product-wishlist">
+                                    <i class="far fa-heart"></i>
+                                </div> -->
+                                <img src="admin/upload/<?= $row['img']; ?>" class="product-img" alt="<?= $row['name']; ?>">
                             </div>
-                            <span class="product-rating-count">(<?= $row['rating_count']; ?>)</span>
+                            <div class="product-body">
+                                <span class="product-category"><?php
+                                $sql = "SELECT name FROM category_product WHERE id='".$row['type']."'";
+                                $category = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+                                echo $category['name'];
+                                ?></span>
+                                <h3 class="product-name"><?= $row['name']; ?></h3>
+                                <div class="product-rating">
+                                    <div class="product-rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="product-rating-count">(<?= $row['rating_count']; ?>)</span>
+                                </div>
+                                <div class="product-price">
+                                    <span class="current-price">৳<?= $row['price']; ?></span>
+                                    <span class="original-price">৳<?= $row['old_price']; ?></span>
+                                    <span class="discount"><?= getPercent($row['old_price'], $row['price']); ?> off</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="btn btn-add-to-cart" onclick="addToCart('<?= encryptSt($row['id']) ?>', '<?=encryptSt($row['price'])?>')">Add to Cart</button>
+                                    <button class="btn btn-quick-view" onclick="viewProduct('<?= encryptSt($row['id']) ?>')"><i class="fas fa-eye"></i></button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="product-price">
-                            <span class="current-price">৳<?= $row['price']; ?></span>
-                            <span class="original-price">৳<?= $row['old_price']; ?></span>
-                            <span class="discount"><?= getPercent($row['old_price'], $row['price']); ?> off</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="btn btn-add-to-cart" onclick="addToCart('<?= encryptSt($row['id']) ?>', '<?=encryptSt($row['price'])?>')">Add to Cart</button>
-                            <button class="btn btn-quick-view" onclick="viewProduct('<?= encryptSt($row['id']) ?>')"><i class="fas fa-eye"></i></button>
-                        </div>
+                    </div>
+                <?php }
+            }else{ ?>
+                <div class="blog-card" style="text-align:center; grid-column: 1/-1; box-shadow:none; background:transparent;">
+                    <div class="blog-content">
+                        <h3 class="blog-title" style="color:#7f8c8d;">No products found</h3>
+                        <p class="blog-excerpt">We couldn't find any products matching your search.</p>
                     </div>
                 </div>
-            </div>
             <?php } ?>
         </div>
         <?php if($limit){ ?>

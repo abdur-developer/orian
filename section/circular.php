@@ -148,31 +148,46 @@
 <section class="blog-section" id="circular">    
     <!-- Circuler Section -->
     <div class="container">
-        <div class="section-title">
-            <h2>Circulars</h2>
-            <p>See the latest circulars and notices</p>        
-        </div>
+        <?php if(!$searchTerm): ?>
+            <div class="section-title">
+                <h2>Circulars</h2>
+                <p>See the latest circulars and notices</p>        
+            </div>
+        <?php endif; ?>
         <div class="blog-grid">
             <?php 
             $sql = "SELECT id, img, title, sort_text, dateline FROM circulars";
             if($limit){
                 $sql .= " LIMIT 4";
             }
+            if($searchTerm){
+                $sql .= " WHERE title LIKE '%".$searchTerm."%' OR sort_text LIKE '%".$searchTerm."%'";
+            }
             $result = mysqli_query($conn, $sql);
-            while($row = mysqli_fetch_assoc($result)){ ?>
-            <div class="blog-card">
-                <div class="blog-image">
-                    <img src="admin/upload/<?=$row['img']?>" >
+            
+            if(mysqli_num_rows($result) != 0){
+                while($row = mysqli_fetch_assoc($result)){ ?>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="admin/upload/<?=$row['img']?>" >
+                    </div>
+                    <div class="blog-content">
+                        <span class="blog-date"><?=$row['dateline']?></span>
+                        <h3 class="blog-title"><?=$row['title']?></h3>
+                        <p class="blog-excerpt"><?=$row['sort_text']?>।</p>
+                        <a href="?circular-details=<?=encryptSt($row['id'])?>" class="read-more">
+                            read more <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="blog-content">
-                    <span class="blog-date"><?=$row['dateline']?></span>
-                    <h3 class="blog-title"><?=$row['title']?></h3>
-                    <p class="blog-excerpt"><?=$row['sort_text']?>।</p>
-                    <a href="?circular-details=<?=encryptSt($row['id'])?>" class="read-more">
-                        read more <i class="fas fa-arrow-right"></i>
-                    </a>
+                <?php }
+            }else{ ?>
+                <div class="blog-card" style="text-align:center; grid-column: 1/-1; box-shadow:none; background:transparent;">
+                    <div class="blog-content">
+                        <h3 class="blog-title" style="color:#7f8c8d;">No circulars found</h3>
+                        <p class="blog-excerpt">We couldn't find any circulars matching your search.</p>
+                    </div>
                 </div>
-            </div>
             <?php } ?>
         </div>
         
