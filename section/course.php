@@ -255,7 +255,7 @@
         <?php if($limit){ ?>
             <div class="view-all-btn">
                 <a href="home.php?page=courses" class="btn btn-primary">
-                    সব কোর্স দেখুন <i class="fas fa-arrow-right ms-2"></i>
+                   View all <i class="fas fa-arrow-right ms-2"></i>
                 </a>
             </div>
         <?php } ?>
