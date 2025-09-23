@@ -92,10 +92,11 @@
                         <!-- Is Feature -->
                         <div class="form-floating mb-4">
                             <select name="is_feature" class="form-control" id="is_feature">
-                                <option value="1" <?= $row['is_feature'] == 1 ? 'selected' : '' ?>>Active</option>
-                                <option value="0" <?= $row['is_feature'] == 0 ? 'selected' : '' ?>>Inactive</option>
+                                <option value="0" <?= $row['is_feature'] == 0 ? 'selected' : '' ?>>Normal</option>
+                                <option value="1" <?= $row['is_feature'] == 1 ? 'selected' : '' ?>>Featured</option>
+                                <option value="2" <?= $row['is_feature'] == 2 ? 'selected' : '' ?>>Special</option>
                             </select>
-                            <label for="is_feature"><i class="fas fa-toggle-on me-1 text-muted"></i>Is feature</label>
+                            <label for="is_feature"><i class="fas fa-toggle-on me-1 text-muted"></i>Section type</label>
                         </div>
                         <!-- Description with Quill Editor -->
                         <div class="mb-4">

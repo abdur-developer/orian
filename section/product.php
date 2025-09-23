@@ -302,7 +302,7 @@
             <?php 
             $sql = "SELECT * FROM product";
             if($limit){
-                $sql .= " LIMIT 4";
+                $sql .= " WHERE is_feature = 2 LIMIT 4";
             }
             if(isset($searchTerm)){
                 $sql .= " WHERE name LIKE '%".$searchTerm."%' OR description LIKE '%".$searchTerm."%'";
