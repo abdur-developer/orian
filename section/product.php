@@ -295,7 +295,7 @@
         </div>
     <?php endif; ?>
     <div class="container">
-        <?php if(!$searchTerm): ?>
+        <?php if(!isset($searchTerm)): ?>
             <h2 class="section-title"><?= $limit ? 'Special Deals' : 'Our Products' ?></h2>
         <?php endif; ?>
         <div class="row my-product">
@@ -304,7 +304,7 @@
             if($limit){
                 $sql .= " LIMIT 4";
             }
-            if($searchTerm){
+            if(isset($searchTerm)){
                 $sql .= " WHERE name LIKE '%".$searchTerm."%' OR description LIKE '%".$searchTerm."%'";
             }
             $result = mysqli_query($conn, $sql);

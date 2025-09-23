@@ -146,9 +146,9 @@
 </style>
 
 <section class="blog-section" id="circular">    
-    <!-- Circuler Section -->
+    <!-- Circular Section -->
     <div class="container">
-        <?php if(!$searchTerm): ?>
+        <?php if(!isset($searchTerm)): ?>
             <div class="section-title">
                 <h2>Circulars</h2>
                 <p>See the latest circulars and notices</p>        
@@ -160,7 +160,7 @@
             if($limit){
                 $sql .= " LIMIT 4";
             }
-            if($searchTerm){
+            if(isset($searchTerm)){
                 $sql .= " WHERE title LIKE '%".$searchTerm."%' OR sort_text LIKE '%".$searchTerm."%'";
             }
             $result = mysqli_query($conn, $sql);

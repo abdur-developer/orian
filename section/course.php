@@ -193,7 +193,7 @@
 <section class="section bg-light" id="courses">
     <!-- Main Content -->
     <div class="container">
-        <?php if(!$searchTerm): ?>
+        <?php if(!isset($searchTerm)): ?>
             <h2 class="section-title" data-aos="fade-up">Popular Courses</h2>
             <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Prepare for your dream job with the best instructors</p>
         <?php endif; ?>
@@ -205,7 +205,7 @@
                     $sql .= " LIMIT 4";
                 }
                 
-                if($searchTerm){
+                if(isset($searchTerm)){
                     $sql .= " WHERE title LIKE '%".$searchTerm."%' OR description LIKE '%".$searchTerm."%'";
                 }
                 $result = mysqli_query($conn, $sql);

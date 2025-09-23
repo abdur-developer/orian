@@ -172,7 +172,7 @@
 <section class="blog-section" id="blog">
     <!-- Blog Section -->
     <div class="container">
-        <?php if(!$searchTerm): ?>
+        <?php if(!isset($searchTerm)): ?>
             <div class="section-title">
                 <h2>News Feed</h2>
                 <p>Stay updated with the latest tips, guides, and updates on defense preparation</p>
@@ -181,7 +181,7 @@
         <div class="blog-grid">
             <?php 
             $sql = "SELECT id, img, title, date, sort_text FROM post";
-            if($searchTerm){
+            if(isset($searchTerm)){
                 $sql .= " WHERE title LIKE '%".$searchTerm."%' OR sort_text LIKE '%".$searchTerm."%' OR text LIKE '%".$searchTerm."%'";
             }
             $result = mysqli_query($conn, $sql);

@@ -19,7 +19,7 @@ code_include("section/header.php");
 
 <body>
     <?php
-        code_include("section/chat.php");
+        // code_include("section/chat.php");
         code_include("section/nav.php");
         if(isset($_GET['view-blog'])){
             code_include("section/view-blog.php");
@@ -56,11 +56,12 @@ code_include("section/header.php");
             code_include("section/circular.php", false);
 
             code_include("section/blog.php");
+            code_include("section/bottom_nav.php");
         }
         code_include("section/footer.php");
     ?>
     <!-- Back to Top Button -->
-    <a href="#" class="btn btn-primary back-to-top" id="backToTop">
+    <a href="#" class="btn btn-primary back-to-top" style="margin-bottom: 70px;" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </a>
     <?php code_include("section/script.php");?>

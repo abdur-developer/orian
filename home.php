@@ -259,31 +259,31 @@
                 <div class="col">
                     <a href="home.php" class="nav-item active">
                         <i class="fas fa-home nav-icon"></i>
-                        <span class="nav-text">হোম</span>
+                        <span class="nav-text">home</span>
                     </a>
                 </div>
                 <div class="col">
                     <a href="cart/" class="nav-item">
                         <i class="fas fa-shopping-bag nav-icon"></i>
-                        <span class="nav-text">কার্ট</span>
+                        <span class="nav-text">cart</span>
                     </a>
                 </div>
                 <div class="col">
                     <a href="?page=circular" class="nav-item">
                         <i class="fas fa-newspaper nav-icon"></i>
-                        <span class="nav-text">সার্কুলার</span>
+                        <span class="nav-text">circular</span>
                     </a>
                 </div>
                 <div class="col">
                     <a href="?page=courses" class="nav-item">
                         <i class="fas fa-book nav-icon"></i>
-                        <span class="nav-text">কোর্স</span>
+                        <span class="nav-text">course</span>
                     </a>
                 </div>
                 <div class="col">
                     <a href="?page=profile" class="nav-item">
                         <i class="fas fa-user nav-icon"></i>
-                        <span class="nav-text">প্রোফাইল</span>
+                        <span class="nav-text">profile</span>
                     </a>
                 </div>
             </div>
