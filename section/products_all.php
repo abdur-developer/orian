@@ -254,7 +254,7 @@ function getName($id){
             ?></h2>
             <div class="sort-list">
                 <form action="" method="get" id="categoryForm">
-                    <!-- //?products&category=<?= $row['id'] ?>&name=<?= str_replace(' ', '+', $row['name']) ?> -->
+                    <!-- //?products&category=<= $row['id'] ?>&name=<= str_replace(' ', '+', $row['name']) ?> -->
                     <select name="category" id="categorySelect" onchange="document.getElementById('categoryForm').submit()">
                         <option <?= !isset($_GET['category']) ? "selected" : "" ?> disabled>All Categories</option>
                         <?php
