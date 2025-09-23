@@ -256,6 +256,7 @@ function getName($id){
                 <form action="" method="get" id="categoryForm">
                     <!-- //?products&category=<?= $row['id'] ?>&name=<?= str_replace(' ', '+', $row['name']) ?> -->
                     <select name="category" id="categorySelect" onchange="document.getElementById('categoryForm').submit()">
+                        <option <?= !isset($_GET['category']) ? "selected" : "" ?> disabled>All Categories</option>
                         <?php
                             $sql = "SELECT * FROM category_product";
                             $result = mysqli_query($conn, $sql);
