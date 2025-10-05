@@ -286,7 +286,7 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                             <div class="row g-2 align-items-center">
                                 <div class="col-md-5">
                                     <select name="status" class="form-select border-primary">
-                                        <option value="processing" <?= $products['item_status']=='processing'?'selected':'' ?>>Processing</option>
+                                        <option value="Order Confirm" <?= $products['item_status']=='Order Confirm'?'selected':'' ?>>Processing</option>
                                         <option value="ready" <?= $products['item_status']=='ready'?'selected':'' ?>>Ready for Shipping</option>
                                         <option value="delivery" <?= $products['item_status']=='delivery'?'selected':'' ?>>On Delivery</option>
                                         <option value="delivered" <?= $products['item_status']=='delivered'?'selected':'' ?>>Delivered</option>
@@ -452,7 +452,7 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
 // Helper functions
 function getStatusColor($status) {
     switch($status) {
-        case 'processing': return 'info';
+        case 'Order Confirm': return 'info';
         case 'ready': return 'warning';
         case 'delivery': return 'primary';
         case 'delivered': return 'success';
@@ -463,7 +463,7 @@ function getStatusColor($status) {
 
 function getItemStatusColor($status) {
     switch($status) {
-        case 'processing': return 'info';
+        case 'Order Confirm': return 'info';
         case 'shipped': return 'primary';
         case 'delivered': return 'success';
         case 'cancelled': return 'danger';

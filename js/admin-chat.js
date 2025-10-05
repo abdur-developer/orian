@@ -3,16 +3,17 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
+
 // Firebase Config & Init
 const firebaseConfig = {
-    apiKey: "AIzaSyCm-lGYEk_5riAWRLIXTQC1VUgwVDIe2K4",
-    authDomain: "nayok-420.firebaseapp.com",
+    apiKey: "AIzaSyBjLHvGtPp0yF20Wyc3IOm3-q3ZWh_Yl1w",
+    authDomain: "protisheba-cc0e4.firebaseapp.com",
     databaseURL: "https://nayok-420-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "nayok-420",
-    storageBucket: "nayok-420.appspot.com",
-    messagingSenderId: "886043728751",
-    appId: "1:886043728751:web:ff3088fefd30e5bddc669a",
-    measurementId: "G-E23KJNZVDW"
+    projectId: "protisheba-cc0e4",
+    storageBucket: "protisheba-cc0e4.firebasestorage.app",
+    messagingSenderId: "638647831105",
+    appId: "1:638647831105:web:d48df9437d08379f5e54c0",
+    measurementId: "G-96G6R16HED"
 };
 
 const app = initializeApp(firebaseConfig);

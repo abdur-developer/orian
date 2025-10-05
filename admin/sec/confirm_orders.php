@@ -16,7 +16,7 @@
         JOIN product ON confirm_orders.product_id = product.id 
         JOIN orders ON confirm_orders.order_id = orders.id 
         $where_cause 
-        ORDER BY confirm_orders.id DESC";
+        ORDER BY confirm_orders.id DESC LIMIT 100";
     $result = $conn->query($sql);
 ?>
 <div class="container">
