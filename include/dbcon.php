@@ -14,6 +14,7 @@
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
+    $conn->query("SET time_zone = '+06:00'");
     mysqli_set_charset($conn, "utf8");
 
     function encryptSt($text){
