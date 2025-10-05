@@ -209,6 +209,16 @@ function timeAgo(datetimeStr) {
 
     return "just now";
 }
+async function getUserIds(){
+    try {
+        const response = await fetch("../js/get_user_ids.php");
+        const data = await response.json();
+        return data; // যেমন: ["u3", "u5", "u2"]
+    } catch (error) {
+        console.error("Error fetching user IDs:", error);
+        return [];
+    }
+}
 async function loadUserList() {
     const adminStatusRef = ref(db, `/message_status/admin`);
     onValue(adminStatusRef, async (snapshot) => {
@@ -219,9 +229,8 @@ async function loadUserList() {
         if (!userListElem) return;
         userListElem.innerHTML = "";
 
-        const userIds = Object.keys(users)
-            .filter(key => key.startsWith("user_"))
-            .map(key => key.replace("user_", ""));
+        // const userIds = Object.keys(users).filter(key => key.startsWith("user_")).map(key => key.replace("user_", ""));
+        const userIds = await getUserIds();
 
         for (const id of userIds) {
             try {
