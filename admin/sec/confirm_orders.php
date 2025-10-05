@@ -32,7 +32,7 @@
                         <div class="input-group">
                             <input type="hidden" name="q" value="confirm_orders">
                             <select name="search" class="form-control border-end-0">
-                                <option value="processing" <?= $search == "processing" ? "selected" : "" ?>>Processing</option>
+                                <option value="Order Confirm" <?= $search == "Order Confirm" ? "selected" : "" ?>>Processing</option>
                                 <option value="ready" <?= $search == "ready" ? "selected" : "" ?>>Ready for Shipping</option>
                                 <option value="delivery" <?= $search == "delivery" ? "selected" : "" ?>>On Delivery</option>
                                 <option value="delivered" <?= $search == "delivered" ? "selected" : "" ?>>Delivered</option>
