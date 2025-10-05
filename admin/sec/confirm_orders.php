@@ -1,12 +1,22 @@
 <?php
+    // Search functionality
+    $search = isset($_REQUEST['search']) ? trim($_REQUEST['search']) : '';
+    
+    $where_cause = "WHERE confirm_orders.type = 'product' AND confirm_orders.status = ";
+    if(empty($search)){
+        $where_cause .= "'Order Confirm'";
+    }else{
+        $search = $conn->real_escape_string($search);
+        $where_cause .= "'$search'";
+    }
     // Fetch data
     $sql = "SELECT confirm_orders.id, confirm_orders.status, users.name AS user_name, product.name AS product_name, orders.phone AS order_phone
         FROM confirm_orders 
-        JOIN users ON confirm_orders.user_id = users.id
-        JOIN product ON confirm_orders.product_id = product.id
-        JOIN orders ON confirm_orders.order_id = orders.id
-        WHERE confirm_orders.type = 'product' 
-        ORDER BY confirm_orders.id ASC";
+        JOIN users ON confirm_orders.user_id = users.id 
+        JOIN product ON confirm_orders.product_id = product.id 
+        JOIN orders ON confirm_orders.order_id = orders.id 
+        $where_cause 
+        ORDER BY confirm_orders.id DESC";
     $result = $conn->query($sql);
 ?>
 <div class="container">
@@ -17,6 +27,28 @@
                     <i class="fas fa-truck-loading me-2"></i>
                     Orders Awaiting Delivery
                 </h3>
+                <div class="d-flex align-items-center">
+                    <form class="d-flex search-box" method="post">
+                        <div class="input-group">
+                            <input type="hidden" name="q" value="confirm_orders">
+                            <select name="search" class="form-control border-end-0">
+                                <option value="processing" <?= $search == "processing" ? "selected" : "" ?>>Processing</option>
+                                <option value="ready" <?= $search == "ready" ? "selected" : "" ?>>Ready for Shipping</option>
+                                <option value="delivery" <?= $search == "delivery" ? "selected" : "" ?>>On Delivery</option>
+                                <option value="delivered" <?= $search == "delivered" ? "selected" : "" ?>>Delivered</option>
+                                <option value="cancelled" <?= $search == "cancelled" ? "selected" : "" ?>>Cancelled</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <?php if (!empty($search)): ?>
+                                <a href="?q=confirm_orders" class="btn btn-danger ms-1">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         
