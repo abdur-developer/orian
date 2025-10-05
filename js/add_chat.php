@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-
+date_default_timezone_set('Asia/Dhaka');
 // Allow only POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -24,7 +24,7 @@ $sender = $data['type'];
 
 require_once "../include/dbcon.php";
 
-$stmt = $conn->prepare("INSERT INTO messages (user_id, message, sender) VALUES (?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO messages (user_id, message, sender, timestamp) VALUES (?, ?, ?, NOW())");
 $stmt->bind_param("isi", $userId, $message, $sender);
 $stmt->execute();
 $stmt->close();
