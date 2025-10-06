@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <input type="file" name="img_1" class="form-control" accept="image/*" required>
+                            <input type="file" name="img" class="form-control" accept="image/*" required>
                             <small class="text-muted">Max size: 2MB (JPEG, PNG)</small>
                         </div>
                         <!-- Image Upload -->
