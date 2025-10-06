@@ -327,7 +327,7 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="upload/<?= htmlspecialchars($products['img']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="product-img me-3">
+                                            <img src="upload/<?= htmlspecialchars($products['img']) ?>" class="product-img me-3">
                                             <div>
                                                 <h6 class="mb-1"><?= htmlspecialchars($products['name']) ?></h6>
                                                 <small class="text-muted d-block"><?= htmlspecialchars($products['type']) ?></small>

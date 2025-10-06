@@ -265,7 +265,7 @@
                     ?>
                     <div class="course-item">
 
-                        <img class="course-img" src="<?=htmlspecialchars($course['img'])?>" alt="">
+                        <img class="course-img" src="../admin/upload/<?=htmlspecialchars($course['img'])?>" alt="">
                         <div class="course-info">
                             <div class="course-title"><?=htmlspecialchars($course['title'] ?? $course['name'])?></div>
                             <div class="course-instructor">

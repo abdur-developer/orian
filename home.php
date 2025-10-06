@@ -184,6 +184,9 @@
             }elseif(isset($_GET['products'])){            
                 include("section/products_all.php");
 
+            }elseif(isset($_GET['blogs'])){            
+                include("section/blogs_all.php");
+
             }elseif(isset($_GET['course-details'])){            
                 include("section/view-course.php");
                 include("section/feature.php");

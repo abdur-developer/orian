@@ -159,9 +159,10 @@
             $sql = "SELECT id, img, title, sort_text, dateline FROM circulars";
             if($limit){
                 $sql .= " LIMIT 4";
-            }
-            if(isset($searchTerm)){
+            }else if(isset($searchTerm)){
                 $sql .= " WHERE title LIKE '%".$searchTerm."%' OR sort_text LIKE '%".$searchTerm."%'";
+            }else{
+                $sql .= " LIMIT 10";
             }
             $result = mysqli_query($conn, $sql);
             
@@ -191,12 +192,12 @@
             <?php } ?>
         </div>
         
-        <?php if($limit){ ?>
+        <?php //if($limit){ ?>
             <div class="view-all-btn">
                 <a href="home.php?page=circular" class="btn btn-primary">
                     View all circulars <i class="fas fa-arrow-right ms-2"></i>
                 </a>
             </div>
-        <?php } ?>
+        <?php //} ?>
     </div>
 </section>

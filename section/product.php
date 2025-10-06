@@ -303,9 +303,10 @@
             $sql = "SELECT * FROM product";
             if($limit){
                 $sql .= " WHERE is_feature = 2 LIMIT 4";
-            }
-            if(isset($searchTerm)){
+            }else if(isset($searchTerm)){
                 $sql .= " WHERE name LIKE '%".$searchTerm."%' OR description LIKE '%".$searchTerm."%'";
+            }else{
+                $sql .= " LIMIT 20";
             }
             $result = mysqli_query($conn, $sql);
             if(mysqli_num_rows($result) != 0){
@@ -358,13 +359,13 @@
                 </div>
             <?php } ?>
         </div>
-        <?php if($limit){ ?>
+        <?php //if($limit){ ?>
             <div class="view-all-btn">
                 <a href="?products" class="btn btn-primary">
                     See All <i class="fas fa-arrow-right ms-2"></i>
                 </a>
             </div>
-        <?php } ?>
+        <?php //} ?>
     </div>
     <script>
         function addToCart(id, nani){

@@ -33,6 +33,9 @@ code_include("section/header.php");
         }elseif(isset($_GET['products'])){            
             code_include("section/products_all.php");
 
+        }elseif(isset($_GET['blogs'])){            
+            code_include("section/blogs_all.php");
+
         }elseif(isset($_GET['course-details'])){            
             code_include("section/view-course.php");
             code_include("section/feature.php");

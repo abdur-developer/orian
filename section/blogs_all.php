@@ -182,7 +182,7 @@
             <?php 
             $sql = "SELECT id, img, title, date, sort_text FROM post";
             if(isset($searchTerm)){
-                $sql .= " WHERE title LIKE '%".$searchTerm."%' OR sort_text LIKE '%".$searchTerm."%' OR text LIKE '%".$searchTerm."%' LIMIT 10";
+                $sql .= " WHERE title LIKE '%".$searchTerm."%' OR sort_text LIKE '%".$searchTerm."%' OR text LIKE '%".$searchTerm."%'";
             }
             $result = mysqli_query($conn, $sql);
             if(mysqli_num_rows($result) != 0){
@@ -211,10 +211,10 @@
             <?php } ?>
         </div>
         
-        <div class="view-all-btn">
-            <a href="?blogs" class="btn btn-primary">
+        <!-- <div class="view-all-btn">
+            <a href="/bn/blog" class="btn btn-primary">
                 See all <i class="fas fa-arrow-right ms-2"></i>
             </a>
-        </div>
+        </div> -->
     </div>
 </section>
