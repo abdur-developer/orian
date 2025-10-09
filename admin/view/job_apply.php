@@ -61,8 +61,8 @@
                             <label for="quill-editor" class="form-label">
                                 <i class="fas fa-align-left me-1 text-muted"></i> Details
                             </label>
-                            <div id="quill-editor" style="height: 300px;">
-                                <textarea name="details" style="height: 300px; width: 100%;"><?= $row['details'] ?></textarea>
+                            <div id="quill-editor" style="height: 400px;">
+                                <textarea id="tiny" name="details" style="height: 300px; width: 100%;"><?= $row['details'] ?></textarea>
                             </div>
                             <small class="text-muted">Write detailed details with formatting options</small>
                         </div>
@@ -83,27 +83,27 @@
     </div>
 </div>
 
-<!-- Quill JS -->
-<!-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> -->
-<script>
-// Initialize Quill Editor
-// const quill = new Quill('#quill-editor', {
-//     theme: 'snow',
-//     modules: {
-//         toolbar: [
-//             [{ 'header': [1, 2, 3, false] }],
-//             [{ 'align': [] }],
-//             ['bold', 'italic', 'underline', 'strike'],
-//             [{ 'color': [] }, { 'background': [] }],
-//             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-//             ['link']
-//         ]
-//     },
-//     placeholder: 'Write detailed details here...'
-// });
+<!-- TinyMCE -->
+    <script src="https://cdn.tiny.cloud/1/dt45u81y65w6zsnvtlgdzdqqiifg3zjfsf8angmrgud3u0gp/tinymce/8/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#tiny',
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                'preview', 'anchor', 'searchreplace', 'fullscreen', 'visualblocks',
+                'insertdatetime', 'media', 'table', 'emoticons', 'wordcount'
+            ],
+            toolbar:
+                'undo redo | styles | bold italic underline | ' +
+                'alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | ' +
+                'link image media | code fullscreen preview | forecolor backcolor | ' +
+                'charmap emoticons | removeformat preview',
+            menubar: 'file edit view insert format tools help'
+        });
 
 // Set initial content from database
-// quill.root.innerHTML = `<?= $row['details'] ?>`;
+// quill.root.innerHTML = `<= $row['details'] ?>`;
 
 // Form submission handler
 // document.querySelector('form').addEventListener('submit', function(e) {
