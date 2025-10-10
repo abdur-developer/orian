@@ -122,6 +122,20 @@
                                    value="<?= htmlspecialchars($row['review']) ?>">
                             <label for="review"><i class="fas fa-users me-1 text-muted"></i>Review</label>
                         </div>
+                        
+                        <!-- colors -->
+                        <div class="form-floating mb-4">
+                            <input type="text" name="colors" class="form-control" id="colors" 
+                                   value="<?= htmlspecialchars($row['colors']) ?>">
+                            <label for="colors"><i class="fas fa-palette me-1 text-muted"></i>Colors (separate with commas)</label>
+                        </div>
+                        
+                        <!-- sizes -->
+                        <div class="form-floating mb-4">
+                            <input type="text" name="sizes" class="form-control" id="sizes" 
+                                   value="<?= htmlspecialchars($row['sizes']) ?>">
+                            <label for="sizes"><i class="fas fa-ruler me-1 text-muted"></i>Sizes (separate with commas)</label>
+                        </div>
                     </div>
                     
                     <!-- Right Column -->

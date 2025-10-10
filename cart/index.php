@@ -261,104 +261,192 @@
                 foreach ($cart as $item) {
                     $type = $item['type'];
                     $ref_id = $item['ref_id'];
-                    $course = $conn->query("SELECT * FROM $type WHERE id = $ref_id")->fetch_assoc();
-                    ?>
+                    $type_row = $conn->query("SELECT * FROM $type WHERE id = $ref_id")->fetch_assoc();
+                ?>
                     <div class="course-item">
-
-                        <img class="course-img" src="../admin/upload/<?=htmlspecialchars($course['img'])?>" alt="">
+                        <img class="course-img" src="../admin/upload/<?=htmlspecialchars($type_row['img'])?>" alt="">
                         <div class="course-info">
-                            <div class="course-title"><?=htmlspecialchars($course['title'] ?? $course['name'])?></div>
+                            <div class="course-title"><?=htmlspecialchars($type_row['title'] ?? $type_row['name'])?></div>
                             <div class="course-instructor">
                                 <?php
                                     if ($type === 'product'): 
                                         $hasProduct = true;
-                                        echo htmlspecialchars($course['type']);
+                                        echo htmlspecialchars($type_row['type']);
                                     elseif ($type === 'consultant'): 
                                         $hasConsultant = true;
                                         echo "By Instructor";
                                     else: 
                                         $hasCourse = true;
-                                        echo "By" . htmlspecialchars($course['instructor']);
+                                        echo "By" . htmlspecialchars($type_row['instructor']);
                                     endif;
                                 ?>
                             </div>
                         </div>
                         <style>
-                            .quantity-control {
-                                display: flex;
-                                align-items: center;
-                                gap: 4px;
+                            @media screen and (max-width: 576px) {
+                                .variant-selector, .course-price{
+                                    width: 100%;
+                                    display: flex;
+                                    justify-content: space-between;
+                                }
                             }
-                            .qty-btn {
-                                padding: 4px 10px;
-                                border: 1px solid #ddd;
-                                border-radius: 4px;
+                            .variant-title {
                                 font-size: 14px;
-                                cursor: pointer;
-                                transition: all 0.2s ease;
-                                color: #555;
-                                font-weight: 900;
-                            }
-                            .qty-btn:hover {
-                                background: #eee;
-                                border-color: #ccc;
-                            }
-                            .qty-input {
-                                width: 40px;
-                                text-align: center;
-                                border: 1px solid #ddd;
-                                border-radius: 4px;
-                                font-size: 14px;
-                                padding: 4px 0;
-                                -moz-appearance: textfield;
-                            }
-                            .qty-input::-webkit-outer-spin-button,
-                            .qty-input::-webkit-inner-spin-button {
-                                -webkit-appearance: none;
-                                margin: 0;
-                            }
-                            .item-price {
-                                display: inline-block;
-                                margin-top: 10px;
-                                font-weight: bold;
+                                font-weight: 600;
+                                margin-bottom: 8px;
                                 color: #333;
                             }
-                            .remove-btn {
+                            .variant-options {
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 8px;
+                            }
+                            .variant-option {
+                                position: relative;
+                            }
+                            .variant-input {
+                                position: absolute;
+                                opacity: 0;
+                            }
+                            .variant-label {
                                 display: inline-block;
-                                text-decoration: none;
-                                margin-left: 40px;
-                                color: red;
-                                font-size: 14px;
-                                transition: color 0.2s ease;
+                                padding: 2px 4px;
+                                border: 2px solid #ddd;
+                                border-radius: 6px;
+                                font-size: 12px;
+                                font-weight: 500;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                background: #fff;
                             }
-                            .remove-btn:hover {
-                                color: #e74c3c;
+                            .color-label {
+                                text-align: center;
                             }
-                            .qty-btn:first-child {
-                                background:rgb(255, 124, 124);
+                            .size-label {
+                                text-align: center;
                             }
-                            .qty-btn:last-child {
-                                background:rgb(124, 255, 124);
+                            .variant-input:checked + .variant-label {
+                                border-color: #007bff;
+                                background-color: #007bff;
+                                color: white;
                             }
-                            
+                            .variant-input:checked + .color-label {
+                                border-color: #333;
+                            }
+                            .variant-input:checked + .size-label {
+                                border-color: #007bff;
+                            }
+                            .variant-label:hover {
+                                border-color: #999;
+                            }
                         </style>
+                        <?php
+                        if($type_row['type'] == 2){ // only for Clothing 
+                            $colorsArray = explode(",", $type_row['colors']);
+                            $sizesArray = explode(",", $type_row['sizes']);
+                        ?>
+                            <!-- Cloth Color -->
+                            <div class="variant-selector">
+                                <div class="variant-title">Color:</div>
+                                <div class="variant-options">
+                                    <?php foreach($colorsArray as $index => $color): ?>
+                                        <div class="variant-option" data-column="p_color" data-item-id="<?=$item['id']?>">
+                                            <input type="radio" id="color_<?=$color.$item['id']?>" name="color" value="<?=$index?>" class="variant-input" <?= $index == 0 ? "checked": ""?>>
+                                            <label for="color_<?=$color.$item['id']?>" class="variant-label color-label"><?=$color?></label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                            <!-- Cloth Size -->
+                            <div class="variant-selector">
+                                <div class="variant-title">Size:</div>
+                                <div class="variant-options">
+                                    <?php foreach($sizesArray as $index => $size): ?>
+                                        <div class="variant-option"  data-column="p_size" data-item-id="<?=$item['id']?>">
+                                            <input type="radio" id="size_<?=$size.$item['id']?>" name="size" value="<?=$index?>" class="variant-input" <?= $index == 0 ? "checked": ""?>>
+                                            <label for="size_<?=$size.$item['id']?>" class="variant-label size-label"><?=$size?></label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                            
+                        <?php } ?>
 
                         <div class="course-price">
                             <?php if ($type == 'product'): ?>
+                                <style>
+                                    .quantity-control {
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 4px;
+                                    }
+                                    .qty-btn {
+                                        padding: 4px 10px;
+                                        border: 1px solid #ddd;
+                                        border-radius: 4px;
+                                        font-size: 14px;
+                                        cursor: pointer;
+                                        transition: all 0.2s ease;
+                                        color: #555;
+                                        font-weight: 900;
+                                    }
+                                    .qty-btn:hover {
+                                        background: #eee;
+                                        border-color: #ccc;
+                                    }
+                                    .qty-input {
+                                        width: 40px;
+                                        text-align: center;
+                                        border: 1px solid #ddd;
+                                        border-radius: 4px;
+                                        font-size: 14px;
+                                        padding: 4px 0;
+                                        -moz-appearance: textfield;
+                                    }
+                                    .qty-input::-webkit-outer-spin-button,
+                                    .qty-input::-webkit-inner-spin-button {
+                                        -webkit-appearance: none;
+                                        margin: 0;
+                                    }
+                                    .item-price {
+                                        display: inline-block;
+                                        margin-top: 10px;
+                                        font-weight: bold;
+                                        color: #333;
+                                    }
+                                    .remove-btn {
+                                        display: inline-block;
+                                        text-decoration: none;
+                                        margin-left: 40px;
+                                        color: red;
+                                        font-size: 14px;
+                                        transition: color 0.2s ease;
+                                    }
+                                    .remove-btn:hover {
+                                        color: #e74c3c;
+                                    }
+                                    .qty-btn:first-child {
+                                        background:rgb(255, 124, 124);
+                                    }
+                                    .qty-btn:last-child {
+                                        background:rgb(124, 255, 124);
+                                    }
+                                </style>
                                 <div class="quantity-control">
-                                    <button type="button" class="qty-btn" onclick="updateQuantity('qty_<?=$item['id']?>', -1, '<?=htmlspecialchars($course['price'])?>', this)">-</button>
+                                    <button type="button" class="qty-btn" onclick="updateQuantity('qty_<?=$item['id']?>', -1, '<?=htmlspecialchars($type_row['price'])?>', this)">-</button>
                                     <input type="number" id="qty_<?=$item['id']?>"  data-item-id="<?=$item['id']?>" value="<?=htmlspecialchars($item['quantity'] ?? 1)?>" min="1" class="qty-input" readonly />
-                                    <button type="button" class="qty-btn" onclick="updateQuantity('qty_<?=$item['id']?>', 1, '<?=htmlspecialchars($course['price'])?>', this)">+</button>
+                                    <button type="button" class="qty-btn" onclick="updateQuantity('qty_<?=$item['id']?>', 1, '<?=htmlspecialchars($type_row['price'])?>', this)">+</button>
                                 </div>
                             <?php endif; ?>
                             <span class="item-price">
-                                ৳<span class="price-text"><?=htmlspecialchars($course['price'] * ($item['quantity'] ?? 1))?></span>
+                                ৳<span class="price-text"><?=htmlspecialchars($type_row['price'] * ($item['quantity'] ?? 1))?></span>
                             </span>
                             <a href="?remove=<?=encryptSt($item['id'])?>" class="remove-btn" title="Remove">✖</a>
                         </div>
                     </div>
                     <?php
-                } ?>
+                }
+                ?>
                 </div>
                 <form action="checkout_hosted.php" method="POST" class="card summary">
                     <h2>Checkout Summary</h2>
@@ -430,6 +518,8 @@
                             $result = $conn->query($sql);
                             $str = $result->fetch_assoc();
                         ?>
+                        
+                        <!-- Delivery address option -->
                         <div class="address-selector">
                             <div class="address-option">
                                 <input type="radio" id="inside" name="address_type" value="inside" amount="<?=htmlspecialchars($str['inside'])?>">
@@ -466,7 +556,7 @@
                         </label>
                         <br>
                         <label for="ssl" style="font-size: 14px; color: var(--text-light);">
-                            <input type="radio" name="cod" id="ssl">
+                            <input type="radio" name="cod" id="ssl" disabled>
                             Online payment (SSLCommerz)
                         </label>
                     <?php endif; ?>
@@ -541,6 +631,38 @@
             <?php }
         ?>
         <script src="script.js"></script>
+        <!-- Script to handle variant selection -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('.variant-option').forEach(item => {
+                    let column = item.getAttribute('data-column');
+                    let itemId = item.getAttribute('data-item-id');
+                    let input = item.querySelector('input');
+
+                    item.addEventListener('click', () => {
+                        item.disabled = true;
+                        let value = input.value;
+                        fetch('update_column.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ table: 'cart', column: column, value: value, item_id: itemId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log('Update successful:');
+                            } else {
+                                console.error('Update failed:');
+                                alert('Failed to update. Please try again.');
+                            }
+                            item.disabled = false;
+                        });
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
-<!-- customer_name=John+Doe&customer_mobile=01711xxxxxx&customer_email=you%40example.com&amount=1200 -->
+

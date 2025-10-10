@@ -23,7 +23,7 @@ if($type == 'course'){
     }
 }
 
-$sql = "INSERT INTO cart (user_id, type, price, ref_id) VALUES ('$user_id', '$type', '$price', '$id')";
+$sql = "INSERT INTO cart (user_id, type, price, ref_id, p_color, p_size) VALUES ('$user_id', '$type', '$price', '$id', '0', '0')";
 
 if($user_id && mysqli_query($conn, $sql)) {
     header("Location: index.php?success=".urldecode("Successfully added to cart!"));

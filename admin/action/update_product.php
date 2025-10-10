@@ -18,6 +18,8 @@ $is_feature = intval($_POST['is_feature']);
 $description = $_POST['description']; // Quill HTML input
 $review = $_POST['review'];
 $status = $_POST['status'];
+$colors = $_POST['colors'] ?? '';
+$sizes = $_POST['sizes'] ?? '';
 $remove_img = isset($_POST['remove_img']);
 $remove_img_2 = isset($_POST['remove_img_2']);
 $remove_img_3 = isset($_POST['remove_img_3']);
@@ -99,14 +101,14 @@ try {
     // Update or Insert
     if (!empty($id)) {
         $sql = "UPDATE product SET 
-                    name = ?, type = ?, price = ?, old_price = ?, rating_count = ?,
+                    name = ?, type = ?, price = ?, old_price = ?, rating_count = ?, colors = ?, sizes = ?,
                     description = ?, img = ?, img_2 = ?, img_3 = ?, review = ?, status = ?, is_feature = ?
                 WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "ssiiissssssii",
-            $name, $type, $price, $old_price ,$rating_count, $description,
+            "ssiiissssssssii",
+            $name, $type, $price, $old_price ,$rating_count, $colors, $sizes, $description,
             $img_name, $img_name_2, $img_name_3, $review, $status, $is_feature, $id
         );
         
@@ -119,13 +121,13 @@ try {
         }
     } else {
         $sql = "INSERT INTO product 
-                    (name ,type ,price ,old_price ,rating_count ,img, img_2, img_3, description ,review ,status, is_feature) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    (name ,type ,price ,old_price ,rating_count ,colors, sizes, img, img_2, img_3, description ,review ,status, is_feature) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "ssiiissssssi",
-            $name, $type, $price, $old_price, $rating_count, $img_name, $img_name_2, $img_name_3, $description, $review, $status, $is_feature
+            "ssiiissssssssi",
+            $name, $type, $price, $old_price, $rating_count, $colors, $sizes, $img_name, $img_name_2, $img_name_3, $description, $review, $status, $is_feature
         );
         if ($stmt->execute()) {
             $new_id = $conn->insert_id;

@@ -39,7 +39,9 @@ if ($order) {
 
     // Get products for this order
     $stmt = $conn->prepare("
-        SELECT p.*, co.quantity, co.item_price, co.total_pay, co.status as item_status
+        SELECT p.*, co.quantity, 
+        co.p_color, co.p_size, p.colors , p.sizes, 
+        co.item_price, co.total_pay, co.status as item_status
         FROM confirm_orders co
         JOIN product p ON co.product_id = p.id
         WHERE co.id = ? AND co.type = 'product'
@@ -316,7 +318,9 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th width="45%">Product</th>
+                                    <th width="35%">Product</th>
+                                    <th class="text-end">Color</th>
+                                    <th class="text-end">Size</th>
                                     <th class="text-end">Price</th>
                                     <th class="text-center">Quantity</th>
                                     <th class="text-end">Total Paid</th>
@@ -336,6 +340,18 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                                 <?php endif; ?>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td class="text-end align-middle">
+                                        <?php
+                                            $colorsArray = explode(",", $products['colors']);
+                                            echo htmlspecialchars($colorsArray[$products['p_color']] ?? 'N/A');
+                                        ?>
+                                    </td>
+                                    <td class="text-end align-middle">
+                                        <?php
+                                            $sizesArray = explode(",", $products['sizes']);
+                                            echo htmlspecialchars($sizesArray[$products['p_size']] ?? 'N/A');
+                                        ?>
                                     </td>
                                     <td class="text-end align-middle"><?= $order['currency']." ".number_format($products['item_price'], 2) ?></td>
                                     <td class="text-center align-middle"><?= $products['quantity'] ?></td>

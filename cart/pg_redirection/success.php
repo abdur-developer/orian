@@ -177,9 +177,9 @@ ini_set('display_errors', 0);
                             // Final insert query
                             $sql = "
                                 INSERT INTO confirm_orders 
-                                    (user_id, product_id, order_id, item_price, total_pay, quantity, type, validity)
+                                    (user_id, product_id, order_id, item_price, total_pay, quantity, type, validity, p_color, p_size)
                                 VALUES 
-                                    ('{$order_row['user_id']}', '{$product_id}', '{$order_row['id']}', '{$cart_row['price']}', '{$amount}', '{$quantity}', '{$cart_row['type']}', $validityExpr)
+                                    ('{$order_row['user_id']}', '{$product_id}', '{$order_row['id']}', '{$cart_row['price']}', '{$amount}', '{$quantity}', '{$cart_row['type']}', $validityExpr, '{$cart_row['p_color']}', '{$cart_row['p_size']}')
                             ";
 
                             $conn->query($sql);
