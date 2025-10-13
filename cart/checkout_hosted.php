@@ -13,7 +13,10 @@ use SslCommerz\SslCommerzNotification;
 // getting cart data from database
 $cod = isset($_REQUEST['cod']) ? $_REQUEST['cod'] : '';
 $coupon_code = isset($_REQUEST['coupon_code']) ? $_REQUEST['coupon_code'] : '';
+
 $address = isset($_REQUEST['address']) ? $_REQUEST['address'] : '';
+$address .= isset($_REQUEST['district']) ? " , ".$_REQUEST['district'] : '';
+
 $address_type = isset($_REQUEST['address_type']) ? $_REQUEST['address_type'] : '';
 
 $user_id = $conn->real_escape_string(isset($_COOKIE['user_id']) ? decryptSt($_COOKIE['user_id']) : '');

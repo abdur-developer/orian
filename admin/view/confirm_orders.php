@@ -5,8 +5,9 @@ $con_order_id = isset($_GET['id']) ? intval(decryptSt($_GET['id'])) : 0;
 // Handle status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
     $new_status = $_POST['status'];
-    $stmt = $conn->prepare("UPDATE confirm_orders SET status = ?, updated_at = NOW() WHERE id = ?");
-    $stmt->bind_param("si", $new_status, $con_order_id);
+    $status_id = $_POST['status_id'];
+    $stmt = $conn->prepare("UPDATE orders SET co_status = ? WHERE id = ?");
+    $stmt->bind_param("si", $new_status, $status_id);
     $stmt->execute();
     $stmt->close();
     header("Location: ?e=confirm_orders&id=".encryptSt($con_order_id)."&success=Status+updated");
@@ -24,8 +25,9 @@ $stmt->bind_param("i", $con_order_id);
 $stmt->execute();
 $order = $stmt->get_result()->fetch_assoc();
 // echo $con_order_id;
+// echo "<pre>";
 // var_dump($order);
-// exit();
+// echo "</pre>";
 $stmt->close();
 
 if ($order) {
@@ -37,21 +39,22 @@ if ($order) {
         ];
     }
 
-    // Get products for this order
     $stmt = $conn->prepare("
-        SELECT p.*, co.quantity, 
-        co.p_color, co.p_size, p.colors , p.sizes, 
-        co.item_price, co.total_pay, co.status as item_status
-        FROM confirm_orders co
-        JOIN product p ON co.product_id = p.id
-        WHERE co.id = ? AND co.type = 'product'
+        SELECT 
+            confirm_orders.*, product.name, 
+            product.colors, product.img, product.sizes
+        FROM confirm_orders
+        INNER JOIN product ON product.id = confirm_orders.product_id
+        WHERE confirm_orders.order_id = ?
     ");
-    $stmt->bind_param("i", $con_order_id);
+    $stmt->bind_param("i", $order['id']);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $products = $result->fetch_assoc();
-
+    $products = [];
+    while ($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
     $stmt->close();
 }
 
@@ -288,12 +291,13 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                             <div class="row g-2 align-items-center">
                                 <div class="col-md-5">
                                     <select name="status" class="form-select border-primary">
-                                        <option value="Order Confirm" <?= $products['item_status']=='Order Confirm'?'selected':'' ?>>Processing</option>
-                                        <option value="ready" <?= $products['item_status']=='ready'?'selected':'' ?>>Ready for Shipping</option>
-                                        <option value="delivery" <?= $products['item_status']=='delivery'?'selected':'' ?>>On Delivery</option>
-                                        <option value="delivered" <?= $products['item_status']=='delivered'?'selected':'' ?>>Delivered</option>
-                                        <option value="cancelled" <?= $products['item_status']=='cancelled'?'selected':'' ?>>Cancelled</option>
+                                        <option value="Order Confirm" <?= $order['co_status']=='Order Confirm'?'selected':'' ?>>Processing</option>
+                                        <option value="ready" <?= $order['co_status']=='ready'?'selected':'' ?>>Ready for Shipping</option>
+                                        <option value="delivery" <?= $order['co_status']=='delivery'?'selected':'' ?>>On Delivery</option>
+                                        <option value="delivered" <?= $order['co_status']=='delivered'?'selected':'' ?>>Delivered</option>
+                                        <option value="cancelled" <?= $order['co_status']=='cancelled'?'selected':'' ?>>Cancelled</option>
                                     </select>
+                                    <input type="hidden" name="status_id" value="<?= $order['id'] ?>">
                                 </div>
                                 <div class="col-md-4">
                                     <button type="submit" name="update_status" class="btn btn-primary w-100">
@@ -323,56 +327,55 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                     <th class="text-end">Size</th>
                                     <th class="text-end">Price</th>
                                     <th class="text-center">Quantity</th>
-                                    <th class="text-end">Total Paid</th>
-                                    <th class="text-center">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="upload/<?= htmlspecialchars($products['img']) ?>" class="product-img me-3">
-                                            <div>
-                                                <h6 class="mb-1"><?= htmlspecialchars($products['name']) ?></h6>
-                                                <small class="text-muted d-block"><?= htmlspecialchars($products['type']) ?></small>
-                                                <?php if ($products['item_status'] == 'cancelled'): ?>
-                                                    <small class="text-danger"><i class="fas fa-times-circle me-1"></i> Cancelled</small>
-                                                <?php endif; ?>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-end align-middle">
-                                        <?php
-                                            $colorsArray = explode(",", $products['colors']);
-                                            echo htmlspecialchars($colorsArray[$products['p_color']] ?? 'N/A');
+                                <?php
+                                    $total_pay = 0;
+                                    foreach ($products as $row_product){
+                                        $total_pay = number_format($row_product['total_pay'], 2);
                                         ?>
-                                    </td>
-                                    <td class="text-end align-middle">
-                                        <?php
-                                            $sizesArray = explode(",", $products['sizes']);
-                                            echo htmlspecialchars($sizesArray[$products['p_size']] ?? 'N/A');
-                                        ?>
-                                    </td>
-                                    <td class="text-end align-middle"><?= $order['currency']." ".number_format($products['item_price'], 2) ?></td>
-                                    <td class="text-center align-middle"><?= $products['quantity'] ?></td>
-                                    <td class="text-end align-middle"><?= $order['currency']." ".number_format($products['total_pay'], 2) ?></td>
-                                    <td class="text-center align-middle">
-                                        <span class="badge bg-<?= getItemStatusColor($products['item_status']) ?>">
-                                            <?= ucfirst($products['item_status']) ?>
-                                        </span>
-                                    </td>
-                                </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="upload/<?= htmlspecialchars($row_product['img']) ?>" class="product-img me-3">
+                                                    <div>
+                                                        <h6 class="mb-1"><?= htmlspecialchars($row_product['name']) ?></h6>
+                                                        <small class="text-muted d-block"><?= htmlspecialchars($row_product['type']) ?></small>
+                                                        <?php if ($order['co_status'] == 'cancelled'): ?>
+                                                            <small class="text-danger"><i class="fas fa-times-circle me-1"></i> Cancelled</small>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-end align-middle">
+                                                <?php
+                                                    $colorsArray = explode(",", $row_product['colors']);
+                                                    echo htmlspecialchars($colorsArray[$row_product['p_color']] ?? 'N/A');
+                                                ?>
+                                            </td>
+                                            <td class="text-end align-middle">
+                                                <?php
+                                                    $sizesArray = explode(",", $row_product['sizes']);
+                                                    echo htmlspecialchars($sizesArray[$row_product['p_size']] ?? 'N/A');
+                                                ?>
+                                            </td>
+                                            <td class="text-end align-middle"><?= $order['currency']." ".number_format($row_product['item_price'], 2) ?></td>
+                                            <td class="text-center align-middle"><?= $row_product['quantity'] ?></td>
+                                        </tr>
+                                    <?php }
+                                ?>
                             </tbody>
                             <tfoot>
-                                <!-- <tr class="total-row">
+                                <tr class="total-row">
                                     <th colspan="3" class="text-end">Subtotal</th>
-                                    <td class="text-end"><?= $order['currency']." ".number_format($products['total_pay'], 2) ?></td>
+                                    <td class="text-end"><?= $order['currency']." ".$total_pay ?></td>
                                     <td></td>
-                                </tr> -->
+                                </tr>
                                 <?php if ($order['coupon']): ?>
                                 <tr>
                                     <th colspan="3" class="text-end">Discount (<?= htmlspecialchars($order['coupon']) ?>)</th>
-                                    <td class="text-end text-danger">-<?= $order['currency']." ".number_format($products['total_pay'] - $order['amount'], 2) ?></td>
+                                    <td class="text-end text-danger">-<?= $order['currency']." ".number_format($total_pay - $order['amount'], 2) ?></td>
                                     <td></td>
                                 </tr>
                                 <?php endif; ?>
@@ -427,7 +430,7 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                     <div class="col-md-6 mb-3">
                                         <h6 class="small text-muted mb-1">Payment Method</h6>
                                         <p class="mb-0">
-                                            <?php if ($products['total_pay'] != 0): ?>
+                                            <?php if ($total_pay != 0): ?>
                                                 <span class="badge bg-success bg-opacity-10 text-success">
                                                     <i class="fas fa-check-circle me-1"></i> Paid Online
                                                 </span>

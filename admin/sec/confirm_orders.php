@@ -1,24 +1,40 @@
 <?php
     // Search functionality
     $search = isset($_REQUEST['search']) ? trim($_REQUEST['search']) : '';
-    
-    $where_cause = "WHERE confirm_orders.type = 'product' AND confirm_orders.status = ";
+
+    $where_cause = "WHERE co.type = 'product'";
     if(empty($search)){
-        $where_cause .= "'Order Confirm'";
+        $where_cause .= " AND o.co_status = 'Order Confirm'";
     }else{
         $search = $conn->real_escape_string($search);
-        $where_cause .= "'$search'";
+        $where_cause .= " AND o.co_status = '$search'";
     }
-    // Fetch data
-    $sql = "SELECT confirm_orders.id, confirm_orders.status, users.name AS user_name, product.name AS product_name, orders.phone AS order_phone
-        FROM confirm_orders 
-        JOIN users ON confirm_orders.user_id = users.id 
-        JOIN product ON confirm_orders.product_id = product.id 
-        JOIN orders ON confirm_orders.order_id = orders.id 
-        $where_cause 
-        ORDER BY confirm_orders.id DESC LIMIT 100";
+
+    // Fetch unique order_id data (latest per order)
+    $sql = "
+        SELECT 
+            co.order_id,
+            co.id,
+            o.co_status as status,
+            u.name AS user_name,
+            o.phone AS order_phone
+        FROM confirm_orders co
+        JOIN users u ON co.user_id = u.id
+        JOIN orders o ON co.order_id = o.id
+        INNER JOIN (
+            SELECT order_id, MAX(id) AS max_id
+            FROM confirm_orders
+            WHERE type = 'product'
+            GROUP BY order_id
+        ) latest ON co.id = latest.max_id
+        $where_cause
+        ORDER BY co.id DESC
+        LIMIT 100
+    ";
+
     $result = $conn->query($sql);
 ?>
+
 <div class="container">
     <div class="card shadow-lg">
         <div class="card-header text-white">
@@ -58,11 +74,10 @@
                     <table class="table table-hover user-table">
                         <thead>
                             <tr>
-                                <th width="25%">Name</th>
-                                <th width="20%">Phone</th>
-                                <th width="25%">Product</th>
-                                <th width="20%">Status</th>
-                                <th width="10%" class="text-center">Actions</th>
+                                <th width="35%">Name</th>
+                                <th width="25%">Phone</th>
+                                <th width="25%">Status</th>
+                                <th width="15%" class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,7 +92,6 @@
                                     </div>
                                 </td>
                                 <td><?= htmlspecialchars($row["order_phone"]) ?></td>
-                                <td><?= htmlspecialchars(chotoKro($row["product_name"])) ?></td>
                                 <td>
                                     <span class="status-badge status-inactive">
                                         <i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i>

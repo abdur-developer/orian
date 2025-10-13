@@ -350,9 +350,9 @@
                                 <div class="variant-title">Color:</div>
                                 <div class="variant-options">
                                     <?php foreach($colorsArray as $index => $color): ?>
-                                        <div class="variant-option" data-column="p_color" data-item-id="<?=$item['id']?>">
-                                            <input type="radio" id="color_<?=$color.$item['id']?>" name="color" value="<?=$index?>" class="variant-input" <?= $index == 0 ? "checked": ""?>>
-                                            <label for="color_<?=$color.$item['id']?>" class="variant-label color-label"><?=$color?></label>
+                                        <div class="variant-option" data-column="p_color" data-item-id="<?=$type_row['id']?>">
+                                            <input type="radio" id="color_<?=$color.$type_row['id']?>" name="color_<?=$type_row['id']?>" value="<?=$index?>" class="variant-input" <?= $index == 0 ? "checked": ""?>>
+                                            <label for="color_<?=$color.$type_row['id']?>" class="variant-label color-label"><?=$color?></label>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -362,9 +362,9 @@
                                 <div class="variant-title">Size:</div>
                                 <div class="variant-options">
                                     <?php foreach($sizesArray as $index => $size): ?>
-                                        <div class="variant-option"  data-column="p_size" data-item-id="<?=$item['id']?>">
-                                            <input type="radio" id="size_<?=$size.$item['id']?>" name="size" value="<?=$index?>" class="variant-input" <?= $index == 0 ? "checked": ""?>>
-                                            <label for="size_<?=$size.$item['id']?>" class="variant-label size-label"><?=$size?></label>
+                                        <div class="variant-option"  data-column="p_size" data-item-id="<?=$type_row['id']?>">
+                                            <input type="radio" id="size_<?=$size.$type_row['id']?>" name="size_<?=$type_row['id']?>" value="<?=$index?>" class="variant-input" <?= $index == 0 ? "checked": ""?>>
+                                            <label for="size_<?=$size.$type_row['id']?>" class="variant-label size-label"><?=$size?></label>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -512,6 +512,18 @@
                             .address-option:hover label {
                                 border-color: #c0c0c0;
                             }
+                            .form-control{
+                                width: 100%;
+                                padding: 10px;
+                                border: 1px solid #ccc;
+                                border-radius: 5px;
+                                background-color: #f8f8f8;
+                                font-size: 16px;
+                                color: #333;
+                                appearance: none; /* Removes default browser styling */
+                                -webkit-appearance: none; /* For WebKit browsers */
+                                -moz-appearance: none; /* For Firefox */
+                            }
                         </style>
                         <?php
                             $sql = "SELECT * FROM system_structure WHERE id = 1";
@@ -529,6 +541,76 @@
                                 <input type="radio" id="outside" name="address_type" value="outside" amount="<?=htmlspecialchars($str['outside'])?>" checked>
                                 <label for="outside">Outside <?=$str['center']. ' - <span>' . htmlspecialchars($str['outside']) . ' tk</span>'?></label>
                             </div>
+                        </div>
+                        
+                        <div class="coupon-form">
+                            <select name="district" class="form-control" required>
+                                <option value="" selected disabled>Select your District</option>
+                                <option value="Bagerhat">Bagerhat</option>
+                                <option value="Bandarban">Bandarban</option>
+                                <option value="Barguna">Barguna</option>
+                                <option value="Barisal">Barisal</option>
+                                <option value="Bhola">Bhola</option>
+                                <option value="Bogra">Bogra</option>
+                                <option value="Brahmanbaria">Brahmanbaria</option>
+                                <option value="Chandpur">Chandpur</option>
+                                <option value="Chittagong">Chittagong</option>
+                                <option value="Chuadanga">Chuadanga</option>
+                                <option value="Comilla">Comilla</option>
+                                <option value="Cox'sBazar">Cox'sBazar</option>
+                                <option value="Dhaka">Dhaka</option>
+                                <option value="Dinajpur">Dinajpur</option>
+                                <option value="Faridpur">Faridpur</option>
+                                <option value="Feni">Feni</option>
+                                <option value="Gaibandha">Gaibandha</option>
+                                <option value="Gazipur">Gazipur</option>
+                                <option value="Gopalganj">Gopalganj</option>
+                                <option value="Habiganj">Habiganj</option>
+                                <option value="Jaipurhat">Jaipurhat</option>
+                                <option value="Jamalpur">Jamalpur</option>
+                                <option value="Jessore">Jessore</option>
+                                <option value="Jhalokati">Jhalokati</option>
+                                <option value="Jhenaidah">Jhenaidah</option>
+                                <option value="Khagrachari">Khagrachari</option>
+                                <option value="Khulna">Khulna</option>
+                                <option value="Kishoreganj">Kishoreganj</option>
+                                <option value="Kurigram">Kurigram</option>
+                                <option value="Kushtia">Kushtia</option>
+                                <option value="Lakshmipur">Lakshmipur</option>
+                                <option value="Lalmonirhat">Lalmonirhat</option>
+                                <option value="Madaripur">Madaripur</option>
+                                <option value="Magura">Magura</option>
+                                <option value="Manikganj">Manikganj</option>
+                                <option value="Maulvibazar">Maulvibazar</option>
+                                <option value="Meherpur">Meherpur</option>
+                                <option value="Munshiganj">Munshiganj</option>
+                                <option value="Mymensingh">Mymensingh</option>
+                                <option value="Naogaon">Naogaon</option>
+                                <option value="Narail">Narail</option>
+                                <option value="Narayanganj">Narayanganj</option>
+                                <option value="Narsingdi">Narsingdi</option>
+                                <option value="Natore">Natore</option>
+                                <option value="Nawabganj">Nawabganj</option>
+                                <option value="Netrokona">Netrokona</option>
+                                <option value="Nilphamari">Nilphamari</option>
+                                <option value="Noakhali">Noakhali</option>
+                                <option value="Pabna">Pabna</option>
+                                <option value="Panchagarh">Panchagarh</option>
+                                <option value="Patuakhali">Patuakhali</option>
+                                <option value="Pirojpur">Pirojpur</option>
+                                <option value="Rajbari">Rajbari</option>
+                                <option value="Rajshahi">Rajshahi</option>
+                                <option value="Rangamati">Rangamati</option>
+                                <option value="Rangpur">Rangpur</option>
+                                <option value="Satkhira">Satkhira</option>
+                                <option value="Shariatpur">Shariatpur</option>
+                                <option value="Sherpur">Sherpur</option>
+                                <option value="Sirajganj">Sirajganj</option>
+                                <option value="Sunamganj">Sunamganj</option>
+                                <option value="Sylhet">Sylhet</option>
+                                <option value="Tangail">Tangail</option>
+                                <option value="Thakurgaon">Thakurgaon</option>
+                            </select>
                         </div>
                         <div class="coupon-form">
                             <textarea class="coupon-input" name="address" placeholder="Enter Address" autocomplete="off" required rows="2" maxlength="200" style="resize:vertical; min-height:40px; max-height:60px; line-height:1.4;"></textarea>
