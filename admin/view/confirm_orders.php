@@ -367,11 +367,11 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                                 ?>
                             </tbody>
                             <tfoot>
-                                <tr class="total-row">
+                                <!-- <tr class="total-row">
                                     <th colspan="3" class="text-end">Subtotal</th>
-                                    <td class="text-end"><?= $order['currency']." ".$total_pay ?></td>
+                                    <td class="text-end"><= $order['currency']." ".$total_pay ?></td>
                                     <td></td>
-                                </tr>
+                                </tr> -->
                                 <?php if ($order['coupon']): ?>
                                 <tr>
                                     <th colspan="3" class="text-end">Discount (<?= htmlspecialchars($order['coupon']) ?>)</th>
