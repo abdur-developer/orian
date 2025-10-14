@@ -293,7 +293,7 @@ ini_set('display_errors', 0);
                 clearInterval(countdown);
                 countdownEl.textContent = "Time's up!";
             }else if (seconds == 1) {
-                window.location.replace('../../home.php', '_self'); // Replace with your redirect URL
+                window.location.replace('../../home.php?page=orders', '_self'); // Replace with your redirect URL
             }
         }, 1000);
   </script>

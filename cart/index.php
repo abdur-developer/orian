@@ -10,6 +10,7 @@
         $stmt->bind_param("i", $item_id);
         $stmt->execute();
     }
+    $d_discount = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -341,7 +342,7 @@
                             }
                         </style>
                         <?php
-                        if($type_row['type'] == 2){ // only for Clothing 
+                        if($type == 'product' && $type_row['type'] == 2){ // only for Clothing 
                             $colorsArray = explode(",", $type_row['colors']);
                             $sizesArray = explode(",", $type_row['sizes']);
                         ?>
@@ -373,7 +374,9 @@
                         <?php } ?>
 
                         <div class="course-price">
-                            <?php if ($type == 'product'): ?>
+                            <?php if ($type == 'product'): 
+                                if($d_discount < $type_row['d_discount']) $d_discount = $type_row['d_discount'];
+                                ?>
                                 <style>
                                     .quantity-control {
                                         display: flex;
@@ -454,6 +457,14 @@
                         <span>Subtotal</span>
                         <span id="subtotal">৳0.00</span>
                     </div>
+                    <style>
+                        input[name="delivery_amount"]{
+                            width: 70px;
+                            padding: 0;
+                            margin: 0;
+                            text-align: center;
+                        }
+                    </style>
                     <div class="summary-item" id="discount-row" style="display:none;">
                         <span>Discount <span class="discount-badge" id="discount-code"></span></span>
                         <span style="color: #f72585;" id="discount-amount"></span>
@@ -530,21 +541,19 @@
                             $result = $conn->query($sql);
                             $str = $result->fetch_assoc();
                         ?>
-                        
                         <!-- Delivery address option -->
                         <div class="address-selector">
                             <div class="address-option">
-                                <input type="radio" id="inside" name="address_type" value="inside" amount="<?=htmlspecialchars($str['inside'])?>">
-                                <label for="inside">Inside <?=$str['center']. ' - <span>' . htmlspecialchars($str['inside']) . ' tk</span>'?></label>
+                                <input type="radio" id="inside" name="ck_hub" amount="<?=htmlspecialchars($str['inside'] - $d_discount)?>" disabled>
+                                <label for="inside">Inside <?=$str['center']. ' - <span>' . htmlspecialchars($str['inside'] - $d_discount) . ' tk</span>'?></label>
                             </div>
                             <div class="address-option">
-                                <input type="radio" id="outside" name="address_type" value="outside" amount="<?=htmlspecialchars($str['outside'])?>" checked>
-                                <label for="outside">Outside <?=$str['center']. ' - <span>' . htmlspecialchars($str['outside']) . ' tk</span>'?></label>
+                                <input type="radio" id="outside" name="ck_hub" amount="<?=htmlspecialchars($str['outside'] - $d_discount)?>" disabled>
+                                <label for="outside">Outside <?=$str['center']. ' - <span>' . htmlspecialchars($str['outside'] - $d_discount) . ' tk</span>'?></label>
                             </div>
                         </div>
-                        
                         <div class="coupon-form">
-                            <select name="district" class="form-control" required>
+                            <select name="district" class="form-control" id="district_select" data-hub ="<?=$str['center']?>" required >
                                 <option value="" selected disabled>Select your District</option>
                                 <option value="Bagerhat">Bagerhat</option>
                                 <option value="Bandarban">Bandarban</option>
@@ -612,6 +621,8 @@
                                 <option value="Thakurgaon">Thakurgaon</option>
                             </select>
                         </div>
+                        
+                        
                         <div class="coupon-form">
                             <textarea class="coupon-input" name="address" placeholder="Enter Address" autocomplete="off" required rows="2" maxlength="200" style="resize:vertical; min-height:40px; max-height:60px; line-height:1.4;"></textarea>
                         </div>

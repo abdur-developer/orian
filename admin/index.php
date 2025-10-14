@@ -81,7 +81,7 @@
             ['h' => '?q=product', 'i' => 'box-open', 't' => 'Product'],
             ['h' => '?q=questions', 'i' => 'question-circle', 't' => 'Questions'],
             ['h' => '?q=slider', 'i' => 'image', 't' => 'Slider'],
-            //['h' => '?q=system_structure', 'i' => 'project-diagram', 't' => 'System Structure'],
+            // ['h' => '?q=system_structure', 'i' => 'project-diagram', 't' => 'Delivery'],
             ['h' => '?q=testimonials', 'i' => 'comment-dots', 't' => 'Testimonials']
           ],
           'System' => [

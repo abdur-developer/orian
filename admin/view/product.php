@@ -15,6 +15,10 @@
             'img' => null,
             'description' => null,
             'review' => null,
+            'colors' => null,
+            'is_feature' => null,
+            'd_discount' => 0,
+            'sizes' => null,
             'status' => null
         ];
     }
@@ -27,7 +31,7 @@
     <div class="card shadow-lg border-0">
         <div class="card-header bg-gradient-primary text-white">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Post Details</h4>
+                <h4 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Product Details</h4>
                 <a href="javascript:history.back()" class="btn btn-light btn-sm">
                     <i class="fas fa-arrow-left me-1"></i> Back
                 </a>
@@ -116,6 +120,10 @@
                             <label for="status"><i class="fas fa-calendar-alt me-1 text-muted"></i>Status</label>
                         </div>
                         
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div class="col-md-6">
                         <!-- review -->
                         <div class="form-floating mb-4">
                             <input type="text" name="review" class="form-control" id="review" 
@@ -136,10 +144,13 @@
                                    value="<?= htmlspecialchars($row['sizes']) ?>">
                             <label for="sizes"><i class="fas fa-ruler me-1 text-muted"></i>Sizes (separate with commas)</label>
                         </div>
-                    </div>
-                    
-                    <!-- Right Column -->
-                    <div class="col-md-6">
+                        
+                        <!-- d_discount -->
+                        <div class="form-floating mb-4">
+                            <input type="number" name="d_discount" class="form-control" id="d_discount" maxlength="3"
+                                   value="<?= htmlspecialchars($row['d_discount'] ?? 0) ?>">
+                            <label for="d_discount"><i class="fas fa-info-circle me-1 text-muted"></i>Delivery discount</label>
+                        </div>
                         <!-- Image Upload -->
                         <div class="mb-4">
                             <label class="form-label"><i class="fas fa-image me-1 text-muted"></i>Post Image 1</label>

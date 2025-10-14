@@ -17,7 +17,7 @@ $coupon_code = isset($_REQUEST['coupon_code']) ? $_REQUEST['coupon_code'] : '';
 $address = isset($_REQUEST['address']) ? $_REQUEST['address'] : '';
 $address .= isset($_REQUEST['district']) ? " , ".$_REQUEST['district'] : '';
 
-$address_type = isset($_REQUEST['address_type']) ? $_REQUEST['address_type'] : '';
+$discount_amount = $_REQUEST['delivery_amount'] ?? 0;
 
 $user_id = $conn->real_escape_string(isset($_COOKIE['user_id']) ? decryptSt($_COOKIE['user_id']) : '');
 
@@ -35,10 +35,8 @@ if ($result->num_rows > 0) {
         $total_amount += ($item['price'] * $row['quantity']);
         $product_category .= $row['type'] . ",";
     }
-    if(!empty($address_type)){
-        $shipping = mysqli_fetch_assoc(mysqli_query($conn, "SELECT $address_type FROM system_structure WHERE id = 1"));
-        $total_amount += $shipping[$address_type];
-    }
+    $total_amount += $discount_amount;
+    
     if(!empty($coupon_code)){
         $sql = "SELECT COUNT(id) AS total FROM orders WHERE user_id = '$user_id' AND coupon = '$coupon_code'";
         $result = mysqli_fetch_assoc(mysqli_query($conn, $sql));
@@ -57,7 +55,7 @@ if ($result->num_rows > 0) {
     exit;
 }
 
-
+// die($total_amount);
 # Organize the submitted/inputted data
 $post_data = array();
 

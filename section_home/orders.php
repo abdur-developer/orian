@@ -85,7 +85,7 @@
 
 <div class="container pb-5">
     <?php
-        $sql = "SELECT * FROM orders";
+        $sql = "SELECT * FROM orders ORDER BY id DESC";
         $query = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_assoc($query)){?>
         <!-- Order Card -->

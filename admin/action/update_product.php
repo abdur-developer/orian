@@ -18,6 +18,7 @@ $is_feature = intval($_POST['is_feature']);
 $description = $_POST['description']; // Quill HTML input
 $review = $_POST['review'];
 $status = $_POST['status'];
+$d_discount = $_POST['d_discount'];
 $colors = $_POST['colors'] ?? '';
 $sizes = $_POST['sizes'] ?? '';
 $remove_img = isset($_POST['remove_img']);
@@ -102,14 +103,14 @@ try {
     if (!empty($id)) {
         $sql = "UPDATE product SET 
                     name = ?, type = ?, price = ?, old_price = ?, rating_count = ?, colors = ?, sizes = ?,
-                    description = ?, img = ?, img_2 = ?, img_3 = ?, review = ?, status = ?, is_feature = ?
+                    description = ?, img = ?, img_2 = ?, img_3 = ?, review = ?, status = ?, is_feature = ?, d_discount = ?
                 WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "ssiiissssssssii",
+            "ssiiissssssssiii",
             $name, $type, $price, $old_price ,$rating_count, $colors, $sizes, $description,
-            $img_name, $img_name_2, $img_name_3, $review, $status, $is_feature, $id
+            $img_name, $img_name_2, $img_name_3, $review, $status, $is_feature, $d_discount, $id
         );
         
         if ($stmt->execute()) {
@@ -121,13 +122,13 @@ try {
         }
     } else {
         $sql = "INSERT INTO product 
-                    (name ,type ,price ,old_price ,rating_count ,colors, sizes, img, img_2, img_3, description ,review ,status, is_feature) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    (name ,type ,price ,old_price ,rating_count ,colors, sizes, img, img_2, img_3, description ,review ,status, is_feature, d_discount) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "ssiiissssssssi",
-            $name, $type, $price, $old_price, $rating_count, $colors, $sizes, $img_name, $img_name_2, $img_name_3, $description, $review, $status, $is_feature
+            "ssiiissssssssii",
+            $name, $type, $price, $old_price, $rating_count, $colors, $sizes, $img_name, $img_name_2, $img_name_3, $description, $review, $status, $is_feature, $d_discount
         );
         if ($stmt->execute()) {
             $new_id = $conn->insert_id;

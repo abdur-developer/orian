@@ -1,0 +1,3 @@
+ALTER TABLE `product` ADD `d_discount` INT(3) NOT NULL DEFAULT '0' COMMENT 'delivery discount' AFTER `old_price`;
+
+
