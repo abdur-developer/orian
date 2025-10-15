@@ -271,7 +271,7 @@
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $active = $index === 0 ? 'active' : '';
-                    $carouselItems .= "<div class='carousel-item $active' onclick=\"window.location.href='" . htmlspecialchars($row['link']) . "'\">
+                    $carouselItems .= "<div class='carousel-item $active' onclick=\"window.location.href='" . htmlspecialchars($row['link']) . "'\" data-bs-interval='3000'>
                         <img src='admin/upload/" . htmlspecialchars($row['img']) . "' class='d-block w-100' alt='Slide_" . ($index + 1) . "'>
                     </div>";
                     $carouselIndicators .= "<button type='button' data-bs-target='#modernCarousel' data-bs-slide-to='$index'" . ($index === 0 ? " class='active'" : "") . "></button>";
@@ -288,6 +288,15 @@
         <div id="modernCarousel" class="carousel slide modern-carousel" data-bs-ride="carousel">
             <div class="carousel-inner"><?= $carouselItems; ?></div>
             <div class="carousel-indicators"><?= $carouselIndicators; ?></div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#modernCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#modernCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
 
         <!-- Offer Banner -->
