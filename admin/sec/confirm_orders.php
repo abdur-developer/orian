@@ -1,4 +1,9 @@
 <?php
+    // Pagination settings
+    $limit = 10;
+    $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $start_from = ($page - 1) * $limit;
+
     // Search functionality
     $search = isset($_REQUEST['search']) ? trim($_REQUEST['search']) : '';
 
@@ -29,10 +34,33 @@
         ) latest ON co.id = latest.max_id
         $where_cause
         ORDER BY co.id DESC
-        LIMIT 100
+        LIMIT $start_from, $limit
     ";
 
     $result = $conn->query($sql);
+
+    // Total records count
+    $count_sql = "
+        SELECT 
+            COUNT(*) as total
+        FROM confirm_orders co
+        JOIN users u ON co.user_id = u.id
+        JOIN orders o ON co.order_id = o.id
+        INNER JOIN (
+            SELECT order_id, MAX(id) AS max_id
+            FROM confirm_orders
+            WHERE type = 'product'
+            GROUP BY order_id
+        ) latest ON co.id = latest.max_id
+        $where_cause
+    ";
+    $total_result = $conn->query($count_sql);
+    $total_rows = $total_result->fetch_assoc()['total'];
+    $total_pages = ceil($total_rows / $limit);
+
+    // Calculate page range
+    $start_range = max(1, $page - 2);
+    $end_range = min($total_pages, $page + 2);
 ?>
 
 <div class="container">
@@ -107,6 +135,62 @@
                             <?php endwhile; ?>
                         </tbody>
                     </table>
+                </div>
+                <!-- Pagination -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-muted">
+                        Showing <strong><?= ($start_from + 1) ?></strong> to <strong><?= min($start_from + $limit, $total_rows) ?></strong> of <strong><?= $total_rows ?></strong> entries
+                        <?php if (!empty($search)): ?>
+                            (filtered from total)
+                        <?php endif; ?>
+                    </div>
+                    
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination mb-0">
+                            <!-- First Page -->
+                            <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?q=confirm_orders&page=1<?= !empty($search) ? '&search='.urlencode($search) : '' ?>" aria-label="First">
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            
+                            <!-- Previous Page -->
+                            <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?q=confirm_orders&page=<?= $page-1 ?><?= !empty($search) ? '&search='.urlencode($search) : '' ?>" aria-label="Previous">
+                                    <i class="fas fa-angle-left"></i>
+                                </a>
+                            </li>
+                            
+                            <!-- Page Numbers -->
+                            <?php if ($start_range > 1): ?>
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            <?php endif; ?>
+                            
+                            <?php for ($i = $start_range; $i <= $end_range; $i++): ?>
+                                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                    <a class="page-link" href="?q=confirm_orders&page=<?= $i ?><?= !empty($search) ? '&search='.urlencode($search) : '' ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            
+                            <?php if ($end_range < $total_pages): ?>
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            <?php endif; ?>
+                            
+                            <!-- Next Page -->
+                            <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?q=confirm_orders&page=<?= $page+1 ?><?= !empty($search) ? '&search='.urlencode($search) : '' ?>" aria-label="Next">
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                            </li>
+                            
+                            <!-- Last Page -->
+                            <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?q=confirm_orders&page=<?= $total_pages ?><?= !empty($search) ? '&search='.urlencode($search) : '' ?>" aria-label="Last">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             <?php else: ?>
                 <div class="text-center py-5">
