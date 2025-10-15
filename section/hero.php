@@ -285,18 +285,18 @@
             }
         ?>
 
-        <div id="modernCarousel" class="carousel slide modern-carousel" data-bs-ride="carousel">
+        <div id="modernCarousel" class="carousel slide modern-carousel" data-bs-ride="carousel" data-bs-touch="true">
             <div class="carousel-inner"><?= $carouselItems; ?></div>
             <div class="carousel-indicators"><?= $carouselIndicators; ?></div>
             
-            <button class="carousel-control-prev" type="button" data-bs-target="#modernCarousel" data-bs-slide="prev">
+            <!-- <button class="carousel-control-prev" type="button" data-bs-target="#modernCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#modernCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
-            </button>
+            </button> -->
         </div>
 
         <!-- Offer Banner -->
