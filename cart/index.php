@@ -1,7 +1,7 @@
 <?php
     require_once '../include/dbcon.php';
     if(!isset($_COOKIE['number'])) {
-        header("Location: ../auth.php?error=Please+login+first!&refer=".urlencode(encryptSt("cart/index.php")));
+        header("Location: ../auth.php?refer=".urlencode(encryptSt("cart/index.php"))); //error=Please+login+first!&
         exit();
     }
     if(isset($_GET['remove']) && !empty($_GET['remove'])) {

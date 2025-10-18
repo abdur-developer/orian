@@ -45,6 +45,9 @@
                                 <td><?= htmlspecialchars($row["name"]) ?></td>
                                 <td><?= getProductCount($row['id']) ?></td>
                                 <td class="text-center action-buttons">
+                                    <button class="btn btn-sm btn-view me-1" title="View" onclick="location.href='?q=product&cate_id=<?= encryptSt($row['id']) ?>'">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
                                     <button class="btn btn-sm btn-edit me-1" title="Edit" onclick="location.href='?e=category_product&id=<?= encryptSt($row['id']) ?>'">
                                         <i class="fas fa-edit"></i>
                                     </button>

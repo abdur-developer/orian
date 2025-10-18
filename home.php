@@ -2,7 +2,7 @@
     $user = null;
     require_once 'include/dbcon.php';
     if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
-        header("Location: auth.php?error=Please+login+first!&refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));
+        header("Location: auth.php?refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));//error=Please+login+first!&
         exit();
     }
     $user_id = decryptSt($_COOKIE['user_id']);

@@ -5,10 +5,11 @@
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
     }else{
+        $cate_id = $_GET['cate_id'];
         $row = [
             'id' => null,
             'name' => null,
-            'type' => null,
+            'type' => decryptSt($cate_id),
             'price' => null,
             'old_price' => null,
             'rating_count' => null,

@@ -225,6 +225,18 @@
             </script>
             ";
         }
+        if(isset($_REQUEST['error'])){
+            $error = $_REQUEST['error'];
+            echo "
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'WOW...',
+                    text: '$error'
+                    });
+            </script>
+            ";
+        }
     ?>
     <div class="login-card">
         <div class="card-header">

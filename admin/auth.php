@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['pass
         header("Location: index.php");
         exit();
     } else {
-        header("Location: auth.php?error=Invalid email or password");
+        header("Location: auth.php?error=Invalid+email+or+password");
         exit();
     }
 }
