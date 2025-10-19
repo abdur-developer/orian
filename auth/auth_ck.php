@@ -1,36 +1,67 @@
 <?php
-include 'include/dbcon.php';
+include '../include/dbcon.php';
 
 function sanitize($conn, $value) {
     return mysqli_real_escape_string($conn, trim($value));
 }
-function encryptPass($password) {
-    return password_hash($password, PASSWORD_BCRYPT);
+function sendOTP($number){
+    session_start();
+    $otp = rand(100000, 999999);
+    $message = "(Protisheba) Your OTP for password reset is: $otp";
+
+    if (isset($_SESSION['otp_time']) && (time() - (int)$_SESSION['otp_time']) > 300) {
+        unset($_SESSION['otp'], $_SESSION['otp_time'], $_SESSION['user_num']);
+    }
+    if(isset($_SESSION['user_num']) && $_SESSION['user_num'] != $number){
+        unset($_SESSION['otp'], $_SESSION['otp_time'], $_SESSION['user_num']);
+    }
+    if (!isset($_SESSION['otp'])) {
+        $api_key = 'jVfGENOMNjgj7ZQqYM1Q';
+        $sender_id = 'Random';
+    
+        $url = "http://bulksmsbd.net/api/smsapi";
+        $params = [
+            'api_key' => $api_key,
+            'type' => 'text',
+            'number' => $number,
+            'senderid' => $sender_id,
+            'message' => $message
+        ];
+    
+        $url_with_params = $url . '?' . http_build_query($params);
+    
+        $ch = curl_init($url_with_params);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+    
+        // var_dump($response);
+        // exit();
+        // OTP পাঠানোর সময়
+        $_SESSION['otp'] = encryptSt($otp);
+        $_SESSION['otp_time'] = time(); // OTP জেনারেট সময়
+        $_SESSION['user_num'] = $number;
+    }
+    header("location: verify.php");
 }
 
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['number'], $_POST['password'])) {
+    if (!isset($_POST['number'])) {
         header("location: ?error=Missing+input!");
         exit();
     }
 
     $number = sanitize($conn, $_POST['number']);
-    $password = $_POST['password']; // Don't sanitize password
     $signup = isset($_POST['signup']) ? (int)$_POST['signup'] : 0;
-    $name = isset($_POST['name']) ? sanitize($conn, $_POST['name']) : '';
-    $email = isset($_POST['email']) ? sanitize($conn, $_POST['email']) : '';
-    $wish = isset($_POST['wish']) ? implode(',', array_map(function($w) use ($conn) {
-        return sanitize($conn, $w);
-    }, $_POST['wish'])) : '';
-
+    $forgot = isset($_POST['forgot']) ? (int)$_POST['forgot'] : 0;
+    $wish = 'jani na';
+    // $wish = isset($_POST['wish']) ? implode(',', array_map(function($w) use ($conn) {
+        //     return sanitize($conn, $w);
+        // }, $_POST['wish'])) : '';
+        
     if (strlen($number) < 11) {
         header("location: ?error=Invalid+number!");
-        exit();
-    }
-    if (strlen($password) < 6) {
-        header("location: ?error=Password+must+be+at+least+6+characters!");
         exit();
     }
 
@@ -39,20 +70,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    if ($forgot === 1) {
+        if ($result->num_rows === 0) {
+            header("location: ?error=Number+not+found!");
+            exit();
+        }else sendOTP($number);
+        exit();
+    }
+    
+    
+    $password = $_POST['password']; // Don't sanitize password
+    if (strlen($password) < 6) {
+        header("location: ?error=Password+must+be+at+least+6+characters!");
+        exit();
+    }
+    
+    
     if ($signup === 1) {
+        $email = isset($_POST['email']) ? sanitize($conn, $_POST['email']) : '';
+        $name = isset($_POST['name']) ? sanitize($conn, $_POST['name']) : '';
         if ($result->num_rows > 0) {
             header("location: ?error=Number+already+exists!");
             exit();
         }
 
         $stmt = $conn->prepare("INSERT INTO users (name, number, email, wish, password) VALUES (?, ?, ?, ?, ?)");
-        $hashedPassword = encryptPass($password);
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $stmt->bind_param("sssss", $name, $number, $email, $wish, $hashedPassword);
         if ($stmt->execute()) {
             addCookie('user_id', encryptSt($conn->insert_id));
             addCookie('number', encryptSt($number));
             addCookie('web', encryptSt($password));
-            header("Location: home.php");
+            header("Location: ../home.php");
             exit();
         } else {
             header("location: ?error=Error: " . $stmt->error);
@@ -73,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: $refer");
                     exit();
                 }else {
-                    header("Location: home.php");
+                    header("Location: ../home.php");
                     exit();
                 }
             } else {
@@ -88,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-require_once 'include/dbcon.php';
+require_once '../include/dbcon.php';
 if (isset($_COOKIE['number']) && isset($_COOKIE['web'])) {
     $number = decryptSt($_COOKIE['number']);
     $web = decryptSt($_COOKIE['web']);
@@ -105,7 +154,7 @@ if (isset($_COOKIE['number']) && isset($_COOKIE['web'])) {
                 header("Location: $refer");
                 exit();
             }else {
-                header("Location: home.php");
+                header("Location: ../home.php");
                 exit();
             }
         }

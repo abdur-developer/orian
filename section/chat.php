@@ -186,7 +186,7 @@
   <div class="body" id="chatBody">
     <div class="message-box bot-message">
       <strong>AI:</strong> আপনি কি আমাদের এজেন্ট এর সাথে কথা বলতে চান? 😊 তাহলে প্রথমে 
-      <a href="auth.php" style="color: #882188ff; text-decoration: underline;">লগইন</a> করতে হবে , তারপর 
+      <a href="auth/" style="color: #882188ff; text-decoration: underline;">লগইন</a> করতে হবে , তারপর 
       <a href="home.php?page=consultants" style="color: #882188ff; text-decoration: underline;">পরামর্শদাতা সেকশনে </a>যেতে হবে...
       <div class="timestamp">আজ <?php echo date('h:i A'); ?></div>
       <!-- <div class="suggestions" id="initialSuggestions"></div> -->

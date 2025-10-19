@@ -2,7 +2,7 @@
     $user = null;
     require_once 'include/dbcon.php';
     if (!isset($_COOKIE['number']) || !isset($_COOKIE['web'])) {
-        header("Location: auth.php?refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));//error=Please+login+first!&
+        header("Location: auth/?refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));//error=Please+login+first!&
         exit();
     }
     $user_id = decryptSt($_COOKIE['user_id']);
@@ -17,11 +17,11 @@
         $user = $result->fetch_assoc();
         //reverify the password
         if (!verifyPassword($web, $user['password'])) {
-            header("Location: auth.php?error=Session+expired,+please+login+again!&refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));
+            header("Location: auth/?error=Session+expired,+please+login+again!&refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));
             exit();
         }
     } else {
-        header("Location: auth.php?error=User+not+found!&refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));
+        header("Location: auth/?error=User+not+found!&refer=" . urlencode(encryptSt($_SERVER['REQUEST_URI'])));
         exit();
     }
 

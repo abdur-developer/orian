@@ -1,7 +1,7 @@
 <?php
     require_once '../include/dbcon.php';
     if(!isset($_COOKIE['number'])) {
-        header("Location: ../auth.php?refer=".urlencode(encryptSt("cart/index.php"))); //error=Please+login+first!&
+        header("Location: ../auth/?refer=".urlencode(encryptSt("cart/index.php"))); //error=Please+login+first!&
         exit();
     }
     if(isset($_GET['remove']) && !empty($_GET['remove'])) {
@@ -250,7 +250,7 @@
             }else {
                 // send to auth page if not logged in
                 echo '<script>
-                    window.location.href = "../auth.php?refer=' . urlencode(encryptSt("cart/index.php")) . '";
+                    window.location.href = "../auth/?refer=' . urlencode(encryptSt("cart/index.php")) . '";
                 </script>';
             }
             $count = count($cart);

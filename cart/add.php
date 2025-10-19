@@ -1,7 +1,7 @@
 <?php
 require_once '../include/dbcon.php';
 if(!isset($_COOKIE['number'])) {
-    header("Location: ../auth.php?msg=Please+login+first!&refer=".urlencode(encryptSt("cart/add.php?type={$_GET['type']}&nani={$_GET['nani']}&thanks={$_GET['thanks']}")));
+    header("Location: ../auth/?msg=Please+login+first!&refer=".urlencode(encryptSt("cart/add.php?type={$_GET['type']}&nani={$_GET['nani']}&thanks={$_GET['thanks']}")));
     exit();
 }
 $type = $_GET['type']; //course, product, consultant

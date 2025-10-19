@@ -217,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="card-footer text-center py-3">
                             <small class="text-muted">
-                                Changed your mind? <a href="auth.php">Return to safety</a>
+                                Changed your mind? <a href="auth/">Return to safety</a>
                             </small>
                         </div>
                     </div>

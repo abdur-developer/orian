@@ -16,7 +16,7 @@ orian
 │     ├─ questions.php
 │     ├─ testimonials.php
 │     └─ users.php
-├─ auth.php
+├─ auth/
 ├─ cart
 │  ├─ add.php
 │  ├─ checkout_hosted.php
