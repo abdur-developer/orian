@@ -16,16 +16,17 @@ function sendOTP($number){
         unset($_SESSION['otp'], $_SESSION['otp_time'], $_SESSION['user_num']);
     }
     if (!isset($_SESSION['otp'])) {
-        $api_key = 'jVfGENOMNjgj7ZQqYM1Q';
-        $sender_id = 'Random';
-    
-        $url = "http://bulksmsbd.net/api/smsapi";
+        $api_key = 'OJSONNUUGT97U9Z';
+        $sender_id = '8809601004808';
+        $url = "https://api.mimsms.com/api/SmsSending/Send";
         $params = [
-            'api_key' => $api_key,
-            'type' => 'text',
-            'number' => $number,
-            'senderid' => $sender_id,
-            'message' => $message
+            'Apikey' => $api_key,
+            'UserName' => 'alaminfiverr548@gmail.com',
+            'SenderName' => $sender_id,
+            'CampaignId' => 'null',
+            'MobileNumber' => '88'.$number,
+            'TransactionType' => 'T',
+            'Message' => $message
         ];
     
         $url_with_params = $url . '?' . http_build_query($params);

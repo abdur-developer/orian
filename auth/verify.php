@@ -283,7 +283,7 @@
     <?php
         // Simulating session data for the example
         
-        if(isset($_REQUEST['success'])){
+        if(isset($_REQUEST['success']) && !$able_reset){
             $success = $_REQUEST['success'];
             echo "
             <script>
@@ -295,7 +295,7 @@
             </script>
             ";
         }
-        if(isset($_REQUEST['error'])){
+        if(isset($_REQUEST['error']) && !$able_reset){
             $error = $_REQUEST['error'];
             echo "
             <script>
