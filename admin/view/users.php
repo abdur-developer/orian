@@ -43,7 +43,7 @@
                     <div class="col-md-6">
                         <!-- Student ID -->
                         <div class="form-floating mb-4">
-                            <input type="text" name="student_id" class="form-control" id="student_id" 
+                            <input type="text" readonly class="form-control" id="student_id" 
                                    value="<?= htmlspecialchars($row['student_id']) ?>">
                             <label for="student_id"><i class="fas fa-id-card me-1 text-muted"></i>Student ID</label>
                             <div class="invalid-feedback">Please provide a student ID</div>

@@ -8,7 +8,6 @@
 
     // Get form data
     $id = $_POST['id'];
-    $student_id = $_POST['student_id'] ?? null;
     $name = $_POST['name'] ?? null;
     $number = $_POST['number'] ?? null;
     $email = $_POST['email'] ?? null;
@@ -44,13 +43,13 @@
             $password_hash = !empty($new_password) ? password_hash($new_password, PASSWORD_BCRYPT) : $user['password'];
 
             $sql = "UPDATE users SET 
-                    student_id = ?, name = ?, number = ?, email = ?, password = ?,
+                    name = ?, number = ?, email = ?, password = ?,
                     wish = ?, bio = ?, address = ?, status = ? 
                     WHERE id = ?";
             
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("isssssssii", 
-                $student_id, $name, $number, $email, $password_hash,
+            $stmt->bind_param("sssssssii", 
+                $name, $number, $email, $password_hash,
                 $wish, $bio, $address, $status, $id
             );
             
@@ -72,12 +71,12 @@
             $password_hash = password_hash($new_password, PASSWORD_BCRYPT);
 
             $sql = "INSERT INTO users 
-                    (student_id, name, number, email, password, wish, bio, address, status) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    (name, number, email, password, wish, bio, address, status) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("isssssssi",
-                $student_id, $name, $number, $email, $password_hash,
+            $stmt->bind_param("sssssssi",
+                $name, $number, $email, $password_hash,
                 $wish, $bio, $address, $status
             );
             
