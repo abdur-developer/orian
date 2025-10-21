@@ -49,7 +49,7 @@
                     WHERE id = ?";
             
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssssssssii", 
+            $stmt->bind_param("isssssssii", 
                 $student_id, $name, $number, $email, $password_hash,
                 $wish, $bio, $address, $status, $id
             );
@@ -76,7 +76,7 @@
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssssssssi",
+            $stmt->bind_param("isssssssi",
                 $student_id, $name, $number, $email, $password_hash,
                 $wish, $bio, $address, $status
             );
