@@ -20,6 +20,6 @@
 <div class="signup-link">
     <?php
         $ref = isset($_GET['refer']) ? htmlspecialchars($_GET['refer']) : '';
-        echo 'কোন আকাউন্ট নেই ? <a href="auth/?signup&refer=' . urlencode($ref) . '">রেজিস্টার করুন</a>';
+        echo 'কোন আকাউন্ট নেই ? <a href="index.php?signup&refer=' . urlencode($ref) . '">রেজিস্টার করুন</a>';
     ?>
 </div>
