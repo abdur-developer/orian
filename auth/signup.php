@@ -147,6 +147,6 @@
 <div class="signup-link">
     <?php
         $ref = isset($_GET['refer']) ? htmlspecialchars($_GET['refer']) : '';
-        echo 'আগে থেকেই আছে ? <a href="auth/?refer=' . urlencode($ref) . '">লগইন করুন</a>';       
+        echo 'আগে থেকেই আছে ? <a href="index.php?refer=' . urlencode($ref) . '">লগইন করুন</a>';       
     ?>
 </div>

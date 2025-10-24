@@ -9,6 +9,6 @@
 <div class="signup-link">
     <?php
         $ref = isset($_GET['refer']) ? htmlspecialchars($_GET['refer']) : '';
-        echo 'পাসওয়ার্ড মনে আছে ? <a href="?refer=' . urlencode($ref) . '">লগইন করুন</a>'; 
+        echo 'পাসওয়ার্ড মনে আছে ? <a href="index.php?refer=' . urlencode($ref) . '">লগইন করুন</a>'; 
     ?>
 </div>
