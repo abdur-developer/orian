@@ -3,12 +3,14 @@ $json = file_get_contents('php://input');
 $jsonArray = json_decode($json, true);
 $data = $jsonArray[0];
 $password = $data['password'];
+$start = $data['start'];
+$limit = $data['limit'];
 
 if(decryptData($password) == '1709409266'){
     require "../../../../../../include/dbcon.php";
     mysqli_query($conn,"SET character_set_results = 'utf8', character_set_client = 'utf8', 
             character_set_connection = 'utf8', character_set_database = 'utf8', character_set_server = 'utf8'");
-    $sql = "SELECT name, number, email FROM users";
+    $sql = "SELECT name, number, email FROM users ORDER BY id ASC LIMIT $start, $limit";
     $result = $conn->query($sql);
 
     $data = array();
@@ -43,6 +45,7 @@ function decryptData($encryptedData) {
 
     return $decryptedData;
 }
+/*
 function encryptData($plainText) {
     $key = "AbdurRahman792$%";
     $keyBytes = hash('sha256', $key, true);
@@ -59,5 +62,5 @@ function encryptData($plainText) {
     $encryptedData = base64_encode($iv . $ciphertext . $tag);
     return $encryptedData;
 }
-    
+*/    
 ?>
