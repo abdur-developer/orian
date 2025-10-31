@@ -42,7 +42,7 @@
                         <!-- Name -->
                         <div class="form-floating mb-4">
                             <input type="text" name="name" class="form-control" id="name" 
-                                   value="<?= htmlspecialchars($row['name']) ?>" required>
+                                   value="<?= htmlspecialchars($row['name']) ?>" maxlength="50" required>
                             <label for="name"><i class="fas fa-heading me-1 text-muted"></i>Name</label>
                             <div class="invalid-feedback">Please provide a name</div>
                         </div>
