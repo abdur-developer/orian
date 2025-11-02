@@ -250,7 +250,7 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
             <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <div class="d-flex align-items-center mb-3 mb-md-0">
                     <?php if (!empty($user_details)): ?>
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="user-avatar me-3">
+                        <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="User" class="user-avatar me-3">
                         <div>
                             <h4 class="mb-0"><?= htmlspecialchars($user_details['name']) ?></h4>
                             <small class="text-white-80">Customer</small>
@@ -274,8 +274,64 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                 </div>
             </div>
         </div>
+        <style>
+            .feedback-card {
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                border: none;
+                margin: 0;
+                transition: all 0.3s ease;
+            }            
+            .form-label {
+                font-weight: 600;
+                color: var(--dark-color);
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .form-control, .form-select {
+                border-radius: 8px;
+                border: 1px solid #e2e8f0;
+                transition: all 0.2s ease;
+            }
+            
+            .form-control:focus, .form-select:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+            }
+        </style>
+        <form class="alert alert-info feedback-card" action="" method="post">
+            <?php
+                $sql = "SELECT feedback, show_feedback FROM users WHERE id = {$order['user_id']}";
+                $feedback = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+            ?>
+            <div class="row g-3">
+                <div class="col-md-7">
+                    <label for="feedbackText" class="form-label">Feedback Message</label>
+                    <input type="text" name="feedback_txt" id="feedbackText" class="form-control" value="<?= $feedback['feedback'] ?? "order place" ?>" placeholder="Enter your feedback message here...">
+                    <input type="hidden" name="user_id" value="<?=$order['user_id']?>">
+                    <input type="hidden" name="order_id" value="<?=$_GET['id']?>">
+                </div>
+                <div class="col-md-3">
+                    <label for="is_show" class="form-label">Visibility</label>
+                    <select name="is_show" id="is_show" class="form-select">
+                        <option value="0" <?= $feedback['show_feedback'] == 0 ? 'selected':'' ?>>Only Admin</option>
+                        <option value="1" <?= $feedback['show_feedback'] == 1 ? 'selected':'' ?>>Admin & User</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-2 d-flex align-items-end">
+                    <div class="btn-group w-100">
+                        <button type="submit" class="btn btn-success align-items-center">
+                            <i class="fas fa-paper-plane mr-3"></i> Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
         
-        <div class="card-body p-4">
+        <div class="card-body px-4">
             <?php if (!$order): ?>
                 <div class="alert alert-danger text-center py-4">
                     <i class="fas fa-exclamation-circle fa-2x mb-3"></i>
@@ -291,11 +347,11 @@ $order_number = $order ? 'ORD-'.date('Y', strtotime($order['created_at'])).'-'.s
                             <div class="row g-2 align-items-center">
                                 <div class="col-md-5">
                                     <select name="status" class="form-select border-primary">
-                                        <option value="Order Confirm" <?= $order['co_status']=='Order Confirm'?'selected':'' ?>>Processing</option>
-                                        <option value="ready" <?= $order['co_status']=='ready'?'selected':'' ?>>Ready for Shipping</option>
-                                        <option value="delivery" <?= $order['co_status']=='delivery'?'selected':'' ?>>On Delivery</option>
-                                        <option value="delivered" <?= $order['co_status']=='delivered'?'selected':'' ?>>Delivered</option>
-                                        <option value="cancelled" <?= $order['co_status']=='cancelled'?'selected':'' ?>>Cancelled</option>
+                                        <option value="Order Confirm" <?= $order['co_status'] == 'Order Confirm' ? 'selected':'' ?>>Processing</option>
+                                        <option value="ready" <?= $order['co_status'] == 'ready' ? 'selected':'' ?>>Ready for Shipping</option>
+                                        <option value="delivery" <?= $order['co_status'] == 'delivery' ? 'selected':'' ?>>On Delivery</option>
+                                        <option value="delivered" <?= $order['co_status'] == 'delivered' ? 'selected':'' ?>>Delivered</option>
+                                        <option value="cancelled" <?= $order['co_status'] == 'cancelled' ? 'selected':'' ?>>Cancelled</option>
                                     </select>
                                     <input type="hidden" name="status_id" value="<?= $order['id'] ?>">
                                 </div>

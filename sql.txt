@@ -1,1 +1,0 @@
-ALTER TABLE `questions` CHANGE `cat_id` `cat_id` INT(11) NULL DEFAULT NULL;

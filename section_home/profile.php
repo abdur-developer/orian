@@ -94,7 +94,7 @@
     
     /* Main Content */
     .content {
-      padding: 1.5rem;
+      padding: 1rem;
     }
     
     .content-header h1 {
@@ -244,7 +244,7 @@
       
       .content {
         flex: 1;
-        padding: 2.5rem;
+        padding: 1rem;
       }
       
       .form-group {
@@ -264,7 +264,7 @@
       }
       
       .content {
-        padding: 3rem;
+        padding: 2rem;
       }
     }
 </style>
@@ -290,6 +290,11 @@
     </div>
     
     <div class="content">
+      <?php if($user['feedback'] && $user['show_feedback'] == 1): ?>
+        <div class="alert alert-warning p-2">
+          <strong>Note:</strong> <?=$user['feedback']?>
+        </div>
+      <?php endif; ?>
       <div class="content-header">
         <h1>Personal Information</h1>
       </div>

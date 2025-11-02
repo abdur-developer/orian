@@ -81,6 +81,20 @@ if(isset($_REQUEST['admin-username'])){
     }
 
     $stmt->close();
+}elseif(isset($_REQUEST['feedback_txt'])){
+    $txt = $_REQUEST['feedback_txt'];
+    $is_show = $_REQUEST['is_show'];
+    $user_id = $_REQUEST['user_id'];
+
+    $sql = "UPDATE users SET feedback = ?, show_feedback = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sii", $txt, $is_show, $user_id);
+
+    if($stmt->execute()){
+        header("location: index.php?e=confirm_orders&id=".$_REQUEST['order_id']."&success=Feedback+updated+successfully.");
+        exit();
+    }
+
 }elseif(isset($_REQUEST['coupons_code'])){
     $id = isset($_REQUEST['editId']) ? intval($_REQUEST['editId']) : '';
     $code = $_REQUEST['coupons_code'];
