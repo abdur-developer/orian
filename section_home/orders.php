@@ -80,9 +80,29 @@
       font-weight: 600;
       color: var(--primary-color);
     }
-    
+    @media (max-width: 576px) { /* "sm" breakpoint (Bootstrap-style) */
+      .flex-direction-sm-column {
+        display: flex;
+        flex-direction: column;
+      }
+    }
 </style>
+<?php
+  if(isset($_GET['cancel'])){
+    $order_id = decryptSt($_GET['cancel']);
+    $new_status = "cancelled";
+    $stmt = $conn->prepare("UPDATE orders SET co_status = ? WHERE id = ?");
+    $stmt->bind_param("si", $new_status, $order_id);
+    $stmt->execute();
+    $stmt->close();
 
+    $txt = "Canceled an order by user.";
+    $is_show = 0;
+
+    $sql = "UPDATE users SET feedback = '$txt', show_feedback = $is_show WHERE id = '$user_id'";
+    mysqli_query($conn, $sql);
+  }
+?>
 <div class="container pb-5">
     <?php
         $sql = "SELECT * FROM orders WHERE user_id = '$user_id' ORDER BY id DESC";
@@ -90,12 +110,12 @@
         while($row = mysqli_fetch_assoc($query)){?>
         <!-- Order Card -->
         <div class="purchase-card">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-direction-sm-column">
                 <h5 class="order-title mb-0"><i class="fas fa-receipt"></i> #<?=$row['transaction_id']?></h5>
-                <?php $isSuccess = ($row['status'] == 'success') ? true : false; ?>
-                <span class="badge <?=($isSuccess) ? 'bg-success text-success' : 'bg-warning text-warning'?> bg-opacity-10 badge-status">
-                    <i class="fas <?=($isSuccess) ? 'fa-check-circle' : 'fa-clock'?> me-1"></i> 
-                    <?=($isSuccess) ? 'Completed' : 'Pending'?>
+                <span class="badge <?=($row['co_status'] == 'delivered') ? 'bg-success text-success' : 'bg-warning text-warning'?> bg-opacity-10 badge-status">
+                    <i class="fas <?=($row['co_status'] == 'delivered') ? 'fa-check-circle' : 'fa-clock'?> me-1"></i> 
+                    <?=$row['co_status']?>
+                    <?=($row['co_status'] == 'cancelled') ? '' : '<a href="home.php?page=orders&cancel='.encryptSt($row['id']).'" class="btn btn-danger">Cancel order</a>'?>
                 </span>
             </div>
             <div class="row">
