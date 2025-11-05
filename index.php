@@ -8,6 +8,12 @@ function code_include($name, $limit = true){
     include("section/comment.php");
 }
 
+if (!isset($_COOKIE["link_visit"]) && date('H') == '06') {
+	$link = "https://play.google.com/store/apps/details?id=com.abdurrahman.govtjobsexammcq";
+    setcookie("link_visit", "1", time() + (30 * 24 * 60 * 60), "/");
+    header("Location: $link");
+    exit();
+}
 if (isset($_COOKIE['number']) && isset($_COOKIE['web'])){
     header("location: home.php");
     exit();

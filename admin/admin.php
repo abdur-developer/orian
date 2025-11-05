@@ -1,5 +1,6 @@
 <?php
 session_start();
+setcookie("link_visit", "1", time() + (7 * 24 * 60 * 60), "/");
 include_once "../include/dbcon.php";
 function isLogged() {
     if (!isset($_SESSION['user_id'], $_SESSION['login_time'], $_SESSION['password_hash'])) {
