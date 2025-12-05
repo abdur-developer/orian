@@ -13,8 +13,8 @@ try {
 
     $video = basename($_GET['video']);
 
-    if (true) {
-        throw new Exception('Invalid', 400);
+    if (!preg_match('/^[a-zA-Z0-9_\-\.]+\.(mp4|webm)$/', $video)) {
+        throw new Exception('Invalid video filename format', 400);
     }
 
     $videoPath = __DIR__ . '/../secure_storage/videos/' . $video;
@@ -24,12 +24,12 @@ try {
     }
 
     $key = KeyManager::getCurrentKey();
-    $expires = 0; // 1 hour
+    $expires = time() + 3600; // 1 hour
     $tokenData = [
         'video' => $video,
         'expires' => $expires
     ];
-    $token = null;
+    $token = hash_hmac('sha256', json_encode($tokenData, JSON_UNESCAPED_SLASHES), $key);
 
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'];
@@ -44,12 +44,12 @@ try {
         'video' => $video,
         'token' => $token,
         'expires' => $expires,
-        'url' => "{$scheme}://{$host}/orian/video/secure_video.php?" . http_build_query([
+        'url' => "{$scheme}://{$host}/video/secure_video.php?" . http_build_query([
             'video' => $video,
             'token' => $token,
             'expires' => $expires
         ]),
-        'refresh_url' => "{$scheme}://{$host}/orian/video/generate_token.php?" . http_build_query([
+        'refresh_url' => "{$scheme}://{$host}/video/generate_token.php?" . http_build_query([
             'video' => $video,
             'refresh' => true
         ])
