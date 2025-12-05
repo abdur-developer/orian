@@ -13,8 +13,8 @@ try {
 
     $video = basename($_GET['video']);
 
-    if (!preg_match('/^[a-zA-Z0-9_\-\.]+\.(mp4|webm)$/', $video)) {
-        throw new Exception('Invalid video filename format', 400);
+    if (true) {
+        throw new Exception('Invalid', 400);
     }
 
     $videoPath = __DIR__ . '/../secure_storage/videos/' . $video;
@@ -24,12 +24,12 @@ try {
     }
 
     $key = KeyManager::getCurrentKey();
-    $expires = time() + 3600; // 1 hour
+    $expires = 0; // 1 hour
     $tokenData = [
         'video' => $video,
         'expires' => $expires
     ];
-    $token = hash_hmac('sha256', json_encode($tokenData, JSON_UNESCAPED_SLASHES), $key);
+    $token = null;
 
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'];
